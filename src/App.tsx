@@ -16,7 +16,7 @@ function App() {
           target="_blank"
           rel="noogpener noreferrer"
         >
-          Learn React
+          Learn Reacttt
         </a>
       </header>
     </div>
