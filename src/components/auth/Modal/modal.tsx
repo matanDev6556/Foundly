@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Modal.css';
 import CompanySignUpForm from './CompanySignUpForm/CompanySignUpForm';
 import InvestorSignUpForm from './InvestorSignUpForm/InvestorSignUpForm';
-import PreferencesStep from './InvestorSignUpForm/PreferencesStep';
+import PreferencesStep from './InvestorSignUpForm/preferencesStep/PreferencesStep';
 import LoginForm from './LoginForm';
 
 const Modal: React.FC<{

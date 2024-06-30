@@ -1,0 +1,18 @@
+.investment-range-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.investment-range-label {
+  margin-right: 10px;
+}
+
+.select {
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  border-color: var(--soft-color);
+  outline: none;
+  transition: border-color 0.3s;
+}

@@ -3,7 +3,7 @@ import './Modal.css';
 import LoginForm from '../../../auth/Modal/LoginForm';
 import CompanySignUpForm from '../../../auth/Modal/CompanySignUpForm/CompanySignUpForm';
 import InvestorSignUpForm from '../../../auth/Modal/InvestorSignUpForm/InvestorSignUpForm';
-import PreferencesStep from '../../../auth/Modal/InvestorSignUpForm/PreferencesStep';
+import PreferencesStep from '../../../auth/Modal/InvestorSignUpForm/preferencesStep/PreferencesStep';
 
 const Modal: React.FC<{
   setOpenModal: (open: boolean) => void;
