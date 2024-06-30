@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './Modal.css';
-import CompanySignUpForm from './CompanySignUpForm/CompanySignUpForm';
-import InvestorSignUpForm from './InvestorSignUpForm/InvestorSignUpForm';
-import PreferencesStep from './InvestorSignUpForm/preferencesStep/PreferencesStep';
+
 import LoginForm from './LoginForm';
+import SignUpForm from './SignUpForm';
+import PreferencesStep from './InvestorSignUpForm/PreferencesStep';
 
 const Modal: React.FC<{
   setOpenModal: (open: boolean) => void;
@@ -21,7 +21,12 @@ const Modal: React.FC<{
     // show the spetsific form
     if (signUpType === 'Investor') {
       return step === 1 ? (
-        <InvestorSignUpForm setStep={setStep} />
+        <SignUpForm
+          handleSumbit={() => {
+            setStep(2);
+          }}
+          userType="Investor"
+        />
       ) : (
         <PreferencesStep />
       );
@@ -29,7 +34,14 @@ const Modal: React.FC<{
     if (signUpType === 'Company') {
       switch (step) {
         case 1:
-          return <CompanySignUpForm />;
+          return (
+            <SignUpForm
+              handleSumbit={() => {
+                setStep(2);
+              }}
+              userType="Company"
+            />
+          );
       }
     }
   };

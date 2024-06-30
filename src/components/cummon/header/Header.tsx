@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Header.css';
-import Modal from '../../auth/Modal/modal';
+import Modal from '../../auth/modal';
+
 
 
 const Header: React.FC = () => {
