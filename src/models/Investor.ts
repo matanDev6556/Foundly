@@ -1,19 +1,38 @@
-// src/models/Investor.ts
+import User from './User';
 
-import User, { UserType } from './User';
+export interface InvestorPreferences {
+  categories: string[];
+  investmentRange: string;
+  preferenceCountry: string;
+  investInPublicCompanies: boolean;
+}
 
 export default class Investor extends User {
+  preferences: InvestorPreferences;
+
   constructor(
+    uid: string,
     name: string,
     email: string,
-    password: string,
-    public preferences: {
-      categories: string[];
-      investmentRange: string;
-      preferenceCountry: string;
-      investInPublicCompanies: boolean;
-    }
+    preferences: InvestorPreferences
   ) {
-    super(name, email, password, 'Investor');
+    super(uid, name, email, 'Investor');
+    this.preferences = preferences;
+  }
+
+  // פונקציה להמרה ל-JSON
+  toJSON() {
+    return {
+      uid: this.uid,
+      name: this.name,
+      email: this.email,
+      userType: this.userType,
+      preferences: this.preferences,
+    };
+  }
+
+  // פונקציה ליצירה מ-JSON
+  static fromJSON(json: any): Investor {
+    return new Investor(json.uid, json.name, json.email, json.preferences);
   }
 }

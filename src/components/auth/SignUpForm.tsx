@@ -1,23 +1,77 @@
-import React from 'react';
+// src/components/SignUpForm.tsx
+import React, { useState } from 'react';
+import User, { UserType } from '../../models/User';
+import { useUser } from '../../context/UserContext';
+import { registerUser } from '../../services/authService';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { useAppStatus } from '../../context/AppStatusContext';
 
 interface SignUpFormProps {
-  userType: string;
-  handleSumbit: () => void;
+  userType: UserType;
+  moveStep: () => void;
 }
-const SignUpForm: React.FC<SignUpFormProps> = ({ userType, handleSumbit }) => {
-  const handleFormSumbit = (event: React.FormEvent<HTMLFormElement>) => {
+
+const SignUpForm: React.FC<SignUpFormProps> = ({ userType, moveStep }) => {
+  const { setUser } = useUser();
+  const { loading, setLoading, error, setError } = useAppStatus();
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleSumbit();
+    try {
+      setLoading(true);
+      // register user and get his credentinal
+      const userCredential = await registerUser(email, password, name);
+      //take the uid that firebase create for the user
+      const { uid } = userCredential.user;
+      // and asign the uuid in the new user
+      const newUser = new User(uid, name, email, userType);
+      //set user locall
+      setUser(newUser);
+
+      setLoading(false);
+      ////move to step 2
+      moveStep();
+    } catch (error: any) {
+      setError(error.message);
+      console.error('Error signing up: ', error);
+    }
   };
+
   return (
-    <form onSubmit={handleFormSumbit}>
+    <form onSubmit={handleFormSubmit}>
       <label>{userType} Name</label>
-      <input type="text" />
+      <input
+        required
+        type="text"
+        name="name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
       <label>Email</label>
-      <input type="email" />
+      <input
+        required
+        type="email"
+        name="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
       <label>Password</label>
-      <input type="password" />
-      <button type="submit">Sign Up</button>
+      <input
+        required
+        type="password"
+        name="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      {loading ? (
+        <ClipLoader color="#39958c" loading={loading} size={50} />
+      ) : (
+        <button type="submit">Sign Up</button>
+      )}
     </form>
   );
 };
