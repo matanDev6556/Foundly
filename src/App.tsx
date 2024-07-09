@@ -10,6 +10,6 @@ function App() {
       <Home></Home>
     </div>
   );
-} //check
+} //check1
 
 export default App;
