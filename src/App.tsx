@@ -1,8 +1,8 @@
-import React from 'react';
-import './assets/styles/colors.css';
-import './App.css';
-import Header from './components/cummon/header/Header';
-import Home from './pages/Home';
+import React from "react";
+import "./assets/styles/colors.css";
+import "./App.css";
+import Header from "./components/cummon/header/Header";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -10,6 +10,6 @@ function App() {
       <Home></Home>
     </div>
   );
-}
+} //check
 
 export default App;
