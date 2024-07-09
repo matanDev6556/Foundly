@@ -1,37 +1,23 @@
-import { useState } from 'react';
+import React from 'react';
 import './investSelector.css';
-const InvestmentRangeSelector: React.FC = () => {
-  const investmentRanges: string[] = [
-    '0 - 10,000',
-    '10,001 - 50,000',
-    '50,001 - 100,000',
-    '100,001 - 500,000',
-    '500,001 - 1,000,000',
-    '1,000,001 - 5,000,000',
-    '5,000,001+',
-  ];
+interface InvestmentRangeSelectorProps {
+  setInvestmentRange: (range: string) => void;
+}
 
-  const [selectedRange, setSelectedRange] = useState<string>('');
-
-  const handleRangeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedRange(event.target.value);
+const InvestmentRangeSelector: React.FC<InvestmentRangeSelectorProps> = ({
+  setInvestmentRange,
+}) => {
+  const handleRangeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setInvestmentRange(e.target.value);
   };
 
   return (
     <div className="investment-range-container">
-      <select
-        value={selectedRange}
-        onChange={handleRangeChange}
-        className="select"
-      >
-        <option value="" disabled>
-          Select range
-        </option>
-        {investmentRanges.map((range) => (
-          <option key={range} value={range}>
-            {range}
-          </option>
-        ))}
+      <select className="select" onChange={handleRangeChange}>
+        <option value="0-100k">$0 - $100k</option>
+        <option value="100k-500k">$100k - $500k</option>
+        <option value="500k-1M">$500k - $1M</option>
+        <option value="1M+">$1M+</option>
       </select>
     </div>
   );
