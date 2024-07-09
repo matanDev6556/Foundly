@@ -1,12 +1,26 @@
 // src/models/User.ts
+export type UserType = 'Investor' | 'Company' | 'Admin' | 'uknown';
 
-export type UserType = 'Investor' | 'Company' | 'Admin';
+
 
 export default class User {
   constructor(
+    public uid: string,
     public name: string,
     public email: string,
-    public password: string,
-    public userType: UserType
+    public userType: string
   ) {}
+
+  toJSON() {
+    return {
+      uid: this.uid,
+      name: this.name,
+      email: this.email,
+      userType: this.userType,
+    };
+  }
+
+  static fromJSON(json: any): User {
+    return new User(json.uid, json.name, json.email, json.userType);
+  }
 }
