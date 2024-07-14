@@ -1,7 +1,6 @@
 // Header.tsx
 import React from 'react';
 import './Header.css';
-import Modal from '../auth/popup/modal';
 import { useUser } from '../../context/UserContext';
 import { logoutUser } from '../../services/authService';
 import { ModalProvider, useModal } from '../../context/popupContext';
@@ -10,11 +9,15 @@ import AdminHeader from './adminHeader';
 import CompanyHeader from './companyHeader';
 import { useNavigate } from 'react-router-dom';
 import { FaSignOutAlt } from 'react-icons/fa';
+import Modal from '../popup/modal';
+import { RoutePath } from '../../utils/enums';
 
-const Header: React.FC = () => {
+const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, setUser } = useUser();
   const { isModalOpen, openModal } = useModal(); // control on pop up
   const nagivate = useNavigate();
+
+  console.log('Heder rendered');
 
   const handleLogout = async () => {
     try {
@@ -63,13 +66,16 @@ const Header: React.FC = () => {
 
   // the header will show the spetsific header
   return (
-    <header className="header">
-      <div className="header__logo" onClick={() => nagivate('/')}>
-        <img src="path/to/logo.png" alt="Logo" />
-      </div>
-      <div className="header__buttons">{renderHeaderButtons()}</div>
-      {isModalOpen && <Modal />}
-    </header>
+    <>
+      <header className="header">
+        <div className="header__logo" onClick={() => nagivate(RoutePath.Home)}>
+          <img src="path/to/logo.png" alt="Logo" />
+        </div>
+        <div className="header__buttons">{renderHeaderButtons()}</div>
+        {isModalOpen && <Modal />}
+      </header>
+      {children}
+    </>
   );
 };
 

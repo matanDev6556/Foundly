@@ -5,6 +5,8 @@ import { useUser } from '../../context/UserContext';
 import { registerUser } from '../../services/authService';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useAppStatus } from '../../context/AppStatusContext';
+import { handleFirebaseError } from '../../services/FirebaseErrorService';
+import { FirebaseError } from 'firebase/app';
 
 interface SignUpFormProps {
   userType: UserType;
@@ -36,8 +38,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ userType, moveStep }) => {
       ////move to step 2
       moveStep();
     } catch (error: any) {
-      setError(error.message);
+      setError(handleFirebaseError(error as FirebaseError));
       console.error('Error signing up: ', error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
 

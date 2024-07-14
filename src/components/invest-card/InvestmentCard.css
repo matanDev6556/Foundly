@@ -33,10 +33,35 @@
   height: auto;
 }
 
-.investment-card__title {
-  font-size: 1.5rem;
-  margin: 10px 0;
-  color: var(--txtMain-color);
+.investment-card__like {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  z-index: 10;
+}
+
+.like-button {
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.like-button svg {
+  color: var(--red-color);
+  width: 20px;
+  height: 20px;
+}
+
+.like-button.liked svg {
+  color: var(--red-color);
 }
 
 .investment-card__description {

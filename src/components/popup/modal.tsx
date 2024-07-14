@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import './Modal.css';
-import { useModal } from '../../../context/popupContext';
 import { getTitle, renderForm, renderSignUpAsButtons } from './modalHelper';
+import { useModal } from '../../context/popupContext';
 
 const Modal: React.FC<{}> = () => {
   const [step, setStep] = useState(1);
   const { closeModal, modalType, userType, setUserType } = useModal();
 
-
-
-  
   return (
     <div className="modalBackground">
       <h1 className="modalTitle">{getTitle(modalType, userType, step)}</h1>
@@ -21,7 +18,7 @@ const Modal: React.FC<{}> = () => {
           {step === 1 && <button onClick={closeModal}>X</button>}
         </div>
         <div className="body">
-          {renderForm(modalType, userType, step, setStep)}
+          {renderForm({ modalType, userType, step, setStep })}
         </div>
       </div>
     </div>

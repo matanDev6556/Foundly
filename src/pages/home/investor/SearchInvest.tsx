@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import './SearchInvestment.css';
-import InvestmentCard from '../../components/invest-card/InvestmentCard';
-import { companies } from '../../utils/constant';
+import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import Header from '../../components/header/Header';
+import InvestmentCard from '../../../components/invest-card/InvestmentCard';
+import { companies } from '../../../utils/constant';
+import './SearchInvestment.css';
 
 const SearchInvestments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,9 +13,10 @@ const SearchInvestments: React.FC = () => {
       .includes(searchTerm.toLowerCase())
   );
 
+  //TODO : fetch real companies list
+
   return (
     <>
-      <Header />
       <div className="all-investments">
         <div className="all-investments__search-container">
           <input

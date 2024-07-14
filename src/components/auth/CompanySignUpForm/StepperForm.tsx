@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Stepper, Step, StepLabel, Button, Box } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useModal } from '../../../context/popupContext';
+import { useAppStatus } from '../../../context/AppStatusContext';
 
 const primaryColor = '#39958c';
 const secondaryColor = '#7fcbc4';
@@ -73,12 +74,24 @@ const StepContent: React.FC<StepContentProps> = ({ step }) => {
 const StepperForm = () => {
   const [activeStep, setActiveStep] = useState(0);
   const { closeModal } = useModal();
+  const { loading, setLoading, error, setError } = useAppStatus();
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const saveDataInDb = () => {
+    setLoading(true); //
+    //TODO : call to SaveUserToDb from services.ts
+
+    // finish to save the user in db
+    setLoading(false);
+    // close the pop up
+    closeModal();
   };
 
   return (
@@ -111,7 +124,7 @@ const StepperForm = () => {
                   if (activeStep < steps.length - 1) {
                     handleNext();
                   } else {
-                    closeModal();
+                    saveDataInDb();
                   }
                 }}
               >

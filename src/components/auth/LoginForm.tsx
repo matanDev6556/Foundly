@@ -5,6 +5,8 @@ import { useModal } from '../../context/popupContext';
 import { useAppStatus } from '../../context/AppStatusContext';
 import { ClipLoader } from 'react-spinners';
 import { fetchUserFromDb } from '../../services/dbService';
+import { handleFirebaseError } from '../../services/FirebaseErrorService';
+import { FirebaseError } from 'firebase/app';
 
 const LoginForm: React.FC = () => {
   const { setUser } = useUser();
@@ -15,12 +17,10 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError('');
     setLoading(true);
     try {
       const userCredential = await loginUser(email, password);
       const user = userCredential.user;
-
       // Fetch user from database
       const fetchedUser = await fetchUserFromDb(user.uid);
       console.log(fetchedUser);
@@ -29,13 +29,12 @@ const LoginForm: React.FC = () => {
       } else {
         setUser(null);
       }
-
-      // Close popup
       setLoading(false);
+      // Close popup
       closeModal();
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message);
+        setError(handleFirebaseError(err as FirebaseError));
       } else {
         setError('An unexpected error occurred');
       }
@@ -65,8 +64,6 @@ const LoginForm: React.FC = () => {
       ) : (
         <button type="submit">Login</button>
       )}
-
-      {error && <p className="error">{error}</p>}
     </form>
   );
 };

@@ -6,12 +6,12 @@ class Invest {
   constructor(
     investorUid: string,
     companyUid: string,
-    investNumber: number,
+    stockNumber: number,
     investAmount: number
   ) {
     this.investorUid = investorUid;
     this.companyUid = companyUid;
-    this.investNumber = investNumber;
+    this.investNumber = stockNumber;
     this.investAmount = investAmount;
   }
 }
