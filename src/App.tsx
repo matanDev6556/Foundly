@@ -1,3 +1,4 @@
+
 // src/App.tsx
 import React from 'react';
 import './assets/styles/colors.css';
@@ -31,6 +32,10 @@ const App: React.FC = () => {
       </CommonProviders>
     </Router>
   );
+
 };
+
+
+
 
 export default App;
