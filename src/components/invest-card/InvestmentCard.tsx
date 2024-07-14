@@ -1,11 +1,11 @@
-// InvestmentCard.tsx
 import React from 'react';
 import './InvestmentCard.css';
-
 import InvestmentLogo from './InvestLogo';
 import Company from '../../models/Company';
 import InvestmentInfoItem from './InvestInfoItem';
 import InvestmentProgress from './InvestProgress';
+import 'react-toastify/dist/ReactToastify.css';
+import LikeButton from './LikeButton';
 
 interface InvestmentCardProps {
   company: Company;
@@ -14,8 +14,21 @@ interface InvestmentCardProps {
 const InvestmentCard: React.FC<InvestmentCardProps> = ({ company }) => {
   const { companyDetails, raiseDetails } = company;
 
+  const formatTargetAmount = (amount: number): string => {
+    if (amount >= 1000000) {
+      return (amount / 1000000).toFixed(0) + 'M';
+    } else if (amount >= 1000) {
+      return (amount / 1000).toFixed(0) + 'K';
+    } else {
+      return amount.toString();
+    }
+  };
+
   return (
     <div className="investment-card">
+      <div className="investment-card__like">
+        <LikeButton companyId={company.uid} />
+      </div>
       <InvestmentLogo
         logo={companyDetails.logo}
         companyName={companyDetails.companyName}
@@ -24,7 +37,7 @@ const InvestmentCard: React.FC<InvestmentCardProps> = ({ company }) => {
 
       <div className="investment-card__info">
         <InvestmentInfoItem
-          value={raiseDetails.targetAmount + '$'}
+          value={formatTargetAmount(raiseDetails.targetAmount) + '$'}
           label="מינ' השקעה"
         />
         <InvestmentInfoItem

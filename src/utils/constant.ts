@@ -5,8 +5,6 @@ import img2 from '../assets/images/company2.png';
 import img3 from '../assets/images/company3.png';
 import logo1 from '../assets/images/logo1.png';
 
-
-
 export const InvesmentsCategories: string[] = [
   'Ai',
   'Technology',
@@ -36,8 +34,8 @@ export const companies: Company[] = [
       logo: logo1,
     },
     {
-      targetAmount: 20000,
-      raisedAmount: 4000,
+      targetAmount: 1000000,
+      raisedAmount: 500000,
       deadline: '12',
       minInvestment: 1000,
       raisePurpose: ['Innovation', 'Expansion'],

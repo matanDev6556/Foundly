@@ -9,18 +9,19 @@ body {
 .all-investments__search-container {
   position: relative;
   display: inline-flex;
-  align-items: center; /* Center items vertically */
-  width: 30%; /* Adjust width as needed */
-
+  align-items: center;
   margin-bottom: 20px;
   border: 1px solid var(--primary-color);
   border-radius: 12px;
+  width: 40%;
+  max-width: 450px;
 }
 
 .all-investments__search {
   flex: 1;
   border-radius: 10px;
   height: 20px;
+  min-width: 150px;
   padding: 10px; /* Adjust to accommodate the icon */
   border: none;
   outline: none;

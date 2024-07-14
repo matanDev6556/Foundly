@@ -4,29 +4,38 @@ import React from 'react';
 import './assets/styles/colors.css';
 import './App.css';
 
-import Home from './pages/home/Home';
-import { UserProvider } from './context/UserContext';
-import { AppStatusProvider } from './context/AppStatusContext';
-import SearchInvestments from './pages/home/SearchInvest';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ModalProvider } from './context/popupContext';
 import { RoutePath } from './utils/enums';
+import { CommonProviders, AppProviders } from './Providers';
+import Header from './components/header/Header';
+import Home from './pages/home/investor/Home';
+import SearchInvestments from './pages/home/investor/SearchInvest';
 
-function App() {
+const AppContent: React.FC = () => {
+  return (
+    <AppProviders>
+      <Routes>
+        <Route path={RoutePath.Home} element={<Home />} />
+        <Route path={RoutePath.SearchInvests} element={<SearchInvestments />} />
+      </Routes>
+    </AppProviders>
+  );
+};
+
+const App: React.FC = () => {
   return (
     <Router>
-      <AppStatusProvider>
-        <ModalProvider>
-          <UserProvider>
-            <Routes>
-              <Route path={RoutePath.Home} element={<Home />} />
-              <Route path={RoutePath.SearchInvests} element={<SearchInvestments />} />
-            </Routes>
-          </UserProvider>
-        </ModalProvider>
-      </AppStatusProvider>
+      <CommonProviders>
+        <Header>
+          <AppContent />
+        </Header>
+      </CommonProviders>
     </Router>
   );
-} //check1
+
+};
+
+
+
 
 export default App;

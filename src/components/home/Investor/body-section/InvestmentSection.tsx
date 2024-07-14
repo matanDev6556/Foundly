@@ -5,10 +5,8 @@ import { companies } from '../../../../utils/constant';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../../../context/UserContext';
 
-
 const InvestmentsSection: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
   const handleAllClick = () => {
     navigate('allInvestments');
   };
