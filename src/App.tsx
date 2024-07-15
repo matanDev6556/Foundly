@@ -1,3 +1,4 @@
+// src/App.tsx
 import React from 'react';
 import './assets/styles/colors.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -44,6 +45,10 @@ const App: React.FC = () => {
       </Router>
     </CommonProviders>
   );
+
 };
+
+
+
 
 export default App;
