@@ -1,36 +1,49 @@
-
 // src/App.tsx
 import React from 'react';
 import './assets/styles/colors.css';
-import './App.css';
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { RoutePath } from './utils/enums';
-import { CommonProviders, AppProviders } from './Providers';
 import Header from './components/header/Header';
-import Home from './pages/home/investor/Home';
-import SearchInvestments from './pages/home/investor/SearchInvest';
+import { AppStatusProvider } from './context/AppStatusContext';
+import { UserProvider } from './context/UserContext';
+import { ModalProvider } from './context/popupContext';
+import Home from './pages/home/Home';
+import SearchInvestments from './pages/home/investor-home/SearchInvest';
 
+interface ProvidersProps {
+  children: React.ReactNode;
+}
+
+// her we will put only the cummon providers
+export const CommonProviders: React.FC<ProvidersProps> = ({ children }) => {
+  return (
+    <UserProvider>
+      <AppStatusProvider>
+        <ModalProvider>{children}</ModalProvider>
+      </AppStatusProvider>
+    </UserProvider>
+  );
+};
+
+// Routes her
 const AppContent: React.FC = () => {
   return (
-    <AppProviders>
-      <Routes>
-        <Route path={RoutePath.Home} element={<Home />} />
-        <Route path={RoutePath.SearchInvests} element={<SearchInvestments />} />
-      </Routes>
-    </AppProviders>
+    <Routes>
+      <Route path={RoutePath.Home} element={<Home />} />
+      <Route path={RoutePath.SearchInvests} element={<SearchInvestments />} />
+    </Routes>
   );
 };
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <CommonProviders>
+    <CommonProviders>
+      <Router>
         <Header>
           <AppContent />
         </Header>
-      </CommonProviders>
-    </Router>
+      </Router>
+    </CommonProviders>
   );
 
 };

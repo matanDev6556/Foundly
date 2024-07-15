@@ -22,7 +22,8 @@ import { FirebaseError } from 'firebase/app';
 // user
 export const saveUserToDb = async (user: User) => {
   try {
-    await setDoc(doc(db, 'users', user.uid), user.toJSON());
+    console.log('SaveUserToDb');
+    await setDoc(doc(db, 'users', user.uid), user.userToJSON());
     console.log('User data saved successfully');
   } catch (error) {
     console.error('Error saving user data: ', error);
