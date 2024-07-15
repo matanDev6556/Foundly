@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+
+import './SearchInvestment.css';
 import InvestmentCard from '../../../components/invest-card/InvestmentCard';
 import { companies } from '../../../utils/constant';
-import './SearchInvestment.css';
 
 const SearchInvestments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

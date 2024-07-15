@@ -24,14 +24,16 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const unsubscribe = handleAuthStateChanged(async (currentUser) => {
-      setUser(currentUser);
+      if (currentUser && !user) {
+        setUser(currentUser);
+      }
     });
     return () => {
       if (unsubscribe) {
         unsubscribe();
       }
     };
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     console.log('user:', user);

@@ -25,6 +25,7 @@ const PreferencesStep: React.FC = () => {
     useState<boolean>(false);
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    console.log(user);
     event.preventDefault();
     if (user?.userType === 'Investor') {
       const updatedUser = new Investor(user.uid, user.name, user.email, {
@@ -33,13 +34,13 @@ const PreferencesStep: React.FC = () => {
         preferenceCountry,
         investInPublicCompanies,
       });
-      //set user localy
-      setUser(updatedUser);
 
       //save the user to db
       try {
         setLoading(true);
         await saveUserToDb(updatedUser);
+        //set user localy
+        setUser(updatedUser);
         closeModal();
       } catch (error) {
         setError('Error saving user preferences');
