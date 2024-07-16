@@ -1,0 +1,53 @@
+body {
+  background-color: var(--bg-color);
+}
+.all-investments {
+  padding: 20px;
+  text-align: center;
+}
+
+.all-investments__search-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid var(--primary-color);
+  border-radius: 12px;
+  width: 40%;
+  max-width: 450px;
+}
+
+.all-investments__search {
+  flex: 1;
+  border-radius: 10px;
+  height: 20px;
+  min-width: 150px;
+  padding: 10px; /* Adjust to accommodate the icon */
+  border: none;
+  outline: none;
+  font-size: 16px; /* Adjust font size */
+  text-align: center;
+}
+
+.all-investments__search-icon {
+  position: absolute;
+
+  width: 40px; /* Adjust size as needed */
+  height: 40px; /* Adjust size as needed */
+  border-radius: 10px; /* Make it circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  color: white; /* Text color */
+}
+
+.all-investments__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center align investment cards */
+  gap: 20px;
+}
+.title {
+  color: var(--txtMain-color);
+}
