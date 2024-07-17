@@ -15,6 +15,7 @@ interface ProvidersProps {
 }
 
 // her we will put only the cummon providers
+// as we can see the user provide to all the app foe example
 export const CommonProviders: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <UserProvider>
@@ -45,10 +46,6 @@ const App: React.FC = () => {
       </Router>
     </CommonProviders>
   );
-
 };
-
-
-
 
 export default App;
