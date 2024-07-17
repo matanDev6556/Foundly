@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './YesNoSelector.css';
+interface YesNoSelectorProps {
+  setYesNo: (value: boolean) => void;
+}
 
-const YesNoSelector: React.FC = () => {
-  const [selectedOption, setSelectedOption] = useState<string>('');
-
-  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(event.target.value);
-    
+const YesNoSelector: React.FC<YesNoSelectorProps> = ({ setYesNo }) => {
+  const handleYesNoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setYesNo(e.target.value === 'yes');
   };
 
   return (
@@ -14,18 +14,18 @@ const YesNoSelector: React.FC = () => {
       <label>
         <input
           type="radio"
+          name="yesNo"
           value="yes"
-          checked={selectedOption === 'yes'}
-          onChange={handleOptionChange}
+          onChange={handleYesNoChange}
         />
         Yes
       </label>
       <label>
         <input
           type="radio"
+          name="yesNo"
           value="no"
-          checked={selectedOption === 'no'}
-          onChange={handleOptionChange}
+          onChange={handleYesNoChange}
         />
         No
       </label>

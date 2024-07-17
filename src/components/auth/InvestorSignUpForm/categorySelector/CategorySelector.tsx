@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CategorySelector.css'; // קובץ ה-CSS כדי להגדיר את הסטייל
 
-const categories: string[] = [
-  'Ai',
-  'Technology',
-  'health',
-  'renewable energy',
-  'real estate',
-  'Food',
-  'finance',
-  'Electric cars',
-];
+interface CategorySelectorProps {
+  list: string[];
+  setCategories: (categories: string[]) => void;
+}
 
-const CategorySelector: React.FC = () => {
+const CategorySelector: React.FC<CategorySelectorProps> = ({
+  setCategories,
+  list,
+}) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const handleCategoryClick = (category: string) => {
@@ -23,19 +20,23 @@ const CategorySelector: React.FC = () => {
     );
   };
 
+  useEffect(() => {
+    setCategories(selectedCategories);
+  }, [selectedCategories, setCategories]);
+
   return (
     <div>
       <div className="category-container">
-        {categories.map((category) => (
+        {list.map((category: string) => (
           <button
             key={category}
             className={`category-button ${
               selectedCategories.includes(category) ? 'selected' : ''
             }`}
-            onClick={(e) =>{
-                e.preventDefault();
-                handleCategoryClick(category)}
-            } 
+            onClick={(e) => {
+              e.preventDefault();
+              handleCategoryClick(category);
+            }}
           >
             {category}
           </button>
