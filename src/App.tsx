@@ -14,7 +14,8 @@ interface ProvidersProps {
   children: React.ReactNode;
 }
 
-// her we will put only the cummon providers
+// her we will put only the cummon providers that all the app need
+// as her we provide the user/status/popup availble all the app
 export const CommonProviders: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <UserProvider>
@@ -35,6 +36,7 @@ const AppContent: React.FC = () => {
   );
 };
 
+// HER THE APP START
 const App: React.FC = () => {
   return (
     <CommonProviders>
@@ -45,10 +47,6 @@ const App: React.FC = () => {
       </Router>
     </CommonProviders>
   );
-
 };
-
-
-
 
 export default App;
