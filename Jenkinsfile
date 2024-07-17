@@ -13,55 +13,20 @@ pipeline {
             }
         }
 
-
-        // stage('Install Dependencies') {
-        //     steps {
-                
-        //         sh 'npm install'
-        //     }
-        // }
-
-        // stage('Build') {
-        //     steps {
-               
-        //         sh 'npm run build'
-        //     }
-        // }
-
-        // stage('Docker Build') {
-        //     steps {
-                
-        //         sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
-        //     }
-        // }
-
-        // stage('Docker Push') {
-        //     steps {
-                
-        //         sh "docker push ${DOCKER_IMAGE}:${DOCKER_TAG}"
-        //     }
-        // }
-
-        // stage('Deploy to Firebase') {
-        //     steps {
-                
-        //         sh 'npm install -g firebase-tools'
-        //         sh 'firebase deploy --only hosting'
-        //     }
-        // }
-
-        // stage('Cleanup') {
-        //     steps {
-                
-        //         sh "docker rmi ${DOCKER_IMAGE}:${DOCKER_TAG}"
-        //     }
-        // }
->>>>>>> be00475fdfc737cbabd53e7e7a948bd3cd2d8045
+        stage('Run Tests') {
+            steps {
+                sh 'npx jest --verbose --outputFile=test-reports/results.xml --json'
+            }
+            post {
+                always {
+                    junit 'test-reports/results.xml'
+                }
+            }
+        }
     }
 
     post {
         always {
-            // Clean up workspace after build
             cleanWs()
         }
     }
