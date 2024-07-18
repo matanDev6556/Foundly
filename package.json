@@ -28,21 +28,7 @@
     "react-toastify": "^10.0.5",
     "web-vitals": "^2.1.4"
   },
-  "jest": {
-    "reporters": [
-      "default",
-      [
-        "jest-junit",
-        {
-          "outputDirectory": "test-reports",
-          "outputName": "results.xml"
-        }
-      ]
-    ],
-    "testMatch": [
-      "**/src/auth/InvestorSignUpForm/preferencesStep.test.ts"
-    ]
-  },
+  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -67,6 +53,15 @@
       "last 1 safari version"
     ]
   },
+  "jest": {
+  "reporters": [
+    "default",
+    ["jest-junit", {
+      "outputDirectory": "test-reports",
+      "outputName": "results.xml"
+    }]
+  ]
+},
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
     "@types/uuid": "^10.0.0",

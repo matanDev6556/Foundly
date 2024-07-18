@@ -7,26 +7,33 @@ pipeline {
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Run Tests') {
+        stage('Docker Build') {
             steps {
-                sh 'npx jest --verbose --outputFile=test-reports/results.xml --json'
-            }
-            post {
-                always {
-                    junit 'test-reports/results.xml'
-                }
+                
+                sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
             }
         }
+        stage('Unit test') {
+            steps {
+                
+               sh 'docker run --rm fundly npx jest'
+            }
+        }
+        
+
+        
     }
 
     post {
         always {
+            // Clean up workspace after build
             cleanWs()
         }
     }

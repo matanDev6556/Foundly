@@ -14,8 +14,7 @@ interface ProvidersProps {
   children: React.ReactNode;
 }
 
-// her we will put only the cummon providers
-// as we can see the user provide to all the app foe example
+
 export const CommonProviders: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <UserProvider>
@@ -36,6 +35,7 @@ const AppContent: React.FC = () => {
   );
 };
 
+// HER THE APP START
 const App: React.FC = () => {
   return (
     <CommonProviders>

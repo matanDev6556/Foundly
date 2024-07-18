@@ -19,7 +19,7 @@ const PreferencesStep: React.FC = () => {
 
   // set data from form
   const [categories, setCategories] = useState<string[]>([]);
-  const [investmentRange, setInvestmentRange] = useState<string>('');
+  const [investmentRange, setInvestmentRange] = useState<string>('0-100k');
   const [preferenceCountry, setPreferenceCountry] = useState<string>('Israel');
   const [investInPublicCompanies, setInvestInPublicCompanies] =
     useState<boolean>(false);
