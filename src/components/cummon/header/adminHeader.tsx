@@ -1,7 +1,7 @@
 // AdminHeader.tsx
 import React from 'react';
-import { useModal } from '../../context/popupContext';
 import { FaSignOutAlt } from 'react-icons/fa';
+import { useModal } from '../../../context/popupContext';
 
 const AdminHeader: React.FC<{ handleLogout: () => void }> = ({
   handleLogout,

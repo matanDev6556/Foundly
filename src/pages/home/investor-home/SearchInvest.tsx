@@ -1,11 +1,11 @@
 // src/pages/SearchInvestments.tsx
 import React, { useState } from 'react';
-import InvestmentCard from '../../../components/invest-card/InvestmentCard';
 import { companies } from '../../../utils/constant';
 import { LikesProvider } from '../../../context/LikesContext';
 
 import './SearchInvestment.css'; // Add this line
 import SearchBar from '../../../components/cummon/SearchBar';
+import InvestmentCard from '../../../components/cummon/invest-card/InvestmentCard';
 
 const SearchInvestments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

@@ -1,11 +1,11 @@
 import React from 'react';
 import './InvestmentCard.css';
 import InvestmentLogo from './InvestLogo';
-import Company from '../../models/Company';
 import InvestmentInfoItem from './InvestInfoItem';
 import InvestmentProgress from './InvestProgress';
 import 'react-toastify/dist/ReactToastify.css';
 import LikeButton from './LikeButton';
+import Company from '../../../models/Company';
 
 interface InvestmentCardProps {
   company: Company;

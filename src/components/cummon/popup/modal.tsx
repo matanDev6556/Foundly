@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './Modal.css';
 import { getTitle, renderForm, renderSignUpAsButtons } from './modalHelper';
-import { useModal } from '../../context/popupContext';
+import { useModal } from '../../../context/popupContext';
+
 
 const Modal: React.FC<{}> = () => {
   const [step, setStep] = useState(1);

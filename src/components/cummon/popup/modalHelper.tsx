@@ -1,7 +1,8 @@
-import StepperForm from '../auth/CompanySignUpForm/StepperForm';
-import PreferencesStep from '../auth/InvestorSignUpForm/PreferencesStep';
-import LoginForm from '../auth/LoginForm';
-import SignUpForm from '../auth/SignUpForm';
+import StepperForm from "../../auth/CompanySignUpForm/StepperForm";
+import PreferencesStep from "../../auth/InvestorSignUpForm/PreferencesStep";
+import LoginForm from "../../auth/LoginForm";
+import SignUpForm from "../../auth/SignUpForm";
+
 
 interface RenderFormProps {
   modalType: string;

@@ -3,17 +3,18 @@ import React from 'react';
 import './assets/styles/colors.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { RoutePath } from './utils/enums';
-import Header from './components/header/Header';
 import { AppStatusProvider } from './context/AppStatusContext';
 import { UserProvider } from './context/UserContext';
 import { ModalProvider } from './context/popupContext';
 import Home from './pages/home/Home';
 import SearchInvestments from './pages/home/investor-home/SearchInvest';
+import MyInvestments from './pages/investor/myInvestments';
+import { LikesProvider } from './context/LikesContext';
+import Header from './components/cummon/header/Header';
 
 interface ProvidersProps {
   children: React.ReactNode;
 }
-
 
 export const CommonProviders: React.FC<ProvidersProps> = ({ children }) => {
   return (
@@ -31,6 +32,16 @@ const AppContent: React.FC = () => {
     <Routes>
       <Route path={RoutePath.Home} element={<Home />} />
       <Route path={RoutePath.SearchInvests} element={<SearchInvestments />} />
+      <Route
+        path={RoutePath.MyInvestments}
+        element={
+          <>
+            <LikesProvider>
+              <MyInvestments />
+            </LikesProvider>
+          </>
+        }
+      />
     </Routes>
   );
 };

@@ -1,9 +1,8 @@
 import React from 'react';
-import InvestmentCard from '../../../invest-card/InvestmentCard';
 import './investmentsSection.css';
-import { companies } from '../../../../utils/constant';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../../../context/UserContext';
+import { companies } from '../../../../utils/constant';
+import InvestmentCard from '../../../cummon/invest-card/InvestmentCard';
 
 const InvestmentsSection: React.FC = () => {
   const navigate = useNavigate();
