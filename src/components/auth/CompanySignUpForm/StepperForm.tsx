@@ -87,7 +87,7 @@ const StepperForm = () => {
   const saveDataInDb = () => {
     setLoading(true); //
     //TODO : call to SaveUserToDb from services.ts
-
+    
     // finish to save the user in db
     setLoading(false);
     // close the pop up
