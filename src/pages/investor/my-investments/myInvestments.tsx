@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import { companies } from '../../utils/constant';
-import { LikesProvider, useLikes } from '../../context/LikesContext';
-import Company from '../../models/Company'; // Ensure you have this import
-import SearchBar from '../../components/cummon/SearchBar';
+
 import './myInvestments.css';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import LikeView from '../../components/investor/my-investments/LikeView';
-import InvestmentsView from '../../components/investor/my-investments/InvestmentsView';
+import SearchBar from '../../../components/cummon/SearchBar';
+import InvestmentsView from '../../../components/investor/my-investments/InvestmentsView';
+import LikeView from '../../../components/investor/my-investments/LikeView';
+import { useLikes } from '../../../context/LikesContext';
+import Company from '../../../models/Company';
+import { companies } from '../../../utils/constant';
+
 
 const MyInvestments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');

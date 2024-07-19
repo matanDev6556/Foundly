@@ -8,7 +8,7 @@ interface NoDataProps {
 const NoData: React.FC<NoDataProps> = ({ img, messeage }) => {
   return (
     <>
-      <img height={500} src={img} alt="N0_data" />
+      <img height={430} src={img} alt="N0_data" />
       <h3 style={{ color: '#728f9e' }}>{messeage}</h3>
     </>
   );

@@ -1,4 +1,8 @@
 /* src/components/SearchBar.css */
+::placeholder {
+  text-align: center;
+}
+
 .search-bar {
   position: relative;
   display: inline-flex;

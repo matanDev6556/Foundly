@@ -5,7 +5,7 @@ import { LikesProvider } from '../../../context/LikesContext';
 
 import './SearchInvestment.css'; // Add this line
 import SearchBar from '../../../components/cummon/SearchBar';
-import InvestmentCard from '../../../components/cummon/invest-card/InvestmentCard';
+import InvestmentList from '../../../components/cummon/invest-card/InvestList';
 
 const SearchInvestments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -26,9 +26,7 @@ const SearchInvestments: React.FC = () => {
         </div>
         <h2 className="title">כל ההשקעות</h2>
         <div className="all-investments__list">
-          {filteredCompanies.map((company) => (
-            <InvestmentCard key={company.uid} company={company} />
-          ))}
+          <InvestmentList companies={filteredCompanies} />
         </div>
       </div>
     </LikesProvider>

@@ -27,7 +27,7 @@ const MainSection: React.FC = () => {
             הפלטפורמה שלנו מציעה גיוס כספים שקוף וממוקד עם מידע רגולטורי מלא
             לגיבוי כל החלטת השקעה.
           </p>
-          {!user && (
+          {!user ? (
             <div className="main-section__buttons">
               <button
                 className="main-section__button raise_bttn"
@@ -49,6 +49,12 @@ const MainSection: React.FC = () => {
                 רוצה להשקיע
               </button>
             </div>
+          ) : (
+            <>
+              <h1 style={{ marginTop: '70px', textAlign: 'center',color:'#39958c'}}>
+                !{user.name} ברוך הבא
+              </h1>
+            </>
           )}
         </div>
       </div>
