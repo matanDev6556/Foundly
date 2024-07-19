@@ -18,7 +18,7 @@ import User from '../models/User';
 import { UserType } from '../utils/enums';
 import { handleFirebaseError } from './FirebaseErrorService';
 import { FirebaseError } from 'firebase/app';
-
+import { useAppStatus } from '../context/AppStatusContext';
 
 interface HasToJson {
   toJson: () => { [key: string]: any };

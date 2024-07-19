@@ -1,16 +1,16 @@
 // Header.tsx
 import React from 'react';
 import './Header.css';
-import { useUser } from '../../context/UserContext';
-import { logoutUser } from '../../services/authService';
-import { ModalProvider, useModal } from '../../context/popupContext';
 import InvestorHeader from './investorHeader';
 import AdminHeader from './adminHeader';
 import CompanyHeader from './companyHeader';
 import { useNavigate } from 'react-router-dom';
 import { FaSignOutAlt } from 'react-icons/fa';
+import { useUser } from '../../../context/UserContext';
+import { useModal } from '../../../context/popupContext';
+import { logoutUser } from '../../../services/authService';
+import { RoutePath } from '../../../utils/enums';
 import Modal from '../popup/modal';
-import { RoutePath } from '../../utils/enums';
 
 const Header: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, setUser } = useUser();

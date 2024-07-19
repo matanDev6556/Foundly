@@ -1,16 +1,13 @@
-import React, { useState } from "react";
-import { useUser } from "../../../context/UserContext";
-import { useModal } from "../../../context/popupContext";
-import { useAppStatus } from "../../../context/AppStatusContext";
-import { ClipLoader } from "react-spinners";
-import { saveUserToDb } from "../../../services/dbService";
-import YesNoSelector from "../InvestorSignUpForm/yes-no/YesNoSelector";
-import { InvesmentsCategories } from "../../../utils/constant";
-import Company, { CompanyDetails, RaiseDetails } from "../../../models/Company";
-import Slider from "@mui/material/Slider";
-import { Stack } from "@mui/system";
-import VolumeDown from "@mui/icons-material/VolumeDown";
-import VolumeUp from "@mui/icons-material/VolumeDown";
+import React, { useState } from 'react';
+import { useUser } from '../../../context/UserContext';
+import { useModal } from '../../../context/popupContext';
+import { useAppStatus } from '../../../context/AppStatusContext';
+import { ClipLoader } from 'react-spinners';
+import { saveUserToDb } from '../../../services/dbService';
+import YesNoSelector from '../InvestorSignUpForm/yes-no/YesNoSelector';
+import { InvesmentsCategories } from '../../../utils/constant';
+import Company, { CompanyDetails, RaiseDetails } from '../../../models/Company';
+import Slider from '@mui/material/Slider';
 
 export const RaiseContentForm: React.FC = () => {
   const { setLoading, setError } = useAppStatus();
@@ -55,9 +52,9 @@ export const RaiseContentForm: React.FC = () => {
         value={formatValueLabel(campaignValue)}
         onChange={(e) => setCampaignValue(parseInt(e.target.value, 10))}
         style={{
-          textAlign: "center",
+          textAlign: 'center',
           color: `var(--primary-color)`,
-          fontWeight: "bold",
+          fontWeight: 'bold',
         }}
       />
     </form>
