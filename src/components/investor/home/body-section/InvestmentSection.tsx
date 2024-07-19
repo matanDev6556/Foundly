@@ -3,6 +3,7 @@ import './investmentsSection.css';
 import { useNavigate } from 'react-router-dom';
 import { companies } from '../../../../utils/constant';
 import InvestmentCard from '../../../cummon/invest-card/InvestmentCard';
+import InvestmentList from '../../../cummon/invest-card/InvestList';
 
 const InvestmentsSection: React.FC = () => {
   const navigate = useNavigate();
@@ -23,9 +24,7 @@ const InvestmentsSection: React.FC = () => {
         <h2 className="investments-section__title">השקעות פתוחות</h2>
       </div>
       <div className="investments-section__list">
-        {companies.slice(0, 3).map((company) => (
-          <InvestmentCard key={company.uid} company={company} />
-        ))}
+        <InvestmentList companies={companies.slice(0, 3)}/>
       </div>
     </section>
   );

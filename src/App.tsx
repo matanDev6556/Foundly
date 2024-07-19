@@ -7,10 +7,11 @@ import { AppStatusProvider } from './context/AppStatusContext';
 import { UserProvider } from './context/UserContext';
 import { ModalProvider } from './context/popupContext';
 import Home from './pages/home/Home';
-import SearchInvestments from './pages/home/investor-home/SearchInvest';
-import MyInvestments from './pages/investor/myInvestments';
 import { LikesProvider } from './context/LikesContext';
 import Header from './components/cummon/header/Header';
+import SearchInvestments from './pages/investor/all-investments/SearchInvest';
+import MyInvestments from './pages/investor/my-investments/myInvestments';
+
 
 interface ProvidersProps {
   children: React.ReactNode;

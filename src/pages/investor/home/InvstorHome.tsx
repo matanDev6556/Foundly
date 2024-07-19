@@ -1,6 +1,7 @@
 
 import { LikesProvider } from '../../../context/LikesContext';
-import GuestHome from '../GuestHome';
+import GuestHome from '../../home/GuestHome';
+
 
 const InvestorHome: React.FC = () => {
   return (
