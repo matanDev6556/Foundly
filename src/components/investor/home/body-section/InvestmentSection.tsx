@@ -2,7 +2,6 @@ import React from 'react';
 import './investmentsSection.css';
 import { useNavigate } from 'react-router-dom';
 import { companies } from '../../../../utils/constant';
-import InvestmentCard from '../../../cummon/invest-card/InvestmentCard';
 import InvestmentList from '../../../cummon/invest-card/InvestList';
 
 const InvestmentsSection: React.FC = () => {
