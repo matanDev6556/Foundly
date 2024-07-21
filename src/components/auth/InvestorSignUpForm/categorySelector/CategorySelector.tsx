@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import './CategorySelector.css'; // קובץ ה-CSS כדי להגדיר את הסטייל
+import './CategorySelector.css';
 
 interface CategorySelectorProps {
   list: string[];
   setCategories: (categories: string[]) => void;
+  initialCategories?: string[];
 }
 
 const CategorySelector: React.FC<CategorySelectorProps> = ({
   setCategories,
   list,
+  initialCategories = [],
 }) => {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(initialCategories);
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategories((prevSelected) =>
@@ -23,6 +25,12 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
   useEffect(() => {
     setCategories(selectedCategories);
   }, [selectedCategories, setCategories]);
+
+  useEffect(() => {
+    if (initialCategories.length > 0) {
+      setSelectedCategories(initialCategories);
+    }
+  }, [initialCategories]);
 
   return (
     <div>
