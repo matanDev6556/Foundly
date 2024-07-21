@@ -29,7 +29,11 @@ const InvestorHeader: React.FC<{ handleLogout: () => void }> = ({
         My Profile
       </button>
 
-      <FaBell size={25} color="#da678a" onClick={() => openModal('Profile')} />
+      <FaBell
+        size={25}
+        color="#da678a"
+        onClick={() => openModal('Notifications')}
+      />
       <FaSignOutAlt size={25} color="#da678a" onClick={handleLogout} />
     </>
   );

@@ -1,8 +1,8 @@
-import StepperForm from "../../auth/CompanySignUpForm/StepperForm";
-import PreferencesStep from "../../auth/InvestorSignUpForm/PreferencesStep";
-import LoginForm from "../../auth/LoginForm";
-import SignUpForm from "../../auth/SignUpForm";
-
+import StepperForm from '../../auth/CompanySignUpForm/StepperForm';
+import PreferencesStep from '../../auth/InvestorSignUpForm/PreferencesStep';
+import LoginForm from '../../auth/LoginForm';
+import SignUpForm from '../../auth/SignUpForm';
+import Profile from '../../investor/profile/profile';
 
 interface RenderFormProps {
   modalType: string;
@@ -39,7 +39,7 @@ const renderSignUpForm = (
 
 const renderProfile = (userType: string) => {
   if (userType === 'Investor') {
-    return <h1>Investor Profile</h1>;
+    return <Profile />;
   }
 
   if (userType === 'Company') {
