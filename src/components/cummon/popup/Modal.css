@@ -9,7 +9,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 .modalContainer {
@@ -24,6 +24,8 @@
   align-items: center;
   min-width: 300px;
   max-width: 600px;
+  max-height: 80vh; /* הגדרת גובה מקסימלי */
+  overflow-y: auto; /* מאפשר גלילה אנכית */
 }
 
 .titleCloseBtn {
@@ -38,13 +40,16 @@
   font-size: 25px;
   cursor: pointer;
 }
+
 .sign-up-as {
   text-align: center;
   margin-bottom: 10px;
 }
+
 .sign-up-as button + button {
   margin-left: 5px;
 }
+
 .sign-up-as button {
   margin-bottom: 10px;
   padding: 15px;
@@ -53,10 +58,12 @@
   cursor: pointer;
   font-size: 16px;
 }
+
 .unActiveSignUpButton {
   color: var(--primary-color);
   background-color: white;
 }
+
 .activeSignUpButton {
   color: white;
   background-color: var(--primary-color);
@@ -67,9 +74,11 @@
   color: white;
   margin-bottom: 20px;
 }
+
 .body {
   width: 100%;
 }
+
 .modalContainer .body {
   display: flex;
   justify-content: center;
@@ -93,6 +102,7 @@ form label {
   font-size: 18px;
   font-weight: bold;
 }
+
 form input {
   height: 30px;
   width: 100%;
