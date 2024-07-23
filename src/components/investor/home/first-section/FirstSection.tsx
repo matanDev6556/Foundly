@@ -1,17 +1,17 @@
 // src/components/MainSection.tsx
-import React from 'react';
-import './FirstSection.css';
-import analyticImg from '../../../../assets/images/analytic_image.png';
-import { useUser } from '../../../../context/UserContext';
-import { useModal } from '../../../../context/popupContext';
-import { UserType } from '../../../../utils/enums';
+import React from "react";
+import "./FirstSection.css";
+import analyticImg from "../../../../assets/images/analytic_image.png";
+import { useUser } from "../../../../context/UserContext";
+import { useModal } from "../../../../context/popupContext";
+import { UserType } from "../../../../utils/enums";
 
 const MainSection: React.FC = () => {
   const { user } = useUser();
   const { openModal, setUserType } = useModal();
   return (
     <section className="main-section">
-      <div className="main-section__content">
+      <div data-testid="check" className="main-section__content">
         <img
           src={analyticImg}
           alt="Main Illustration"
@@ -19,7 +19,7 @@ const MainSection: React.FC = () => {
         />
         <div className="main-section__text">
           <h1>
-            השקיעו היום בחברות הפרטיות של{' '}
+            השקיעו היום בחברות הפרטיות של{" "}
             <span className="highlight">המחר</span>
           </h1>
           <p>
@@ -32,7 +32,7 @@ const MainSection: React.FC = () => {
               <button
                 className="main-section__button raise_bttn"
                 onClick={() => {
-                  openModal('Sign Up As');
+                  openModal("Sign Up As");
                   setUserType(UserType.Company);
                 }}
               >
@@ -42,7 +42,7 @@ const MainSection: React.FC = () => {
               <button
                 className="main-section__button invest_bttn"
                 onClick={() => {
-                  openModal('Sign Up As');
+                  openModal("Sign Up As");
                   setUserType(UserType.Investor);
                 }}
               >
