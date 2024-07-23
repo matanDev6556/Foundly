@@ -1,29 +1,27 @@
-import React, { useState } from "react";
-import { Stepper, Step, StepLabel, Button, Box } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useModal } from "../../../context/popupContext";
-import { useAppStatus } from "../../../context/AppStatusContext";
-import { InfoContentForm } from "./InfoContentForm";
-import { RaiseContentForm } from "./RaiseContentForm";
-import { DocsForm } from "./DocsForm";
-import { saveUserToDb } from "../../../services/dbService";
-import { useUser } from "../../../context/UserContext";
-import Company from "../../../models/Company";
-import { User } from "firebase/auth";
+import React, { useEffect, useState } from 'react';
+import { Stepper, Step, StepLabel, Button, Box } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useModal } from '../../../context/popupContext';
+import { useAppStatus } from '../../../context/AppStatusContext';
+import { InfoContentForm } from './InfoContentForm';
+import { RaiseContentForm } from './RaiseContentForm';
+import { DocsForm } from './DocsForm';
+import { saveUserToDb } from '../../../services/dbService';
+import { useUser } from '../../../context/UserContext';
+import Company from '../../../models/Company';
+import { User } from 'firebase/auth';
 
-const primaryColor = "#39958c";
-const secondaryColor = "#7fcbc4";
-const softColor = "#D0EBEA";
+const primaryColor = '#39958c';
+const secondaryColor = '#7fcbc4';
+const softColor = '#D0EBEA';
 const style = {
-  width: "100%",
-  height: "70vh",
-  padding: "10px",
-  overflowY: "auto",
-  "&::-webkit-scrollbar": {
-    display: "none",
+  width: '100%',
+  height: '70vh',
+  padding: '10px',
+  overflowY: 'auto',
+  '&::-webkit-scrollbar': {
+    display: 'none',
   },
-  "-ms-overflow-style": "none",
-  "scrollbar-width": "none",
 };
 // custome them for stepper
 const theme = createTheme({
@@ -39,13 +37,13 @@ const theme = createTheme({
     MuiStepIcon: {
       styleOverrides: {
         root: {
-          "&.Mui-active": {
+          '&.Mui-active': {
             color: secondaryColor, // צבע שלב פעיל
           },
-          "&.Mui-completed": {
+          '&.Mui-completed': {
             color: primaryColor, // צבע שלב שהושלם
           },
-          "&.Mui-disabled": {
+          '&.Mui-disabled': {
             color: softColor, // צבע שלב שאינו פעיל
           },
         },
@@ -54,14 +52,14 @@ const theme = createTheme({
     MuiStepLabel: {
       styleOverrides: {
         label: {
-          "&.Mui-active": {
+          '&.Mui-active': {
             color: primaryColor, // צבע טקסט של שלב פעיל
           },
-          "&.Mui-completed": {
+          '&.Mui-completed': {
             color: secondaryColor, // צבע טקסט של שלב שהושלם
           },
-          "&.Mui-disabled": {
-            color: "#e0e0e0", // צבע טקסט של שלב שאינו פעיל
+          '&.Mui-disabled': {
+            color: '#e0e0e0', // צבע טקסט של שלב שאינו פעיל
           },
         },
       },
@@ -69,24 +67,29 @@ const theme = createTheme({
   },
 });
 
-const steps = ["Info", "Rais", "Docs"];
+const steps = ['Info', 'Rais', 'Docs'];
 
 interface StepContentProps {
   step: number;
+  user: Company;
+  updateUser: (updatedUser: Company) => void;
 }
-
-const StepContent: React.FC<StepContentProps> = ({ step }) => {
+const StepContent: React.FC<StepContentProps> = ({
+  step,
+  user,
+  updateUser,
+}) => {
   switch (step) {
     case 0:
       return (
         <div>
-          <InfoContentForm />
+          <InfoContentForm user={user} updateUser={updateUser} />
         </div>
       );
     case 1:
       return (
         <div>
-          <RaiseContentForm />
+          <RaiseContentForm user={user} updateUser={updateUser} />
         </div>
       );
     case 2:
@@ -98,9 +101,35 @@ const StepContent: React.FC<StepContentProps> = ({ step }) => {
 
 const StepperForm: React.FC = () => {
   const { user, setUser } = useUser();
+  const [localUser, setLocalUser] = useState<Company>(new Company());
   const [activeStep, setActiveStep] = useState(0);
   const { closeModal } = useModal();
   const { loading, setLoading, error, setError } = useAppStatus();
+
+  useEffect(() => {
+    if (user) {
+      const investor = user as Company;
+      const updatedLocalUser = new Company(
+        investor.uid || localUser.uid,
+        investor.name || localUser.name,
+        investor.email || localUser.email,
+        {
+          ...localUser.companyDetails,
+          ...investor.companyDetails,
+        },
+        {
+          ...localUser.raiseDetails,
+          ...investor.raiseDetails,
+        },
+        investor.uploadedDocuments || localUser.uploadedDocuments
+      );
+      setLocalUser(updatedLocalUser);
+    }
+  }, [user]);
+
+  const updateUser = (updatedUser: Company) => {
+    setLocalUser(updatedUser);
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -113,7 +142,8 @@ const StepperForm: React.FC = () => {
   const saveDataInDb = async () => {
     setLoading(true); //
     //TODO : call to SaveUserToDb from services.ts
-    await saveUserToDb(user as Company);
+    await saveUserToDb(localUser);
+    setUser(localUser);
     // finish to save the user in db
     setLoading(false);
     // close the pop up
@@ -132,8 +162,12 @@ const StepperForm: React.FC = () => {
         </Stepper>
         <Box sx={{ marginTop: 2 }}>
           <Box>
-            <StepContent step={activeStep} />
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            <StepContent
+              step={activeStep}
+              user={localUser}
+              updateUser={updateUser}
+            />
+            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
               <Button
                 color="inherit"
                 disabled={activeStep === 0}
@@ -142,7 +176,7 @@ const StepperForm: React.FC = () => {
               >
                 Back
               </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
+              <Box sx={{ flex: '1 1 auto' }} />
               <Button
                 variant="contained"
                 color="primary"
@@ -154,7 +188,7 @@ const StepperForm: React.FC = () => {
                   }
                 }}
               >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
               </Button>
             </Box>
           </Box>

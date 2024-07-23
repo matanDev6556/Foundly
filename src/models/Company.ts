@@ -22,15 +22,39 @@ export interface RaiseDetails {
 }
 
 export default class Company extends User {
+  public companyDetails: CompanyDetails;
+  public raiseDetails: RaiseDetails;
+  public uploadedDocuments: string[];
+
   constructor(
-    uid: string,
-    name: string,
-    email: string,
-    public companyDetails: CompanyDetails,
-    public raiseDetails: RaiseDetails,
-    public uploadedDocuments: string[] = []
+    uid: string = '',
+    name: string = '',
+    email: string = '',
+    companyDetails: CompanyDetails = {
+      companyName: '',
+      website: '',
+      promoVideoLink: '',
+      country: '',
+      registrarOfCompanies: false,
+      category: '',
+      description: '',
+      about: '',
+      image: '',
+      logo: '',
+    },
+    raiseDetails: RaiseDetails = {
+      targetAmount: 0,
+      deadline: '',
+      minInvestment: 0,
+      raisePurpose: [],
+      raisedAmount: 0,
+    },
+    uploadedDocuments: string[] = []
   ) {
     super(uid, name, email, 'Company');
+    this.companyDetails = companyDetails;
+    this.raiseDetails = raiseDetails;
+    this.uploadedDocuments = uploadedDocuments;
   }
 
   static fromJSON(json: any): Company {
