@@ -1,15 +1,19 @@
-// src/components/PreferencesStep.tsx
-import React, { useState } from "react";
-import CategorySelector from "./categorySelector/CategorySelector";
-import YesNoSelector from "./yes-no/YesNoSelector";
-import Investor from "../../../models/Investor";
-import { InvesmentsCategories } from "../../../utils/constant";
-import InvestmentRangeSelector from "./investRange/InvestSlector";
-import { useUser } from "../../../context/UserContext";
-import { useModal } from "../../../context/popupContext";
-import { useAppStatus } from "../../../context/AppStatusContext";
-import { ClipLoader } from "react-spinners";
-import { saveUserToDb } from "../../../services/dbService";
+import React, { useState, useEffect } from 'react';
+import CategorySelector from '../../cummon/list-selector/ListSelector';
+import YesNoSelector from './yes-no/YesNoSelector';
+import Investor from '../../../models/Investor';
+import {
+  countries,
+  InvesmentsCategories,
+  InvestmentRange,
+} from '../../../utils/constant';
+import { useUser } from '../../../context/UserContext';
+import { useModal } from '../../../context/popupContext';
+import { useAppStatus } from '../../../context/AppStatusContext';
+import { ClipLoader } from 'react-spinners';
+import { saveUserToDb } from '../../../services/dbService';
+import GenericSelector from '../../cummon/drop-down/Selector';
+import ListSelector from '../../cummon/list-selector/ListSelector';
 
 interface PreferencesStepProps {
   isEditing?: boolean;
@@ -20,17 +24,29 @@ const PreferencesStep: React.FC<PreferencesStepProps> = ({
 }) => {
   const { user, setUser } = useUser();
   const { closeModal } = useModal();
-  const { loading, setLoading, error, setError } = useAppStatus();
+  const { loading, setLoading, setError } = useAppStatus();
 
   const [categories, setCategories] = useState<string[]>([]);
-  const [investmentRange, setInvestmentRange] = useState<string>("0-100k");
-  const [preferenceCountry, setPreferenceCountry] = useState<string>("Israel");
+  const [investmentRange, setInvestmentRange] = useState<string>('0-100k');
+  const [preferenceCountry, setPreferenceCountry] = useState<string>('Israel');
   const [investInPublicCompanies, setInvestInPublicCompanies] =
     useState<boolean>(false);
 
+  useEffect(() => {
+    if (isEditing && user?.userType === 'Investor') {
+      const investor = user as Investor;
+      setCategories(investor.preferences.categories || []);
+      setInvestmentRange(investor.preferences.investmentRange || '0-100k');
+      setPreferenceCountry(investor.preferences.preferenceCountry || 'Israel');
+      setInvestInPublicCompanies(
+        investor.preferences.investInPublicCompanies || false
+      );
+    }
+  }, [isEditing, user]);
+
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (user?.userType === "Investor") {
+    if (user?.userType === 'Investor') {
       const updatedUser = new Investor(user.uid, user.name, user.email, {
         categories,
         investmentRange,
@@ -44,7 +60,7 @@ const PreferencesStep: React.FC<PreferencesStepProps> = ({
         setUser(updatedUser);
         closeModal();
       } catch (error) {
-        setError("Error saving user preferences");
+        setError('Error saving user preferences');
       } finally {
         setLoading(false);
       }
@@ -53,26 +69,25 @@ const PreferencesStep: React.FC<PreferencesStepProps> = ({
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <label data-testid="check1">Choose Categories</label>
-      <CategorySelector
+      <label>Choose Categories</label>
+      <ListSelector
         list={InvesmentsCategories}
-        setCategories={setCategories}
-        initialCategories={categories}
+        setList={setCategories}
+        initialList={categories}
       />
       <label>Investment range</label>
-      <InvestmentRangeSelector
-        setInvestmentRange={setInvestmentRange}
-        initialRange={investmentRange}
+      <GenericSelector
+        options={InvestmentRange}
+        setSelectedValue={setInvestmentRange}
+        initialValue={investmentRange}
       />
       <label>Country of companies</label>
-      <select
-        className="select"
-        value={preferenceCountry}
-        onChange={(e) => setPreferenceCountry(e.target.value)}
-      >
-        <option value="Israel">Israel</option>
-        <option value="Other">Other</option>
-      </select>
+      <GenericSelector
+        options={countries}
+        setSelectedValue={setPreferenceCountry}
+        initialValue={preferenceCountry}
+      />
+
       <label>Investing in already public companies?</label>
       <YesNoSelector
         setYesNo={setInvestInPublicCompanies}
@@ -82,7 +97,7 @@ const PreferencesStep: React.FC<PreferencesStepProps> = ({
         <ClipLoader color="#39958c" loading={loading} size={50} />
       ) : (
         <button type="submit">
-          {isEditing ? "Save Changes" : "Let's Start!"}
+          {isEditing ? 'Save Changes' : "Let's Start!"}
         </button>
       )}
     </form>

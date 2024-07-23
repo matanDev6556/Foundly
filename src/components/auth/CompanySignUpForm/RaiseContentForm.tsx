@@ -1,18 +1,11 @@
-import React, { ChangeEvent, useState, useEffect } from "react";
-import { useUser } from "../../../context/UserContext";
-import { useModal } from "../../../context/popupContext";
-import { useAppStatus } from "../../../context/AppStatusContext";
-import { ClipLoader } from "react-spinners";
-import { saveUserToDb } from "../../../services/dbService";
-import YesNoSelector from "../InvestorSignUpForm/yes-no/YesNoSelector";
-import { InvesmentsCategories, RaisePurpose } from "../../../utils/constant";
-import Company, { CompanyDetails, RaiseDetails } from "../../../models/Company";
-import Slider from "@mui/material/Slider";
-import { Stack } from "@mui/system";
-import VolumeDown from "@mui/icons-material/VolumeDown";
-import VolumeUp from "@mui/icons-material/VolumeDown";
-import { format } from "date-fns";
-import CategorySelector from "../InvestorSignUpForm/categorySelector/CategorySelector";
+import React, { ChangeEvent, useState, useEffect } from 'react';
+import { useUser } from '../../../context/UserContext';
+import { useAppStatus } from '../../../context/AppStatusContext';
+import { RaisePurpose } from '../../../utils/constant';
+import Company, { CompanyDetails, RaiseDetails } from '../../../models/Company';
+import Slider from '@mui/material/Slider';
+import { format } from 'date-fns';
+import ListSelector from '../../cummon/list-selector/ListSelector';
 
 export const RaiseContentForm: React.FC = () => {
   const { setLoading, setError } = useAppStatus();
@@ -41,7 +34,7 @@ export const RaiseContentForm: React.FC = () => {
 
       // Only update if registered value has actually changed
       if (company.raiseDetails?.raisePurpose !== raisePurpose) {
-        console.log("regi changed");
+        console.log('regi changed');
         return new Company(
           company.uid,
           company.name,
@@ -99,7 +92,7 @@ export const RaiseContentForm: React.FC = () => {
         onChange={(event) => {
           console.log(user);
           setRaisedAmount(parseInt(event.target.value as string, 10));
-          setAttr("raisedAmount", event);
+          setAttr('raisedAmount', event);
         }}
       />
       <label>How much money does the company wants to raise?</label>
@@ -111,9 +104,9 @@ export const RaiseContentForm: React.FC = () => {
         min={1000}
         max={6000000}
         onChange={(e, newValue) => {
-          if (typeof newValue === "number") {
+          if (typeof newValue === 'number') {
             setTargetAmount(newValue);
-            setAttr("targetAmount", {
+            setAttr('targetAmount', {
               target: { value: newValue.toString() },
             } as ChangeEvent<HTMLInputElement>);
           }
@@ -126,20 +119,20 @@ export const RaiseContentForm: React.FC = () => {
         value={formatValueLabel(targetAmount)}
         onChange={(e) => {
           setTargetAmount(parseInt(e.target.value as string, 10));
-          setAttr("targetAmount", e);
+          setAttr('targetAmount', e);
         }}
         style={{
-          textAlign: "center",
+          textAlign: 'center',
           color: `var(--primary-color)`,
-          fontWeight: "bold",
+          fontWeight: 'bold',
         }}
       />
       <label>What's your estimated deadline for the raise?</label>
       <input
         type="date"
         required
-        value={format(deadLine, "dd-mm-yyyy")}
-        onChange={(e) => setAttr("deadline", e)}
+        value={format(deadLine, 'dd-mm-yyyy')}
+        onChange={(e) => setAttr('deadline', e)}
       />
       <label>Minimum investment per person?</label>
       <Slider
@@ -150,9 +143,9 @@ export const RaiseContentForm: React.FC = () => {
         min={1000}
         max={1000000}
         onChange={(e, newValue) => {
-          if (typeof newValue === "number") {
+          if (typeof newValue === 'number') {
             setMinInvestment(newValue);
-            setAttr("minInvestment", {
+            setAttr('minInvestment', {
               target: { value: newValue.toString() },
             } as ChangeEvent<HTMLInputElement>);
           }
@@ -165,16 +158,16 @@ export const RaiseContentForm: React.FC = () => {
         value={formatValueLabel(minInvestment)}
         onChange={(e) => {
           setMinInvestment(parseInt(e.target.value as string, 10));
-          setAttr("minInvestment", e);
+          setAttr('minInvestment', e);
         }}
         style={{
-          textAlign: "center",
+          textAlign: 'center',
           color: `var(--primary-color)`,
-          fontWeight: "bold",
+          fontWeight: 'bold',
         }}
       />
       <label>What's the raise purpose?</label>
-      <CategorySelector list={RaisePurpose} setCategories={setRaisePurpose} />
+      <ListSelector list={RaisePurpose} setList={setRaisePurpose} />
     </form>
   );
 };
