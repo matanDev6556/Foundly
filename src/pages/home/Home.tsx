@@ -1,7 +1,8 @@
 import { useUser } from '../../context/UserContext';
 import { UserType } from '../../utils/enums';
+import InvestorHome from '../investor/home/InvstorHome';
 import GuestHome from './GuestHome';
-import InvestorHome from './investor-home/InvstorHome';
+
 
 const Home: React.FC = () => {
   const { user } = useUser();

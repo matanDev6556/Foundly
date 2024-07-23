@@ -11,13 +11,17 @@ import { useAppStatus } from "../../../context/AppStatusContext";
 import { ClipLoader } from "react-spinners";
 import { saveUserToDb } from "../../../services/dbService";
 
-const PreferencesStep: React.FC = () => {
+interface PreferencesStepProps {
+  isEditing?: boolean;
+}
+
+const PreferencesStep: React.FC<PreferencesStepProps> = ({
+  isEditing = false,
+}) => {
   const { user, setUser } = useUser();
-  //control the popup vissability
   const { closeModal } = useModal();
   const { loading, setLoading, error, setError } = useAppStatus();
 
-  // set data from form
   const [categories, setCategories] = useState<string[]>([]);
   const [investmentRange, setInvestmentRange] = useState<string>("0-100k");
   const [preferenceCountry, setPreferenceCountry] = useState<string>("Israel");
@@ -25,7 +29,6 @@ const PreferencesStep: React.FC = () => {
     useState<boolean>(false);
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    console.log(user);
     event.preventDefault();
     if (user?.userType === "Investor") {
       const updatedUser = new Investor(user.uid, user.name, user.email, {
@@ -35,11 +38,9 @@ const PreferencesStep: React.FC = () => {
         investInPublicCompanies,
       });
 
-      //save the user to db
       try {
         setLoading(true);
         await saveUserToDb(updatedUser);
-        //set user localy
         setUser(updatedUser);
         closeModal();
       } catch (error) {
@@ -56,9 +57,13 @@ const PreferencesStep: React.FC = () => {
       <CategorySelector
         list={InvesmentsCategories}
         setCategories={setCategories}
+        initialCategories={categories}
       />
       <label>Investment range</label>
-      <InvestmentRangeSelector setInvestmentRange={setInvestmentRange} />
+      <InvestmentRangeSelector
+        setInvestmentRange={setInvestmentRange}
+        initialRange={investmentRange}
+      />
       <label>Country of companies</label>
       <select
         className="select"
@@ -69,11 +74,16 @@ const PreferencesStep: React.FC = () => {
         <option value="Other">Other</option>
       </select>
       <label>Investing in already public companies?</label>
-      <YesNoSelector setYesNo={setInvestInPublicCompanies} />
+      <YesNoSelector
+        setYesNo={setInvestInPublicCompanies}
+        initialValue={investInPublicCompanies}
+      />
       {loading ? (
         <ClipLoader color="#39958c" loading={loading} size={50} />
       ) : (
-        <button type="submit">Let's Start!</button>
+        <button type="submit">
+          {isEditing ? "Save Changes" : "Let's Start!"}
+        </button>
       )}
     </form>
   );

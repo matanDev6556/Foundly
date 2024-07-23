@@ -2,9 +2,10 @@
 import React from 'react';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { useUser } from '../../context/UserContext';
 import 'react-toastify/dist/ReactToastify.css';
-import { useLikes } from '../../context/LikesContext';
+import { useLikes } from '../../../context/LikesContext';
+import { useUser } from '../../../context/UserContext';
+
 
 
 

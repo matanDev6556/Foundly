@@ -4,6 +4,7 @@ import Like from '../models/Like';
 import { useUser } from './UserContext';
 import { deleteDocument, fetchForUser, saveToDb } from '../services/dbService';
 
+
 interface LikesContextType {
   likes: Like[];
   toggleLike: (companyId: string, userId: string) => void;
@@ -30,6 +31,10 @@ export const LikesProvider: React.FC<{ children: React.ReactNode }> = ({
       setLikes([]);
     }
   }, []);
+
+  useEffect(() => {
+    console.log(likes);
+  }, [likes]);
 
   const toggleLike = async (companyId: string, userId: string) => {
     console.log('toggle like');
