@@ -1,15 +1,15 @@
 // src/components/PreferencesStep.tsx
-import React, { useState } from 'react';
-import CategorySelector from './categorySelector/CategorySelector';
-import YesNoSelector from './yes-no/YesNoSelector';
-import Investor from '../../../models/Investor';
-import { InvesmentsCategories } from '../../../utils/constant';
-import InvestmentRangeSelector from './investRange/InvestSlector';
-import { useUser } from '../../../context/UserContext';
-import { useModal } from '../../../context/popupContext';
-import { useAppStatus } from '../../../context/AppStatusContext';
-import { ClipLoader } from 'react-spinners';
-import { saveUserToDb } from '../../../services/dbService';
+import React, { useState } from "react";
+import CategorySelector from "./categorySelector/CategorySelector";
+import YesNoSelector from "./yes-no/YesNoSelector";
+import Investor from "../../../models/Investor";
+import { InvesmentsCategories } from "../../../utils/constant";
+import InvestmentRangeSelector from "./investRange/InvestSlector";
+import { useUser } from "../../../context/UserContext";
+import { useModal } from "../../../context/popupContext";
+import { useAppStatus } from "../../../context/AppStatusContext";
+import { ClipLoader } from "react-spinners";
+import { saveUserToDb } from "../../../services/dbService";
 
 const PreferencesStep: React.FC = () => {
   const { user, setUser } = useUser();
@@ -19,15 +19,15 @@ const PreferencesStep: React.FC = () => {
 
   // set data from form
   const [categories, setCategories] = useState<string[]>([]);
-  const [investmentRange, setInvestmentRange] = useState<string>('0-100k');
-  const [preferenceCountry, setPreferenceCountry] = useState<string>('Israel');
+  const [investmentRange, setInvestmentRange] = useState<string>("0-100k");
+  const [preferenceCountry, setPreferenceCountry] = useState<string>("Israel");
   const [investInPublicCompanies, setInvestInPublicCompanies] =
     useState<boolean>(false);
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     console.log(user);
     event.preventDefault();
-    if (user?.userType === 'Investor') {
+    if (user?.userType === "Investor") {
       const updatedUser = new Investor(user.uid, user.name, user.email, {
         categories,
         investmentRange,
@@ -43,7 +43,7 @@ const PreferencesStep: React.FC = () => {
         setUser(updatedUser);
         closeModal();
       } catch (error) {
-        setError('Error saving user preferences');
+        setError("Error saving user preferences");
       } finally {
         setLoading(false);
       }
@@ -52,7 +52,7 @@ const PreferencesStep: React.FC = () => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <label>Choose Categories</label>
+      <label data-testid="check1">Choose Categories</label>
       <CategorySelector
         list={InvesmentsCategories}
         setCategories={setCategories}

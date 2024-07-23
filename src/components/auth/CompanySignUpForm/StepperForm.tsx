@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Button, Box } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useModal } from '../../../context/popupContext';
-import { useAppStatus } from '../../../context/AppStatusContext';
+import React, { useState } from "react";
+import { Stepper, Step, StepLabel, Button, Box } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useModal } from "../../../context/popupContext";
+import { useAppStatus } from "../../../context/AppStatusContext";
+import { InfoContentForm } from "./InfoContentForm";
+import { RaiseContentForm } from "./RaiseContentForm";
+import { DocsForm } from "./DocsForm";
+import { saveUserToDb } from "../../../services/dbService";
+import { useUser } from "../../../context/UserContext";
+import Company from "../../../models/Company";
+import { User } from "firebase/auth";
 
-const primaryColor = '#39958c';
-const secondaryColor = '#7fcbc4';
-const softColor = '#D0EBEA';
-
+const primaryColor = "#39958c";
+const secondaryColor = "#7fcbc4";
+const softColor = "#D0EBEA";
+const style = {
+  width: "100%",
+  height: "70vh",
+  padding: "10px",
+  overflowY: "auto",
+  "&::-webkit-scrollbar": {
+    display: "none",
+  },
+  "-ms-overflow-style": "none",
+  "scrollbar-width": "none",
+};
 // custome them for stepper
 const theme = createTheme({
   palette: {
@@ -22,13 +39,13 @@ const theme = createTheme({
     MuiStepIcon: {
       styleOverrides: {
         root: {
-          '&.Mui-active': {
+          "&.Mui-active": {
             color: secondaryColor, // צבע שלב פעיל
           },
-          '&.Mui-completed': {
+          "&.Mui-completed": {
             color: primaryColor, // צבע שלב שהושלם
           },
-          '&.Mui-disabled': {
+          "&.Mui-disabled": {
             color: softColor, // צבע שלב שאינו פעיל
           },
         },
@@ -37,14 +54,14 @@ const theme = createTheme({
     MuiStepLabel: {
       styleOverrides: {
         label: {
-          '&.Mui-active': {
+          "&.Mui-active": {
             color: primaryColor, // צבע טקסט של שלב פעיל
           },
-          '&.Mui-completed': {
+          "&.Mui-completed": {
             color: secondaryColor, // צבע טקסט של שלב שהושלם
           },
-          '&.Mui-disabled': {
-            color: '#e0e0e0', // צבע טקסט של שלב שאינו פעיל
+          "&.Mui-disabled": {
+            color: "#e0e0e0", // צבע טקסט של שלב שאינו פעיל
           },
         },
       },
@@ -52,26 +69,35 @@ const theme = createTheme({
   },
 });
 
-const steps = ['Info', 'Rais', 'Docs'];
+const steps = ["Info", "Rais", "Docs"];
 
 interface StepContentProps {
   step: number;
 }
-// TODO : Create Info,Rais,Docs Components
+
 const StepContent: React.FC<StepContentProps> = ({ step }) => {
   switch (step) {
     case 0:
-      return <div>Info Content</div>;
+      return (
+        <div>
+          <InfoContentForm />
+        </div>
+      );
     case 1:
-      return <div>Rais Content</div>;
+      return (
+        <div>
+          <RaiseContentForm />
+        </div>
+      );
     case 2:
-      return <div>Docs Content</div>;
+      return <DocsForm />;
     default:
       return <div>Unknown Step</div>;
   }
 };
 
-const StepperForm = () => {
+const StepperForm: React.FC = () => {
+  const { user, setUser } = useUser();
   const [activeStep, setActiveStep] = useState(0);
   const { closeModal } = useModal();
   const { loading, setLoading, error, setError } = useAppStatus();
@@ -84,10 +110,10 @@ const StepperForm = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const saveDataInDb = () => {
+  const saveDataInDb = async () => {
     setLoading(true); //
     //TODO : call to SaveUserToDb from services.ts
-    
+    await saveUserToDb(user as Company);
     // finish to save the user in db
     setLoading(false);
     // close the pop up
@@ -96,7 +122,7 @@ const StepperForm = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ width: '100%' }}>
+      <Box sx={style}>
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => (
             <Step key={label}>
@@ -107,7 +133,7 @@ const StepperForm = () => {
         <Box sx={{ marginTop: 2 }}>
           <Box>
             <StepContent step={activeStep} />
-            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Button
                 color="inherit"
                 disabled={activeStep === 0}
@@ -116,7 +142,7 @@ const StepperForm = () => {
               >
                 Back
               </Button>
-              <Box sx={{ flex: '1 1 auto' }} />
+              <Box sx={{ flex: "1 1 auto" }} />
               <Button
                 variant="contained"
                 color="primary"
@@ -128,7 +154,7 @@ const StepperForm = () => {
                   }
                 }}
               >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                {activeStep === steps.length - 1 ? "Finish" : "Next"}
               </Button>
             </Box>
           </Box>

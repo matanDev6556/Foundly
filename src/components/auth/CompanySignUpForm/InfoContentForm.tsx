@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
 import { useUser } from "../../../context/UserContext";
 import { useModal } from "../../../context/popupContext";
 import { useAppStatus } from "../../../context/AppStatusContext";
@@ -7,6 +7,7 @@ import { saveUserToDb } from "../../../services/dbService";
 import YesNoSelector from "../InvestorSignUpForm/yes-no/YesNoSelector";
 import { InvesmentsCategories } from "../../../utils/constant";
 import Company, { CompanyDetails, RaiseDetails } from "../../../models/Company";
+
 export const InfoContentForm: React.FC = () => {
   const { setLoading, setError } = useAppStatus();
   const { user, setUser } = useUser();
@@ -18,57 +19,82 @@ export const InfoContentForm: React.FC = () => {
   const [category, setCategory] = useState("");
   const [about, setAbout] = useState("");
 
-  const handleSubmitForm = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const companyDetails: CompanyDetails = {
-      companyName: companyName,
-      website: website,
-      promoVideoLink: youtubeSite,
-      country: country,
-      registrarOfCompanies: registered,
-      category: category,
-      description: about,
-      about: about,
-      image: "",
-      logo: "",
-    };
-    const raiseDetails: RaiseDetails = {
-      targetAmount: 0,
-      deadline: "",
-      minInvestment: 0,
-      raisePurpose: [],
-      raisedAmount: 0,
-    };
-    if (user != null) {
-      const updatedUser = new Company(
-        user.uid,
-        user.name,
-        user.email,
-        companyDetails,
-        raiseDetails,
-        []
-      );
-      setUser(updatedUser);
-      try {
-        setLoading(true);
-        await saveUserToDb(updatedUser);
-      } catch (e) {
-        setError("error saving user Info Content");
-      } finally {
-        setLoading(false);
-      }
+  useEffect(() => {
+    if (user instanceof Company) {
+      setCompanyName(user.companyDetails.companyName || "");
+      setWebsite(user.companyDetails.website || "");
+      setYoutubeSite(user.companyDetails.promoVideoLink || "");
+      setCountry(user.companyDetails.country || "");
+      setCategory(user.companyDetails.category || "");
+      setAbout(user.companyDetails.about || "");
+      setRegistered(user.companyDetails.registrarOfCompanies || false);
     }
+  }, [user]);
+
+  useEffect(() => {
+    setUser((prev) => {
+      const company = prev as Company;
+
+      // Only update if registered value has actually changed
+      if (company.companyDetails?.registrarOfCompanies !== registered) {
+        console.log("regi changed");
+        return new Company(
+          company.uid,
+          company.name,
+          company.email,
+          {
+            ...company.companyDetails,
+            registrarOfCompanies: registered,
+          },
+          company.raiseDetails,
+          company.uploadedDocuments
+        );
+      }
+
+      return prev;
+    });
+  }, [registered, setUser]);
+
+  const setAttr = (
+    attrName: string,
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    setUser((prev) => {
+      const company = prev as Company;
+
+      // Cast the event target to the appropriate type to access the value property
+      const value = e.target.value;
+
+      // Create a new object for companyDetails
+      const updatedCompanyDetails = {
+        ...company.companyDetails,
+        [attrName]: value,
+      };
+
+      return new Company(
+        company.uid,
+        company.name,
+        company.email,
+        updatedCompanyDetails,
+        company.raiseDetails,
+        company.uploadedDocuments
+      );
+    });
   };
+
   return (
-    <form onSubmit={handleSubmitForm}>
+    <form onSubmit={() => {}}>
       <label>Images</label>
       <label>Company name</label>
       <input
         required
         type="text"
-        name="Company_name"
+        name="companyName"
         value={companyName}
-        onChange={(event) => setCompanyName(event.target.value)}
+        onChange={(event) => {
+          setCompanyName(event.target.value);
+          setAttr("companyName", event);
+        }}
       />
       <label>Company's website</label>
       <input
@@ -76,25 +102,32 @@ export const InfoContentForm: React.FC = () => {
         type="text"
         name="website"
         value={website}
-        onChange={(e) => {
-          setWebsite(e.target.value);
+        onChange={(event) => {
+          setWebsite(event.target.value);
+          setAttr("website", event);
         }}
       />
       <label>Youtube promotional video</label>
       <input
         required
-        name="youtube_site"
+        name="youtubeSite"
         value={youtubeSite}
-        onChange={(e) => setYoutubeSite(e.target.value)}
+        onChange={(event) => {
+          setYoutubeSite(event.target.value);
+          setAttr("promoVideoLink", event);
+        }}
       />
       <label>Country</label>
       <select
         className="select"
         value={country}
-        onChange={(e) => setCountry(e.target.value)}
+        onChange={(event) => {
+          setCountry(event.target.value);
+          setAttr("country", event);
+        }}
       >
-        <option>Israel</option>
-        <option>Others</option>
+        <option value="Israel">Israel</option>
+        <option value="Others">Others</option>
       </select>
       <label>Is the company registered in the Companies Registry?</label>
       <YesNoSelector setYesNo={setRegistered} />
@@ -102,10 +135,16 @@ export const InfoContentForm: React.FC = () => {
       <select
         className="select"
         name="category"
-        onChange={(e) => setCategory(e.target.value)}
+        value={category}
+        onChange={(event) => {
+          setCategory(event.target.value);
+          setAttr("category", event);
+        }}
       >
         {InvesmentsCategories.map((category) => (
-          <option>{category}</option>
+          <option key={category} value={category}>
+            {category}
+          </option>
         ))}
       </select>
       <label>Few words about the company</label>
@@ -115,8 +154,9 @@ export const InfoContentForm: React.FC = () => {
         rows={10}
         cols={50}
         value={about}
-        onChange={(e) => {
-          setAbout(e.target.value);
+        onChange={(event) => {
+          setAbout(event.target.value);
+          setAttr("about", event);
         }}
         style={{ width: "100%", height: "80px" }}
       />

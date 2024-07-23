@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import './Modal.css';
-import { getTitle, renderForm, renderSignUpAsButtons } from './modalHelper';
-import { useModal } from '../../context/popupContext';
+import React, { useState } from "react";
+import "./Modal.css";
+import { getTitle, renderForm, renderSignUpAsButtons } from "./modalHelper";
+import { useModal } from "../../context/popupContext";
 
 const Modal: React.FC<{}> = () => {
   const [step, setStep] = useState(1);
@@ -11,7 +11,7 @@ const Modal: React.FC<{}> = () => {
     <div className="modalBackground">
       <h1 className="modalTitle">{getTitle(modalType, userType, step)}</h1>
       {step === 1 &&
-        modalType === 'Sign Up As' &&
+        modalType === "Sign Up As" &&
         renderSignUpAsButtons(userType, setUserType)}
       <div className="modalContainer">
         <div className="titleCloseBtn">

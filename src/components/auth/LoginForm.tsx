@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import { useUser } from '../../context/UserContext';
-import { loginUser } from '../../services/authService';
-import { useModal } from '../../context/popupContext';
-import { useAppStatus } from '../../context/AppStatusContext';
-import { ClipLoader } from 'react-spinners';
-import { fetchUserFromDb } from '../../services/dbService';
-import { handleFirebaseError } from '../../services/FirebaseErrorService';
-import { FirebaseError } from 'firebase/app';
+import React, { useState } from "react";
+import { useUser } from "../../context/UserContext";
+import { loginUser } from "../../services/authService";
+import { useModal } from "../../context/popupContext";
+import { useAppStatus } from "../../context/AppStatusContext";
+import { ClipLoader } from "react-spinners";
+import { fetchUserFromDb } from "../../services/dbService";
+import { handleFirebaseError } from "../../services/FirebaseErrorService";
+import { FirebaseError } from "firebase/app";
 
 const LoginForm: React.FC = () => {
   const { setUser } = useUser();
   const { closeModal } = useModal();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { loading, setLoading, error, setError } = useAppStatus();
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
@@ -30,13 +29,14 @@ const LoginForm: React.FC = () => {
         setUser(null);
       }
       setLoading(false);
+
       // Close popup
       closeModal();
     } catch (err) {
       if (err instanceof Error) {
         setError(handleFirebaseError(err as FirebaseError));
       } else {
-        setError('An unexpected error occurred');
+        setError("An unexpected error occurred");
       }
     } finally {
       setLoading(false);

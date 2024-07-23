@@ -1,13 +1,23 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import User from '../models/User';
-import Investor from '../models/Investor';
-import Admin from '../models/Admin';
-import Company from '../models/Company';
-import { handleAuthStateChanged } from '../services/authService';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import User from "../models/User";
+import Investor from "../models/Investor";
+import Admin from "../models/Admin";
+import Company from "../models/Company";
+import { handleAuthStateChanged } from "../services/authService";
+
+type AuthUser = User | Investor | Company | Admin | null;
 
 interface UserContextType {
-  user: User | null;
-  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  user: AuthUser;
+  setUser: Dispatch<SetStateAction<AuthUser>>;
 }
 
 const AuthContext = createContext<UserContextType>({
@@ -15,12 +25,10 @@ const AuthContext = createContext<UserContextType>({
   setUser: () => {},
 });
 
-export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
+export const UserProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | Investor | Company | Admin | null>(
-    null
-  );
+  const [user, setUser] = useState<AuthUser>(null);
 
   useEffect(() => {
     const unsubscribe = handleAuthStateChanged(async (currentUser) => {
@@ -36,7 +44,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [user]);
 
   useEffect(() => {
-    console.log('user:', user);
+    console.log("user:", user);
   }, [user]);
 
   return (
