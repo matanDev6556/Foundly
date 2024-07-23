@@ -1,90 +1,79 @@
-import React, { useEffect, useState, ChangeEvent } from "react";
-import { useUser } from "../../../context/UserContext";
-import { useModal } from "../../../context/popupContext";
-import { useAppStatus } from "../../../context/AppStatusContext";
-import { ClipLoader } from "react-spinners";
-import { saveUserToDb } from "../../../services/dbService";
-import YesNoSelector from "../InvestorSignUpForm/yes-no/YesNoSelector";
-import { InvesmentsCategories } from "../../../utils/constant";
-import Company, { CompanyDetails, RaiseDetails } from "../../../models/Company";
+import React, { useEffect, useState } from 'react';
+import { useAppStatus } from '../../../context/AppStatusContext';
+import YesNoSelector from '../InvestorSignUpForm/yes-no/YesNoSelector';
+import { InvesmentsCategories } from '../../../utils/constant';
+import Company from '../../../models/Company';
 
-export const InfoContentForm: React.FC = () => {
+interface InfoContentFormProps {
+  user: Company;
+  updateUser: (updatedUser: Company) => void;
+}
+
+export const InfoContentForm: React.FC<InfoContentFormProps> = ({
+  user,
+  updateUser,
+}) => {
   const { setLoading, setError } = useAppStatus();
-  const { user, setUser } = useUser();
-  const [companyName, setCompanyName] = useState("");
-  const [website, setWebsite] = useState("");
-  const [youtubeSite, setYoutubeSite] = useState("");
-  const [country, setCountry] = useState("");
-  const [registered, setRegistered] = useState(false);
-  const [category, setCategory] = useState("");
-  const [about, setAbout] = useState("");
+  const [companyName, setCompanyName] = useState(
+    user.companyDetails.companyName || ''
+  );
+  const [website, setWebsite] = useState(user.companyDetails.website || '');
+  const [youtubeSite, setYoutubeSite] = useState(
+    user.companyDetails.promoVideoLink || ''
+  );
+  const [country, setCountry] = useState(user.companyDetails.country || '');
+  const [registered, setRegistered] = useState(
+    user.companyDetails.registrarOfCompanies || false
+  );
+  const [category, setCategory] = useState(user.companyDetails.category || '');
+  const [about, setAbout] = useState(user.companyDetails.about || '');
 
   useEffect(() => {
-    if (user instanceof Company) {
-      setCompanyName(user.companyDetails.companyName || "");
-      setWebsite(user.companyDetails.website || "");
-      setYoutubeSite(user.companyDetails.promoVideoLink || "");
-      setCountry(user.companyDetails.country || "");
-      setCategory(user.companyDetails.category || "");
-      setAbout(user.companyDetails.about || "");
-      setRegistered(user.companyDetails.registrarOfCompanies || false);
-    }
+    setCompanyName(user.companyDetails.companyName || '');
+    setWebsite(user.companyDetails.website || '');
+    setYoutubeSite(user.companyDetails.promoVideoLink || '');
+    setCountry(user.companyDetails.country || '');
+    setCategory(user.companyDetails.category || '');
+    setAbout(user.companyDetails.about || '');
+    setRegistered(user.companyDetails.registrarOfCompanies || false);
   }, [user]);
 
   useEffect(() => {
-    setUser((prev) => {
-      const company = prev as Company;
+    const updatedUser = new Company(
+      user.uid,
+      user.name,
+      user.email,
+      {
+        ...user.companyDetails,
+        registrarOfCompanies: registered,
+      },
+      user.raiseDetails,
+      user.uploadedDocuments
+    );
+    updateUser(updatedUser);
+  }, [registered]);
 
-      // Only update if registered value has actually changed
-      if (company.companyDetails?.registrarOfCompanies !== registered) {
-        console.log("regi changed");
-        return new Company(
-          company.uid,
-          company.name,
-          company.email,
-          {
-            ...company.companyDetails,
-            registrarOfCompanies: registered,
-          },
-          company.raiseDetails,
-          company.uploadedDocuments
-        );
-      }
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
 
-      return prev;
-    });
-  }, [registered, setUser]);
-
-  const setAttr = (
-    attrName: string,
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    setUser((prev) => {
-      const company = prev as Company;
-
-      // Cast the event target to the appropriate type to access the value property
-      const value = e.target.value;
-
-      // Create a new object for companyDetails
-      const updatedCompanyDetails = {
-        ...company.companyDetails,
+  const setAttr = (attrName: string, value: string) => {
+    const updatedUser = new Company(
+      user.uid,
+      user.name,
+      user.email,
+      {
+        ...user.companyDetails,
         [attrName]: value,
-      };
-
-      return new Company(
-        company.uid,
-        company.name,
-        company.email,
-        updatedCompanyDetails,
-        company.raiseDetails,
-        company.uploadedDocuments
-      );
-    });
+      },
+      user.raiseDetails,
+      user.uploadedDocuments
+    );
+    updateUser(updatedUser);
   };
 
   return (
-    <form onSubmit={() => {}}>
-      <label>Images</label>
+    <form onSubmit={(e) => e.preventDefault()}>
       <label>Company name</label>
       <input
         required
@@ -93,7 +82,7 @@ export const InfoContentForm: React.FC = () => {
         value={companyName}
         onChange={(event) => {
           setCompanyName(event.target.value);
-          setAttr("companyName", event);
+          setAttr('companyName', event.target.value);
         }}
       />
       <label>Company's website</label>
@@ -104,7 +93,7 @@ export const InfoContentForm: React.FC = () => {
         value={website}
         onChange={(event) => {
           setWebsite(event.target.value);
-          setAttr("website", event);
+          setAttr('website', event.target.value);
         }}
       />
       <label>Youtube promotional video</label>
@@ -114,7 +103,7 @@ export const InfoContentForm: React.FC = () => {
         value={youtubeSite}
         onChange={(event) => {
           setYoutubeSite(event.target.value);
-          setAttr("promoVideoLink", event);
+          setAttr('promoVideoLink', event.target.value);
         }}
       />
       <label>Country</label>
@@ -123,7 +112,7 @@ export const InfoContentForm: React.FC = () => {
         value={country}
         onChange={(event) => {
           setCountry(event.target.value);
-          setAttr("country", event);
+          setAttr('country', event.target.value);
         }}
       >
         <option value="Israel">Israel</option>
@@ -138,7 +127,7 @@ export const InfoContentForm: React.FC = () => {
         value={category}
         onChange={(event) => {
           setCategory(event.target.value);
-          setAttr("category", event);
+          setAttr('category', event.target.value);
         }}
       >
         {InvesmentsCategories.map((category) => (
@@ -156,9 +145,9 @@ export const InfoContentForm: React.FC = () => {
         value={about}
         onChange={(event) => {
           setAbout(event.target.value);
-          setAttr("about", event);
+          setAttr('about', event.target.value);
         }}
-        style={{ width: "100%", height: "80px" }}
+        style={{ width: '100%', height: '80px' }}
       />
     </form>
   );

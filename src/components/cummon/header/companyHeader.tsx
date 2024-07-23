@@ -1,29 +1,41 @@
 // CompanyHeader.tsx
 import React from 'react';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaBell, FaSignOutAlt } from 'react-icons/fa';
 import { useModal } from '../../../context/popupContext';
+import Modal from '../popup/modal';
+import StepperForm from '../../auth/CompanySignUpForm/StepperForm';
 
 const CompanyHeader: React.FC<{ handleLogout: () => void }> = ({
   handleLogout,
 }) => {
-  const { openModal } = useModal();
+  const { setModalType, modalType } = useModal();
 
   return (
     <>
       <button
-        className="header__button header_button--fill "
-        onClick={() => openModal('Dashboard')}
-      >
-        Dashboard
-      </button>
-      <button
         className="header__button header_button--border"
         onClick={() => {
-          openModal('Profile');
+          setModalType('Profile');
         }}
       >
         Profile
       </button>
+
+      {modalType === 'Profile' && (
+        <Modal>
+          <StepperForm />
+        </Modal>
+      )}
+      <FaBell
+        size={25}
+        color="#da678a"
+        onClick={() => setModalType('Notifications')}
+      />
+      {modalType === 'Notifications' && (
+        <Modal>
+          <h1>Notifications</h1>
+        </Modal>
+      )}
       <FaSignOutAlt size={25} color="#da678a" onClick={handleLogout} />
     </>
   );

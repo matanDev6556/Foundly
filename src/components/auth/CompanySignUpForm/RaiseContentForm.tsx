@@ -1,78 +1,65 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
-import { useUser } from '../../../context/UserContext';
 import { useAppStatus } from '../../../context/AppStatusContext';
 import { RaisePurpose } from '../../../utils/constant';
-import Company, { CompanyDetails, RaiseDetails } from '../../../models/Company';
+import Company from '../../../models/Company';
 import Slider from '@mui/material/Slider';
 import { format } from 'date-fns';
 import ListSelector from '../../cummon/list-selector/ListSelector';
 
-export const RaiseContentForm: React.FC = () => {
-  const { setLoading, setError } = useAppStatus();
-  const { user, setUser } = useUser();
-  const [raisedAmount, setRaisedAmount] = useState(0);
-  const [targetAmount, setTargetAmount] = useState(1000);
-  const [deadLine, setDeadline] = useState(new Date());
-  const [minInvestment, setMinInvestment] = useState(1000);
-  const [raisePurpose, setRaisePurpose] = useState<string[]>([]);
+interface RaiseContentFormProps {
+  user: Company;
+  updateUser: (updatedUser: Company) => void;
+}
 
-  // useEffect(() => {
-  //   if (user instanceof Company) {
-  //     setMoneyRaised(user.raiseDetails.raisedAmount || 0);
-  //     setTargetAmount(user.raiseDetails.targetAmount || 0);
-  //     setDeadline(user.raiseDetails.deadline);
-  //     setCountry(user.companyDetails.country || "");
-  //     setCategory(user.companyDetails.category || "");
-  //     setAbout(user.companyDetails.about || "");
-  //     setRegistered(user.companyDetails.registrarOfCompanies || false);
-  //   }
-  // }, [user]);
+export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
+  user,
+  updateUser,
+}) => {
+  const { setLoading, setError } = useAppStatus();
+  const [raisedAmount, setRaisedAmount] = useState(
+    user.raiseDetails.raisedAmount || 0
+  );
+  const [targetAmount, setTargetAmount] = useState(
+    user.raiseDetails.targetAmount || 0 || 1000
+  );
+  const [deadLine, setDeadline] = useState(
+    user.raiseDetails.deadline || new Date()
+  );
+  const [minInvestment, setMinInvestment] = useState(
+    user.raiseDetails.minInvestment || 1000
+  );
+  const [raisePurpose, setRaisePurpose] = useState<string[]>(
+    user.raiseDetails.raisePurpose || []
+  );
 
   useEffect(() => {
-    setUser((prev) => {
-      const company = prev as Company;
+    const updatedUser = new Company(
+      user.uid,
+      user.name,
+      user.email,
+      user.companyDetails,
+      {
+        ...user.raiseDetails,
+        raisePurpose: raisePurpose,
+      },
+      user.uploadedDocuments
+    );
+    updateUser(updatedUser);
+  }, [raisePurpose]);
 
-      // Only update if registered value has actually changed
-      if (company.raiseDetails?.raisePurpose !== raisePurpose) {
-        console.log('regi changed');
-        return new Company(
-          company.uid,
-          company.name,
-          company.email,
-          company.companyDetails,
-          {
-            ...company.raiseDetails,
-            raisePurpose: raisePurpose,
-          },
-          company.uploadedDocuments
-        );
-      }
-
-      return prev;
-    });
-  }, [raisePurpose, setUser]);
-
-  const setAttr = (
-    attrName: string,
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    setUser((prev) => {
-      const company = prev as Company;
-      const value = e.target.value;
-      const updatedRaiseDetails = {
-        ...company.raiseDetails,
+  const setAttr = (attrName: string, value: string | number | Date) => {
+    const updatedUser = new Company(
+      user.uid,
+      user.name,
+      user.email,
+      user.companyDetails,
+      {
+        ...user.raiseDetails,
         [attrName]: value,
-      };
-
-      return new Company(
-        company.uid,
-        company.name,
-        company.email,
-        company.companyDetails,
-        updatedRaiseDetails,
-        company.uploadedDocuments
-      );
-    });
+      },
+      user.uploadedDocuments
+    );
+    updateUser(updatedUser);
   };
 
   const formatValueLabel = (value: number) => {
@@ -82,23 +69,23 @@ export const RaiseContentForm: React.FC = () => {
       return `${value / 1000}K`;
     }
   };
+
   return (
     <form onSubmit={() => {}}>
-      <label>How much money did the company raise untill now?</label>
+      <label>How much money did the company raise until now?</label>
       <input
         type="text"
         required
         value={raisedAmount}
         onChange={(event) => {
-          console.log(user);
           setRaisedAmount(parseInt(event.target.value as string, 10));
-          setAttr('raisedAmount', event);
+          setAttr('raisedAmount', parseInt(event.target.value as string, 10));
         }}
       />
-      <label>How much money does the company wants to raise?</label>
+      <label>How much money does the company want to raise?</label>
       <Slider
         aria-label="Restricted values"
-        defaultValue={targetAmount}
+        value={targetAmount}
         step={1000}
         valueLabelDisplay="off"
         min={1000}
@@ -106,9 +93,7 @@ export const RaiseContentForm: React.FC = () => {
         onChange={(e, newValue) => {
           if (typeof newValue === 'number') {
             setTargetAmount(newValue);
-            setAttr('targetAmount', {
-              target: { value: newValue.toString() },
-            } as ChangeEvent<HTMLInputElement>);
+            setAttr('targetAmount', newValue);
           }
         }}
         valueLabelFormat={formatValueLabel}
@@ -119,7 +104,7 @@ export const RaiseContentForm: React.FC = () => {
         value={formatValueLabel(targetAmount)}
         onChange={(e) => {
           setTargetAmount(parseInt(e.target.value as string, 10));
-          setAttr('targetAmount', e);
+          setAttr('targetAmount', parseInt(e.target.value as string, 10));
         }}
         style={{
           textAlign: 'center',
@@ -131,13 +116,17 @@ export const RaiseContentForm: React.FC = () => {
       <input
         type="date"
         required
-        value={format(deadLine, 'dd-mm-yyyy')}
-        onChange={(e) => setAttr('deadline', e)}
+        value={format(deadLine, 'yyyy-MM-dd')}
+        onChange={(e) => {
+          const newDate = new Date(e.target.value);
+          setDeadline(newDate);
+          setAttr('deadline', newDate);
+        }}
       />
       <label>Minimum investment per person?</label>
       <Slider
         aria-label="Restricted values"
-        defaultValue={minInvestment}
+        value={minInvestment}
         step={1000}
         valueLabelDisplay="off"
         min={1000}
@@ -145,9 +134,7 @@ export const RaiseContentForm: React.FC = () => {
         onChange={(e, newValue) => {
           if (typeof newValue === 'number') {
             setMinInvestment(newValue);
-            setAttr('minInvestment', {
-              target: { value: newValue.toString() },
-            } as ChangeEvent<HTMLInputElement>);
+            setAttr('minInvestment', newValue);
           }
         }}
         valueLabelFormat={formatValueLabel}
@@ -158,7 +145,7 @@ export const RaiseContentForm: React.FC = () => {
         value={formatValueLabel(minInvestment)}
         onChange={(e) => {
           setMinInvestment(parseInt(e.target.value as string, 10));
-          setAttr('minInvestment', e);
+          setAttr('minInvestment', parseInt(e.target.value as string, 10));
         }}
         style={{
           textAlign: 'center',
@@ -167,7 +154,11 @@ export const RaiseContentForm: React.FC = () => {
         }}
       />
       <label>What's the raise purpose?</label>
-      <ListSelector list={RaisePurpose} setList={setRaisePurpose} />
+      <ListSelector
+        initialList={raisePurpose}
+        list={RaisePurpose}
+        setList={setRaisePurpose}
+      />
     </form>
   );
 };
