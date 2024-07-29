@@ -10,6 +10,7 @@ import { saveUserToDb } from '../../../services/dbService';
 import { useUser } from '../../../context/UserContext';
 import Company from '../../../models/Company';
 import { User } from 'firebase/auth';
+import { ClipLoader } from 'react-spinners';
 
 const primaryColor = '#39958c';
 const secondaryColor = '#7fcbc4';
@@ -177,19 +178,23 @@ const StepperForm: React.FC = () => {
                 Back
               </Button>
               <Box sx={{ flex: '1 1 auto' }} />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  if (activeStep < steps.length - 1) {
-                    handleNext();
-                  } else {
-                    saveDataInDb();
-                  }
-                }}
-              >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-              </Button>
+              {loading ? (
+                <ClipLoader color="#39958c" loading={loading} size={50} />
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    if (activeStep < steps.length - 1) {
+                      handleNext();
+                    } else {
+                      saveDataInDb();
+                    }
+                  }}
+                >
+                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                </Button>
+              )}
             </Box>
           </Box>
         </Box>

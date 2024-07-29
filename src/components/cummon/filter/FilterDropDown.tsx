@@ -3,6 +3,8 @@ import React from 'react';
 import Button from '../Button';
 import { InvesmentsCategories } from '../../../utils/constant';
 
+import GenericSelector from '../drop-down/Selector';
+
 interface FilterDropdownProps {
   selectedFilters: string[];
   onFilterChange: (filter: string) => void;
@@ -26,6 +28,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
           {category}
         </label>
       ))}
+
       <Button
         label={'Apply'}
         onClick={onApply}

@@ -33,6 +33,14 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
   );
 
   useEffect(() => {
+    setRaisedAmount(user.raiseDetails.raisedAmount || 0);
+    setTargetAmount(user.raiseDetails.targetAmount || 0);
+    setDeadline(user.raiseDetails.deadline || new Date());
+    setMinInvestment(user.raiseDetails.minInvestment || 0);
+    setRaisePurpose(user.raiseDetails.raisePurpose || []);
+  }, [user]);
+
+  useEffect(() => {
     const updatedUser = new Company(
       user.uid,
       user.name,
