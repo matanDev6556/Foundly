@@ -31,7 +31,7 @@ const InvestmentCard: React.FC<InvestmentCardProps> = ({ company }) => {
       </div>
       <InvestmentLogo
         logo={companyDetails.logo}
-        companyName={companyDetails.companyName}
+        companyName={company.name}
         image={companyDetails.image}
       />
 
@@ -47,7 +47,7 @@ const InvestmentCard: React.FC<InvestmentCardProps> = ({ company }) => {
         <InvestmentInfoItem value={companyDetails.category} label="קטגוריה" />
       </div>
 
-      <h3 className="investment-card__title">{companyDetails.companyName}</h3>
+      <h3 className="investment-card__title">{company.name}</h3>
       <p className="investment-card__description">
         {companyDetails.description}
       </p>

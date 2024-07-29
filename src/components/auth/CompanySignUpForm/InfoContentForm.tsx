@@ -14,9 +14,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
   updateUser,
 }) => {
   const { setLoading, setError } = useAppStatus();
-  const [companyName, setCompanyName] = useState(
-    user.companyDetails.companyName || ''
-  );
+  const [companyName, setCompanyName] = useState(user.name || '');
   const [website, setWebsite] = useState(user.companyDetails.website || '');
   const [youtubeSite, setYoutubeSite] = useState(
     user.companyDetails.promoVideoLink || ''
@@ -29,7 +27,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
   const [about, setAbout] = useState(user.companyDetails.about || '');
 
   useEffect(() => {
-    setCompanyName(user.companyDetails.companyName || '');
+    setCompanyName(user.name || '');
     setWebsite(user.companyDetails.website || '');
     setYoutubeSite(user.companyDetails.promoVideoLink || '');
     setCountry(user.companyDetails.country || '');
@@ -60,7 +58,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
   const setAttr = (attrName: string, value: string) => {
     const updatedUser = new Company(
       user.uid,
-      user.name,
+      attrName === 'name' ? value : user.name,
       user.email,
       {
         ...user.companyDetails,
@@ -78,11 +76,11 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
       <input
         required
         type="text"
-        name="companyName"
+        name="name"
         value={companyName}
         onChange={(event) => {
           setCompanyName(event.target.value);
-          setAttr('companyName', event.target.value);
+          setAttr('name', event.target.value);
         }}
       />
       <label>Company's website</label>

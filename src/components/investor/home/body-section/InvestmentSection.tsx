@@ -6,6 +6,8 @@ import InvestmentList from '../../../cummon/invest-card/InvestList';
 
 const InvestmentsSection: React.FC = () => {
   const navigate = useNavigate();
+
+  
   const handleAllClick = () => {
     navigate('allInvestments');
   };

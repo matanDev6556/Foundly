@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import CategorySelector from '../../cummon/list-selector/ListSelector';
 import YesNoSelector from './yes-no/YesNoSelector';
 import Investor from '../../../models/Investor';
 import {

@@ -18,7 +18,6 @@ import User from '../models/User';
 import { UserType } from '../utils/enums';
 import { handleFirebaseError } from './FirebaseErrorService';
 import { FirebaseError } from 'firebase/app';
-import { useAppStatus } from '../context/AppStatusContext';
 
 interface HasToJson {
   toJson: () => { [key: string]: any };
@@ -28,13 +27,15 @@ interface HasToJson {
 // for exampke : likes, invests...
 export const fetchForUser = async <T>(
   collectionName: string,
-  userId: string,
+  attr: string,
+  equalAttr: string,
+
   fromJson: (json: any) => T
 ): Promise<T[]> => {
   try {
     const q = query(
       collection(db, collectionName),
-      where('userId', '==', userId)
+      where(attr, '==', equalAttr)
     );
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => fromJson(doc.data()));

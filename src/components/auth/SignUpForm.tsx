@@ -7,7 +7,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import { useAppStatus } from '../../context/AppStatusContext';
 import { handleFirebaseError } from '../../services/FirebaseErrorService';
 import { FirebaseError } from 'firebase/app';
-import Company, { CompanyDetails, RaiseDetails } from '../../models/Company';
+
 
 interface SignUpFormProps {
   userType: UserType;

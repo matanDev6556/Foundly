@@ -1,7 +1,7 @@
 import User from './User';
 
 export interface CompanyDetails {
-  companyName: string;
+ 
   website: string;
   promoVideoLink: string;
   country: string;
@@ -31,7 +31,6 @@ export default class Company extends User {
     name: string = '',
     email: string = '',
     companyDetails: CompanyDetails = {
-      companyName: '',
       website: '',
       promoVideoLink: '',
       country: '',
