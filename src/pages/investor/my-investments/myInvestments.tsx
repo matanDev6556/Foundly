@@ -30,9 +30,7 @@ const MyInvestments: React.FC = () => {
 
   const filteredCompanies = likedCompanies
     .filter((company) =>
-      company.companyDetails.companyName
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+      company.name.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .filter((company) =>
       selectedFilters.length === 0

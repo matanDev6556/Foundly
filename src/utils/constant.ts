@@ -5,13 +5,13 @@ import img3 from '../assets/images/company3.png';
 import logo1 from '../assets/images/logo1.png';
 
 export const RaisePurpose: string[] = [
-  "Marketing",
-  "Development",
-  "Distribution",
-  "Branding",
-  "Pilot",
-  "Production",
-  "Design",
+  'Marketing',
+  'Development',
+  'Distribution',
+  'Branding',
+  'Pilot',
+  'Production',
+  'Design',
 ];
 export const InvesmentsCategories: string[] = [
   'Ai',
@@ -34,7 +34,6 @@ export const companies: Company[] = [
     'H2OLL',
     'info@h2oll.com',
     {
-      companyName: 'H2OLL',
       website: 'https://h2oll.com',
       promoVideoLink: '',
       country: 'Israel',
@@ -60,7 +59,6 @@ export const companies: Company[] = [
     'GreenTech',
     'info@greentech.com',
     {
-      companyName: 'GreenTech',
       website: 'https://greentech.com',
       promoVideoLink: '',
       country: 'USA',
@@ -86,7 +84,6 @@ export const companies: Company[] = [
     'BioHealth',
     'info@biohealth.com',
     {
-      companyName: 'BioHealth',
       website: 'https://biohealth.com',
       promoVideoLink: '',
       about: '',
@@ -112,7 +109,6 @@ export const companies: Company[] = [
     'Tesla',
     'info@h2oll.com',
     {
-      companyName: 'H2OLL',
       website: 'https://h2oll.com',
       promoVideoLink: '',
       country: 'Israel',
@@ -138,7 +134,6 @@ export const companies: Company[] = [
     'Apple',
     'info@greentech.com',
     {
-      companyName: 'GreenTech',
       website: 'https://greentech.com',
       promoVideoLink: '',
       country: 'USA',
