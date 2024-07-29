@@ -19,7 +19,9 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
   const [youtubeSite, setYoutubeSite] = useState(
     user.companyDetails.promoVideoLink || ''
   );
-  const [country, setCountry] = useState(user.companyDetails.country || '');
+  const [country, setCountry] = useState(
+    user.companyDetails.country || 'Israel'
+  );
   const [registered, setRegistered] = useState(
     user.companyDetails.registrarOfCompanies || false
   );
@@ -28,11 +30,11 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
 
   useEffect(() => {
     setCompanyName(user.name || '');
-    setWebsite(user.companyDetails.website || '');
-    setYoutubeSite(user.companyDetails.promoVideoLink || '');
-    setCountry(user.companyDetails.country || '');
-    setCategory(user.companyDetails.category || '');
-    setAbout(user.companyDetails.about || '');
+    setWebsite(user.companyDetails.website || companyName);
+    setYoutubeSite(user.companyDetails.promoVideoLink || youtubeSite);
+    setCountry(user.companyDetails.country || country);
+    setCategory(user.companyDetails.category || category);
+    setAbout(user.companyDetails.about || about);
     setRegistered(user.companyDetails.registrarOfCompanies || false);
   }, [user]);
 
