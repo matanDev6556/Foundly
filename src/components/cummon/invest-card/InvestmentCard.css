@@ -95,7 +95,7 @@
 }
 
 .investment-card__info-value {
-  font-size: 1.2rem;
+  font-size: 0ץ0rem;
   font-weight: bold;
 }
 
@@ -103,6 +103,9 @@
   font-size: 0.9rem;
   color: #777;
   margin-top: 2px;
+}
+.investment-card__title{
+  color: var(  --txtMain-color);
 }
 
 .investment-card__progress {
