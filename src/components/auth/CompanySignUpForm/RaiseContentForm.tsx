@@ -3,8 +3,9 @@ import { useAppStatus } from '../../../context/AppStatusContext';
 import { RaisePurpose } from '../../../utils/constant';
 import Company from '../../../models/Company';
 import Slider from '@mui/material/Slider';
-import { format, isValid } from 'date-fns';
+import { format, isValid, parseISO } from 'date-fns';
 import ListSelector from '../../cummon/list-selector/ListSelector';
+import { Timestamp } from 'firebase/firestore';
 
 interface RaiseContentFormProps {
   user: Company;
@@ -15,7 +16,7 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
   user,
   updateUser,
 }) => {
-  const { setLoading, setError } = useAppStatus();
+  
   const [raisedAmount, setRaisedAmount] = useState(
     user.raiseDetails.raisedAmount || 0
   );
@@ -23,8 +24,7 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
     user.raiseDetails.targetAmount || 1000
   );
   const [deadLine, setDeadline] = useState<Date>(() => {
-    const date = new Date(user.raiseDetails.deadline || new Date());
-    return isValid(date) ? date : new Date();
+    return user.raiseDetails.deadline.toDate();
   });
   const [minInvestment, setMinInvestment] = useState(
     user.raiseDetails.minInvestment || 1000
@@ -36,7 +36,7 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
   useEffect(() => {
     setRaisedAmount(user.raiseDetails.raisedAmount || 0);
     setTargetAmount(user.raiseDetails.targetAmount || 1000);
-    setDeadline(new Date(user.raiseDetails.deadline || new Date()));
+    setDeadline(user.raiseDetails.deadline.toDate());
     setMinInvestment(user.raiseDetails.minInvestment || 1000);
     setRaisePurpose(user.raiseDetails.raisePurpose || []);
   }, [user]);
@@ -56,7 +56,10 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
     updateUser(updatedUser);
   }, [raisePurpose]);
 
-  const setAttr = (attrName: string, value: string | number | Date) => {
+  const setAttr = (
+    attrName: string,
+    value: string | number | Date | Timestamp
+  ) => {
     const updatedUser = new Company(
       user.uid,
       user.name,
@@ -64,7 +67,8 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
       user.companyDetails,
       {
         ...user.raiseDetails,
-        [attrName]: value,
+        [attrName]:
+          attrName === 'deadline' ? Timestamp.fromDate(value as Date) : value,
       },
       user.uploadedDocuments
     );
@@ -115,7 +119,8 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
         required
         value={formatValueLabel(targetAmount)}
         onChange={(e) => {
-          const value = parseInt(e.target.value.replace(/[KM]/g, ''), 10) * 1000;
+          const value =
+            parseInt(e.target.value.replace(/[KM]/g, ''), 10) * 1000;
           if (!isNaN(value)) {
             setTargetAmount(value);
             setAttr('targetAmount', value);
@@ -131,12 +136,12 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
       <input
         type="date"
         required
-        value={isValid(deadLine) ? format(deadLine, 'yyyy-MM-dd') : ''}
+        value={format(deadLine, 'yyyy-MM-dd')}
         onChange={(e) => {
-          const newDate = new Date(e.target.value);
+          const newDate = parseISO(e.target.value);
           if (isValid(newDate)) {
             setDeadline(newDate);
-            setAttr('deadline', newDate.toISOString());
+            setAttr('deadline', newDate);
           }
         }}
       />
@@ -161,7 +166,8 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
         required
         value={formatValueLabel(minInvestment)}
         onChange={(e) => {
-          const value = parseInt(e.target.value.replace(/[KM]/g, ''), 10) * 1000;
+          const value =
+            parseInt(e.target.value.replace(/[KM]/g, ''), 10) * 1000;
           if (!isNaN(value)) {
             setMinInvestment(value);
             setAttr('minInvestment', value);

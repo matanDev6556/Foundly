@@ -3,6 +3,7 @@ import img1 from '../assets/images/company1.png';
 import img2 from '../assets/images/company2.png';
 import img3 from '../assets/images/company3.png';
 import logo1 from '../assets/images/logo1.png';
+import { Timestamp } from 'firebase/firestore';
 
 export const RaisePurpose: string[] = [
   'Marketing',
@@ -28,6 +29,7 @@ export const InvesmentsCategories: string[] = [
 export const InvestmentRange = ['0-100k', '100k-500k', '500k-1M', '1M+'];
 export const countries = ['Israel', 'Others'];
 
+/*
 export const companies: Company[] = [
   new Company(
     '1',
@@ -47,11 +49,12 @@ export const companies: Company[] = [
     {
       targetAmount: 1000000,
       raisedAmount: 500000,
-      deadline: '12',
+      deadline: Timestamp.fromDate(
+        new Date(Date.now() + 12 * 30 * 24 * 60 * 60 * 1000)
+      ), // 12 months from now
       minInvestment: 1000,
       raisePurpose: ['Innovation', 'Expansion'],
     },
-
     []
   ),
   new Company(
@@ -72,11 +75,12 @@ export const companies: Company[] = [
     {
       targetAmount: 300000,
       raisedAmount: 100000,
-      deadline: '18',
+      deadline: Timestamp.fromDate(
+        new Date(Date.now() + 18 * 30 * 24 * 60 * 60 * 1000)
+      ), // 18 months from now
       minInvestment: 2000,
       raisePurpose: ['Solar', 'Renewable'],
     },
-
     []
   ),
   new Company(
@@ -97,11 +101,12 @@ export const companies: Company[] = [
     {
       targetAmount: 50000,
       raisedAmount: 50000,
-      deadline: '24',
+      deadline: Timestamp.fromDate(
+        new Date(Date.now() + 24 * 30 * 24 * 60 * 60 * 1000)
+      ), // 24 months from now
       minInvestment: 5000,
       raisePurpose: ['Medical', 'Research'],
     },
-
     []
   ),
   new Company(
@@ -122,11 +127,12 @@ export const companies: Company[] = [
     {
       targetAmount: 20000,
       raisedAmount: 10000,
-      deadline: '12',
+      deadline: Timestamp.fromDate(
+        new Date(Date.now() + 12 * 30 * 24 * 60 * 60 * 1000)
+      ), // 12 months from now
       minInvestment: 1000,
       raisePurpose: ['Innovation', 'Expansion'],
     },
-
     []
   ),
   new Company(
@@ -147,11 +153,13 @@ export const companies: Company[] = [
     {
       targetAmount: 30000,
       raisedAmount: 19000,
-      deadline: '18',
+      deadline: Timestamp.fromDate(
+        new Date(Date.now() + 18 * 30 * 24 * 60 * 60 * 1000)
+      ), // 18 months from now
       minInvestment: 2000,
       raisePurpose: ['Solar', 'Renewable'],
     },
-
     []
   ),
 ];
+*/
