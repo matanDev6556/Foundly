@@ -5,9 +5,10 @@ import InvestmentsView from '../../../components/investor/my-investments/Investm
 import LikeView from '../../../components/investor/my-investments/LikeView';
 import { useLikes } from '../../../context/LikesContext';
 import Company from '../../../models/Company';
-import { companies } from '../../../utils/constant';
+//import { companies } from '../../../utils/constant';
 import FilterButton from '../../../components/cummon/filter/FilterButton';
 import SearchBar from '../../../components/cummon/search/SearchBar';
+import { useCompanyList } from '../../../context/CompanyListContext';
 
 const MyInvestments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,6 +16,7 @@ const MyInvestments: React.FC = () => {
   const [likedCompanies, setLikedCompanies] = useState<Company[]>([]);
   const [isLikesView, setIsLikesView] = useState<boolean>(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const { companies } = useCompanyList();
 
   useEffect(() => {
     const likedCompanyIds = new Set(likes.map((like) => like.companyId));

@@ -1,16 +1,18 @@
 // src/pages/SearchInvestments.tsx
 import React, { useState } from 'react';
-import { companies } from '../../../utils/constant';
+//import { companies } from '../../../utils/constant';
 import { LikesProvider } from '../../../context/LikesContext';
 
 import './SearchInvestment.css'; // Add this line
 import SearchBar from '../../../components/cummon/search/SearchBar';
 import InvestmentList from '../../../components/cummon/invest-card/InvestList';
 import FilterButton from '../../../components/cummon/filter/FilterButton';
+import { useCompanyList } from '../../../context/CompanyListContext';
 
 const SearchInvestments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const{companies} =useCompanyList();
 
   const filteredCompanies = companies
     .filter((company) =>

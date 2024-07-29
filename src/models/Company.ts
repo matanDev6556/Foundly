@@ -1,7 +1,8 @@
 import User from './User';
-
+import { Timestamp } from 'firebase/firestore';
+import img1 from '../assets/images/company1.png';
+import logo1 from '../assets/images/logo1.png';
 export interface CompanyDetails {
- 
   website: string;
   promoVideoLink: string;
   country: string;
@@ -15,10 +16,11 @@ export interface CompanyDetails {
 
 export interface RaiseDetails {
   targetAmount: number;
-  deadline: string;
+  deadline: Timestamp; // Changed from string to Timestamp
   minInvestment: number;
   raisePurpose: string[];
-  raisedAmount: number; // סכום הכסף שכבר הושקע
+  raisedAmount: number;
+  currentInvestmentsAmount: number;
 }
 
 export default class Company extends User {
@@ -38,15 +40,16 @@ export default class Company extends User {
       category: '',
       description: '',
       about: '',
-      image: '',
-      logo: '',
+      image: img1,
+      logo: logo1,
     },
     raiseDetails: RaiseDetails = {
       targetAmount: 0,
-      deadline: '',
+      deadline: Timestamp.now(), // Default to current time
       minInvestment: 0,
       raisePurpose: [],
       raisedAmount: 0,
+      currentInvestmentsAmount: 0,
     },
     uploadedDocuments: string[] = []
   ) {
@@ -62,7 +65,13 @@ export default class Company extends User {
       json.name,
       json.email,
       json.companyDetails,
-      json.raiseDetails,
+      {
+        ...json.raiseDetails,
+        deadline:
+          json.raiseDetails.deadline instanceof Timestamp
+            ? json.raiseDetails.deadline
+            : Timestamp.fromDate(new Date(json.raiseDetails.deadline)),
+      },
       json.uploadedDocuments
     );
   }
@@ -74,14 +83,19 @@ export default class Company extends User {
       email: this.email,
       userType: this.userType,
       companyDetails: this.companyDetails,
-      raiseDetails: this.raiseDetails,
+      raiseDetails: {
+        ...this.raiseDetails,
+        deadline: this.raiseDetails.deadline.toDate().toISOString(), // Convert Timestamp to ISO string
+      },
       uploadedDocuments: this.uploadedDocuments,
     };
   }
 
   calculateProgress(): number {
     const progress =
-      (this.raiseDetails.raisedAmount / this.raiseDetails.targetAmount) * 100;
+      (this.raiseDetails.currentInvestmentsAmount /
+        this.raiseDetails.targetAmount) *
+      100;
     return parseFloat(progress.toFixed(0));
   }
 }
