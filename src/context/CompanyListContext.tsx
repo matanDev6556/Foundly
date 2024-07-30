@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import Company from '../models/Company';
-import { fetchForUser, saveToDb, deleteDocument } from '../services/dbService';
+import { fetchForUser } from '../services/dbService';
 import { useAppStatus } from './AppStatusContext';
 
 interface CompanyListContextType {
