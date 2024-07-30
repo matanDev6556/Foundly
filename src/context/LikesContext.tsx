@@ -31,7 +31,7 @@ export const LikesProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   useEffect(() => {
-    console.log(likes);
+    console.log('likes:',likes);
   }, [likes]);
 
   const toggleLike = async (companyId: string, userId: string) => {

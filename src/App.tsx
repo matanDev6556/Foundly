@@ -12,6 +12,7 @@ import Header from './components/cummon/header/Header';
 import SearchInvestments from './pages/investor/all-investments/SearchInvest';
 import MyInvestments from './pages/investor/my-investments/myInvestments';
 import { CompanyListProvider } from './context/CompanyListContext';
+import { PurchedProvider } from './context/PurchedContext';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -39,9 +40,11 @@ const AppContent: React.FC = () => {
         path={RoutePath.MyInvestments}
         element={
           <>
-            <LikesProvider>
-              <MyInvestments />
-            </LikesProvider>
+            <PurchedProvider>
+              <LikesProvider>
+                <MyInvestments />
+              </LikesProvider>
+            </PurchedProvider>
           </>
         }
       />

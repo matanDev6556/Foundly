@@ -1,54 +1,39 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './myInvestments.css';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import InvestmentsView from '../../../components/investor/my-investments/InvestmentsView';
-import LikeView from '../../../components/investor/my-investments/LikeView';
-import { useLikes } from '../../../context/LikesContext';
-import Company from '../../../models/Company';
-//import { companies } from '../../../utils/constant';
+import { usePurchasedCompanies } from './hooks/usePurchedCompanies';
+import { useFilteredPurchasedCompanies } from './hooks/useFilterPurchedCompanies';
+import { useFilteredLikedCompanies } from './hooks/useFilterLikedCompany';
+import { useToggleView } from './hooks/useToggleView';
 import FilterButton from '../../../components/cummon/filter/FilterButton';
 import SearchBar from '../../../components/cummon/search/SearchBar';
-import { useCompanyList } from '../../../context/CompanyListContext';
+import LikedCompaniesView from '../../../components/investor/my-investments/LikeView';
 
 const MyInvestments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const { likes } = useLikes();
-  const [likedCompanies, setLikedCompanies] = useState<Company[]>([]);
-  const [isLikesView, setIsLikesView] = useState<boolean>(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const { companies } = useCompanyList();
+  const { isLikesView, toggleView } = useToggleView();
 
-  useEffect(() => {
-    const likedCompanyIds = new Set(likes.map((like) => like.companyId));
-    const filteredCompanies = companies.filter((company) =>
-      likedCompanyIds.has(company.uid)
-    );
-    setLikedCompanies(filteredCompanies);
-  }, [likes]);
+  const filteredLikedCompanies = useFilteredLikedCompanies(
+    searchTerm,
+    selectedFilters
+  );
+  const filteredPurchasedCompanies = useFilteredPurchasedCompanies(
+    searchTerm,
+    selectedFilters
+  );
 
   const handleFilterChange = (filters: string[]) => {
     setSelectedFilters(filters);
   };
-
-  const filteredCompanies = likedCompanies
-    .filter((company) =>
-      company.name.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-    .filter((company) =>
-      selectedFilters.length === 0
-        ? true
-        : selectedFilters.includes(company.companyDetails.category)
-    );
 
   return (
     <div className="all-investments">
       <div className="all-investments__search-container">
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <FilterButton onFilterChange={handleFilterChange} />
-        <button
-          className="toggle-view-button"
-          onClick={() => setIsLikesView(!isLikesView)}
-        >
+        <button className="toggle-view-button" onClick={toggleView}>
           {isLikesView ? (
             <FaHeart size={25} color="#da678a" />
           ) : (
@@ -57,9 +42,15 @@ const MyInvestments: React.FC = () => {
         </button>
       </div>
       {isLikesView ? (
-        <LikeView companies={filteredCompanies} title={'השקעות שמורות'} />
+        <LikedCompaniesView
+          companies={filteredLikedCompanies}
+          title={'השקעות שמורות'}
+        />
       ) : (
-        <InvestmentsView companies={[]} title={'ההשקעות שלי'} />
+        <InvestmentsView
+          companies={filteredPurchasedCompanies}
+          title={'ההשקעות שלי'}
+        />
       )}
     </div>
   );
