@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 class Invest {
   investId: string;
   investorUid: string;
@@ -6,13 +8,13 @@ class Invest {
   investAmount: number;
 
   constructor(
-    investId: string,
     investorUid: string,
     companyUid: string,
     investNumber: number,
-    investAmount: number
+    investAmount: number,
+    investId?: string
   ) {
-    this.investId = investId;
+    this.investId = investId ?? uuidv4();
     this.investorUid = investorUid;
     this.companyUid = companyUid;
     this.investNumber = investNumber;
@@ -21,6 +23,7 @@ class Invest {
 
   toJson() {
     return {
+      investId: this.investId,
       investorUid: this.investorUid,
       companyUid: this.companyUid,
       investNumber: this.investNumber,
@@ -30,11 +33,11 @@ class Invest {
 
   static fromJson(json: { [key: string]: any }): Invest {
     return new Invest(
-      json.investid,
       json.investorUid,
       json.companyUid,
       json.investNumber,
-      json.investAmount
+      json.investAmount,
+      json.investId
     );
   }
 }

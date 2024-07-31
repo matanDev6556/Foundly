@@ -13,7 +13,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
   user,
   updateUser,
 }) => {
-  const { setLoading, setError } = useAppStatus();
+
   const [companyName, setCompanyName] = useState(user.name || '');
   const [website, setWebsite] = useState(user.companyDetails.website || '');
   const [youtubeSite, setYoutubeSite] = useState(

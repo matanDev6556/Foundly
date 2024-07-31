@@ -13,6 +13,7 @@ import SearchInvestments from './pages/investor/all-investments/SearchInvest';
 import MyInvestments from './pages/investor/my-investments/myInvestments';
 import { CompanyListProvider } from './context/CompanyListContext';
 import { PurchedProvider } from './context/PurchedContext';
+import CompanyProfile from './pages/investor/companyProfile';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -40,14 +41,14 @@ const AppContent: React.FC = () => {
         path={RoutePath.MyInvestments}
         element={
           <>
-            <PurchedProvider>
-              <LikesProvider>
-                <MyInvestments />
-              </LikesProvider>
-            </PurchedProvider>
+            <LikesProvider>
+              <MyInvestments />
+            </LikesProvider>
           </>
         }
+        
       />
+     <Route path={RoutePath.CompanyProfile + '/:companyId'} element={<CompanyProfile />} />
     </Routes>
   );
 };
@@ -56,11 +57,13 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <CommonProviders>
-      <Router>
-        <Header>
-          <AppContent />
-        </Header>
-      </Router>
+      <PurchedProvider>
+        <Router>
+          <Header>
+            <AppContent />
+          </Header>
+        </Router>
+      </PurchedProvider>
     </CommonProviders>
   );
 };

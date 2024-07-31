@@ -4,6 +4,7 @@ import { useModal } from '../../../context/popupContext';
 import Modal from '../popup/modal';
 import Profile from '../../investor/profile/profile';
 
+
 const InvestorHeader: React.FC<{ handleLogout: () => void }> = ({
   handleLogout,
 }) => {

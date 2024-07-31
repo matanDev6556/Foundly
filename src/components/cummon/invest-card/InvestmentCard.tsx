@@ -12,6 +12,8 @@ import {
   formatRemainingTime,
   formatTargetAmount,
 } from '../../../utils/functions';
+import { useNavigate } from 'react-router-dom';
+import { RoutePath } from '../../../utils/enums';
 
 interface InvestmentCardProps {
   company: Company;
@@ -19,13 +21,17 @@ interface InvestmentCardProps {
 
 const InvestmentCard: React.FC<InvestmentCardProps> = ({ company }) => {
   const { companyDetails, raiseDetails } = company;
+  const nagivate = useNavigate();
 
   const remainingDays = calculateRemainingDays(raiseDetails.deadline);
   const { value: remainingTimeValue, unit: remainingTimeUnit } =
     formatRemainingTime(remainingDays);
 
+
   return (
-    <div className="investment-card">
+    <div onClick={()=>{
+      nagivate(RoutePath.CompanyProfile + '/' + company.uid, { state: { company } });
+    }} className="investment-card">
       <div className="investment-card__like">
         <LikeButton companyId={company.uid} />
       </div>
@@ -54,6 +60,7 @@ const InvestmentCard: React.FC<InvestmentCardProps> = ({ company }) => {
       <p>{companyDetails.about}</p>
 
       <InvestmentProgress progress={company.calculateProgress()} />
+      
     </div>
   );
 };

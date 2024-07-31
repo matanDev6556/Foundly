@@ -9,11 +9,14 @@ import { useToggleView } from './hooks/useToggleView';
 import FilterButton from '../../../components/cummon/filter/FilterButton';
 import SearchBar from '../../../components/cummon/search/SearchBar';
 import LikedCompaniesView from '../../../components/investor/my-investments/LikeView';
+import { useAppStatus } from '../../../context/AppStatusContext';
+import { ClipLoader } from 'react-spinners';
 
 const MyInvestments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const { isLikesView, toggleView } = useToggleView();
+  const { loading } = useAppStatus();
 
   const filteredLikedCompanies = useFilteredLikedCompanies(
     searchTerm,
@@ -27,6 +30,9 @@ const MyInvestments: React.FC = () => {
   const handleFilterChange = (filters: string[]) => {
     setSelectedFilters(filters);
   };
+
+  if (loading)
+    return <ClipLoader color="#39958c" loading={loading} size={50} />;
 
   return (
     <div className="all-investments">
