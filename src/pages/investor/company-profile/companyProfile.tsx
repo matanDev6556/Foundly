@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useUser } from '../../context/UserContext';
-import { useModal } from '../../context/popupContext';
-import Modal from '../../components/cummon/popup/modal';
-import Company from '../../models/Company';
-import BuyInvest from '../../components/company/company-profile/buy-invest/BuyInvest';
+import { useUser } from '../../../context/UserContext';
+import { useModal } from '../../../context/popupContext';
+import Modal from '../../../components/cummon/popup/modal';
+import Company from '../../../models/Company';
+import BuyInvest from '../../../components/company/company-profile/buy-invest/BuyInvest';
 import { useLocation, useParams } from 'react-router-dom';
-import { useCompanyList } from '../../context/CompanyListContext';
+import { useCompanyList } from '../../../context/CompanyListContext';
 
 const CompanyProfile: React.FC = () => {
   const { setModalType, modalType } = useModal();
