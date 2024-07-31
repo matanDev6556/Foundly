@@ -1,14 +1,15 @@
-
 import { LikesProvider } from '../../../context/LikesContext';
+import { PurchedProvider } from '../../../context/PurchedContext';
 import GuestHome from '../../home/GuestHome';
-
 
 const InvestorHome: React.FC = () => {
   return (
     <>
-      <LikesProvider>
-        <GuestHome />
-      </LikesProvider>
+      <PurchedProvider>
+        <LikesProvider>
+          <GuestHome />
+        </LikesProvider>
+      </PurchedProvider>
     </>
   );
 };

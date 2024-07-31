@@ -10,7 +10,7 @@ const Profile: React.FC = () => {
     <div className="profile-container">
       <PreferencesStep isEditing={true} />
       <div className="button-container">
-        <Button 
+        <Button
           label={'Delete account'}
           onClick={function (): void {}}
           color={'red'}

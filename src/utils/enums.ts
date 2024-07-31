@@ -2,6 +2,7 @@ export enum RoutePath {
   Home = '/',
   SearchInvests = '/allInvestments',
   MyInvestments = '/myInvestments',
+  CompanyProfile = '/companyProfile',
 }
 export enum UserType {
   Admin = 'Admin',

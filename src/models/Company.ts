@@ -2,6 +2,7 @@ import User from './User';
 import { Timestamp } from 'firebase/firestore';
 import img1 from '../assets/images/company1.png';
 import logo1 from '../assets/images/logo1.png';
+
 export interface CompanyDetails {
   website: string;
   promoVideoLink: string;
@@ -16,7 +17,7 @@ export interface CompanyDetails {
 
 export interface RaiseDetails {
   targetAmount: number;
-  deadline: Timestamp; // Changed from string to Timestamp
+  deadline: Timestamp; 
   minInvestment: number;
   raisePurpose: string[];
   raisedAmount: number;
@@ -50,6 +51,7 @@ export default class Company extends User {
       raisePurpose: [],
       raisedAmount: 0,
       currentInvestmentsAmount: 0,
+      
     },
     uploadedDocuments: string[] = []
   ) {

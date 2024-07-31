@@ -12,7 +12,7 @@ import { useCompanyList } from '../../../context/CompanyListContext';
 const SearchInvestments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const{companies} =useCompanyList();
+  const { companies } = useCompanyList();
 
   const filteredCompanies = companies
     .filter((company) =>
@@ -27,8 +27,6 @@ const SearchInvestments: React.FC = () => {
   const handleFilterChange = (filters: string[]) => {
     setSelectedFilters(filters);
   };
-
-  //TODO : fetch real companies list
 
   return (
     <LikesProvider>

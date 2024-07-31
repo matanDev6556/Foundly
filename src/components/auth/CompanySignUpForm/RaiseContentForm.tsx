@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
-import { useAppStatus } from '../../../context/AppStatusContext';
 import { RaisePurpose } from '../../../utils/constant';
 import Company from '../../../models/Company';
 import Slider from '@mui/material/Slider';
