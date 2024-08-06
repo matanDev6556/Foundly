@@ -1,8 +1,8 @@
-import { useUser } from '../../context/UserContext';
-import { UserType } from '../../utils/enums';
-import InvestorHome from '../investor/home/InvstorHome';
-import GuestHome from './GuestHome';
-
+import { useUser } from "../../context/UserContext";
+import { UserType } from "../../utils/enums";
+import AdminHome from "../admin/AdminHome";
+import InvestorHome from "../investor/home/InvstorHome";
+import GuestHome from "./GuestHome";
 
 const Home: React.FC = () => {
   const { user } = useUser();
@@ -11,7 +11,7 @@ const Home: React.FC = () => {
     <>
       {user ? (
         <>
-          {user.userType === UserType.Admin && <h1>Admin Dashboard</h1>}
+          {user.userType === UserType.Admin && <AdminHome />}
           {user.userType === UserType.Investor && <InvestorHome />}
           {user.userType === UserType.Company && <h1>Company Home</h1>}
         </>

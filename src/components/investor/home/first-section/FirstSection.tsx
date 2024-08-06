@@ -51,7 +51,13 @@ const MainSection: React.FC = () => {
             </div>
           ) : (
             <>
-              <h1 style={{ marginTop: '70px', textAlign: 'center',color:'#39958c'}}>
+              <h1
+                style={{
+                  marginTop: "70px",
+                  textAlign: "center",
+                  color: "#39958c",
+                }}
+              >
                 !{user.name} ברוך הבא
               </h1>
             </>
