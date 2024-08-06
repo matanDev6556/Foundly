@@ -1,0 +1,33 @@
+.stat-card {
+  background-color: var(--primary-color); /* teal-600 */
+  padding: 1.3rem;
+  border-radius: 0.5rem;
+  color: white;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.stat-value {
+  font-size: 1.875rem;
+  font-weight: bold;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stats-container > * + * {
+  margin-left: 1rem;
+}
+
+/* For RTL support */
+[dir='rtl'] .stats-container > * + * {
+  margin-left: 0;
+  margin-right: 1rem;
+}

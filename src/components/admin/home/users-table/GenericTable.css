@@ -1,0 +1,42 @@
+.users-table-container {
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.users-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table-container th,
+.users-table-container td {
+  padding: 20px 25px;
+  text-align: right;
+}
+
+.users-table-container thead tr {
+  background-color: var(--soft);
+}
+
+.users-table-container tbody tr {
+  border-bottom: 1px solid var(--primary-color);
+  background-color: var(--soft-color);
+}
+
+.users-table-container .icon {
+  font-size: 20px;
+  margin-left: 15px;
+}
+
+.users-table-container .delete-button {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  size: 50px;
+}
+
+.users-table-container .delete-button:hover {
+  color: #ff1a1a;
+}

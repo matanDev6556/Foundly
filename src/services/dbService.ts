@@ -18,6 +18,7 @@ import User from '../models/User';
 import { UserType } from '../utils/enums';
 import { handleFirebaseError } from './FirebaseErrorService';
 import { FirebaseError } from 'firebase/app';
+import Invest from '../models/Invest';
 
 interface HasToJson {
   toJson: () => { [key: string]: any };
@@ -116,4 +117,18 @@ export const fetchUserFromDb = async (uid: string): Promise<User | null> => {
   }
 
   return null;
+};
+
+export const fetchAllInvestments = async (): Promise<Invest[]> => {
+  try {
+    const investmentsQuery = query(collection(db, 'investments'));
+    const querySnapshot = await getDocs(investmentsQuery);
+    return querySnapshot.docs.map((doc) =>
+      Invest.fromJson({ ...doc.data(), id: doc.id })
+    );
+  } catch (error: any) {
+    console.error('Error fetching investments from db: ', error);
+    handleFirebaseError(error as FirebaseError);
+    throw error;
+  }
 };
