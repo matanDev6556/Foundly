@@ -1,21 +1,23 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import "./OpenAll.css";
+
 interface OpenAllProps {
   title: string;
-  navigatePath: string;
   isBold?: boolean;
+  onClick?: () => void;
+  buttonText?: string;
 }
+
 const OpenAll: React.FC<OpenAllProps> = ({
   title,
-  navigatePath,
   isBold = true,
+  onClick,
+  buttonText = 'הכל'
 }) => {
-  const navigate = useNavigate();
   return (
     <div className="container">
-      <button className="allButton" onClick={() => navigate(navigatePath)}>
-        הכל
+      <button className="allButton" onClick={onClick}>
+        {buttonText}
       </button>
 
       <h2 className="title" style={{ fontWeight: isBold ? "bold" : "normal" }}>
