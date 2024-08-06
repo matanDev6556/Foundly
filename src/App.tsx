@@ -13,6 +13,9 @@ import SearchInvestments from './pages/investor/all-investments/SearchInvest';
 import MyInvestments from './pages/investor/my-investments/myInvestments';
 import { CompanyListProvider } from './context/CompanyListContext';
 import { PurchedProvider } from './context/PurchedContext';
+
+import InvestmentsTable from './pages/admin/InvetmentsTable';
+import UsersTable from './pages/admin/UsersTable';
 import CompanyProfile from './pages/investor/company-profile/companyProfile';
 
 interface ProvidersProps {
@@ -51,6 +54,9 @@ const AppContent: React.FC = () => {
         path={RoutePath.CompanyProfile + '/:companyId'}
         element={<CompanyProfile />}
       />
+
+      <Route path={RoutePath.InvetmentsTable} element={<InvestmentsTable />} />
+      <Route path={RoutePath.UsersTable} element={<UsersTable />} />
     </Routes>
   );
 };
