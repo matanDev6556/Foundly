@@ -15,8 +15,8 @@ export const useUsersManagement = (limitedRowsCount: number) => {
   useEffect(() => {
     const loadUsers = async () => {
       try {
-        const fetchedInvestors = await fetchForUser('users', 'userType', 'Investor', Investor.fromJSON);
-        const fetchedCompanies = await fetchForUser('users', 'userType', 'Company', Company.fromJSON);
+        const fetchedInvestors = await fetchForUser('users', 'userType', 'Investor', Investor.fromJson);
+        const fetchedCompanies = await fetchForUser('users', 'userType', 'Company', Company.fromJson);
         setInvestors(fetchedInvestors);
         setCompanies(fetchedCompanies);
         setDisplayedUsers([...fetchedInvestors, ...fetchedCompanies].slice(0, limitedRowsCount));

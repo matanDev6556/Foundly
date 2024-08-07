@@ -21,7 +21,7 @@ export default class Investor extends User {
   }
 
   // פונקציה להמרה ל-JSON
-  toJSON() {
+  toJson() {
     return {
       uid: this.uid,
       name: this.name,
@@ -32,7 +32,7 @@ export default class Investor extends User {
   }
 
   // פונקציה ליצירה מ-JSON
-  static fromJSON(json: any): Investor {
+  static fromJson(json: any): Investor {
     return new Investor(json.uid, json.name, json.email, json.preferences);
   }
 }
