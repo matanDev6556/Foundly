@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import Company from "../../../../models/Company";
-import { formatTargetAmount } from "../../../../utils/functions";
-import InvestmentProgress from "../../invest-card/InvestProgress";
-import "./CompanyTopSection.css";
+import React, { useEffect } from 'react';
+import Company from '../../../../models/Company';
+import { formatTargetAmount } from '../../../../utils/functions';
+import InvestmentProgress from '../../invest-card/InvestProgress';
+import './CompanyTopSection.css';
 
 interface BuyInvestProps {
   company: Company;
@@ -27,7 +27,8 @@ export const CompanyTopSection: React.FC<BuyInvestProps> = ({ company }) => {
               <InvestmentProgress progress={company.calculateProgress()} />
             </div>
             <p className="investment-card__investment1">
-              {formatTargetAmount(raiseDetails.targetAmount)}$ already invested!
+              {formatTargetAmount(raiseDetails.currentInvestmentsAmount)}$
+              already invested!
             </p>
           </div>
         </div>

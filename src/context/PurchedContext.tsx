@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import Invest from '../models/Invest';
-import { fetchForUser, saveToDb } from '../services/dbService';
+import { fetchForUser, fetchUserFromDb, saveToDb } from '../services/dbService';
 import { useUser } from './UserContext';
 import { useAppStatus } from './AppStatusContext';
+import Company from '../models/Company';
 
 interface PurchedContextType {
   userInvestments: Invest[];
@@ -54,6 +55,11 @@ export const PurchedProvider: React.FC<{ children: React.ReactNode }> = ({
       // Save the new investment to the database
       setLoading(true);
       await saveToDb('investments', investment.investId, investment);
+      // update the current amount of the raise amount for the company
+      const user = await fetchUserFromDb(investment.companyUid);
+      const company = user as Company;
+      company.raiseDetails.currentInvestmentsAmount += investment.investAmount;
+      await saveToDb('users', company?.uid, company);
       setLoading(false);
       // Update the local state
       setInvestments((prevInvestments) => [...prevInvestments, investment]);

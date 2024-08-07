@@ -22,7 +22,7 @@ const BuyInvest: React.FC<buyInvestProps> = ({
   companyUid,
   minInvest,
 }) => {
-  const pricePerStock = 100;
+  const pricePerStock = 1500;
   const [stockAmount, setStockAmount] = useState(1);
   const [totalAmount, setTotalAmount] = useState(pricePerStock);
   const { buyInvestment } = useUserPurchedContext();

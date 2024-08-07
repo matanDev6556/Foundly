@@ -9,7 +9,7 @@ export default class User {
     public userType: string
   ) {}
 
-  toJSON() {
+  toJson() {
     return {
       uid: this.uid,
       name: this.name,
@@ -19,10 +19,10 @@ export default class User {
   }
 
   userToJSON() {
-    return this.toJSON();
+    return this.toJson();
   }
 
-  static fromJSON(json: any): User {
+  static fromJson(json: any): User {
     return new User(json.uid, json.name, json.email, json.userType);
   }
 }

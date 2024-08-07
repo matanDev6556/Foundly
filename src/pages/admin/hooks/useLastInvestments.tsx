@@ -37,13 +37,13 @@ export const useLastInvestments = (limitedRowsCount: number) => {
           'users',
           'userType',
           'Investor',
-          Investor.fromJSON
+          Investor.fromJson
         );
         const companies = await fetchForUser(
           'users',
           'userType',
           'Company',
-          Company.fromJSON
+          Company.fromJson
         );
 
         const enrichedInvestments: EnrichedInvest[] = fetchedInvestments.map(

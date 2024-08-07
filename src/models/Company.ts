@@ -1,7 +1,7 @@
-import User from "./User";
-import { Timestamp } from "firebase/firestore";
-import img1 from "../assets/images/company1.png";
-import logo1 from "../assets/images/logo1.png";
+import User from './User';
+import { Timestamp } from 'firebase/firestore';
+import img1 from '../assets/images/company1.png';
+import logo1 from '../assets/images/logo1.png';
 
 export interface CompanyDetails {
   website: string;
@@ -30,17 +30,17 @@ export default class Company extends User {
   public uploadedDocuments: string[];
 
   constructor(
-    uid: string = "",
-    name: string = "",
-    email: string = "",
+    uid: string = '',
+    name: string = '',
+    email: string = '',
     companyDetails: CompanyDetails = {
-      website: "",
-      promoVideoLink: "",
-      country: "",
+      website: '',
+      promoVideoLink: '',
+      country: '',
       registrarOfCompanies: false,
-      category: "AI",
-      description: "",
-      about: "",
+      category: 'AI',
+      description: '',
+      about: '',
       image: img1,
       logo: logo1,
     },
@@ -54,13 +54,13 @@ export default class Company extends User {
     },
     uploadedDocuments: string[] = []
   ) {
-    super(uid, name, email, "Company");
+    super(uid, name, email, 'Company');
     this.companyDetails = companyDetails;
     this.raiseDetails = raiseDetails;
     this.uploadedDocuments = uploadedDocuments;
   }
 
-  static fromJSON(json: any): Company {
+  static fromJson(json: any): Company {
     return new Company(
       json.uid,
       json.name,
@@ -77,7 +77,7 @@ export default class Company extends User {
     );
   }
 
-  toJSON() {
+  toJson() {
     return {
       uid: this.uid,
       name: this.name,
