@@ -10,6 +10,8 @@ interface AppStatusContextProps {
   setError: (error: string | null) => void;
   uploading: boolean;
   setUploading: React.Dispatch<React.SetStateAction<boolean>>;
+  uploadProgress: number;
+  setUploadProgress: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const AppStatusContext = createContext<AppStatusContextProps | undefined>(
@@ -20,6 +22,7 @@ export const AppStatusProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [error, setErrorState] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const setError = (error: string | null) => {
     setErrorState(error);
@@ -30,7 +33,16 @@ export const AppStatusProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AppStatusContext.Provider
-      value={{ loading, setLoading, error, setError, uploading, setUploading }}
+      value={{
+        loading,
+        setLoading,
+        error,
+        setError,
+        uploading,
+        setUploading,
+        uploadProgress,
+        setUploadProgress,
+      }}
     >
       {children}
     </AppStatusContext.Provider>
