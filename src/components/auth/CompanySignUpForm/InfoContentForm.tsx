@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useAppStatus } from '../../../context/AppStatusContext';
-import YesNoSelector from '../InvestorSignUpForm/yes-no/YesNoSelector';
-import { InvesmentsCategories } from '../../../utils/constant';
-import Company from '../../../models/Company';
+import React, { useEffect, useState } from "react";
+import { useAppStatus } from "../../../context/AppStatusContext";
+import YesNoSelector from "../InvestorSignUpForm/yes-no/YesNoSelector";
+import { InvesmentsCategories } from "../../../utils/constant";
+import Company from "../../../models/Company";
+import { ImageSection } from "../../../utils/enums";
+import { uploadDoc } from "../../../services/dbService";
 
 interface InfoContentFormProps {
   user: Company;
@@ -13,24 +15,28 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
   user,
   updateUser,
 }) => {
-
-  const [companyName, setCompanyName] = useState(user.name || '');
-  const [website, setWebsite] = useState(user.companyDetails.website || '');
+  const [companyName, setCompanyName] = useState(user.name || "");
+  const [website, setWebsite] = useState(user.companyDetails.website || "");
+  const [image, setImage] = useState(user.companyDetails.image || "");
+  const [logo, setLogo] = useState(user.companyDetails.logo || "");
   const [youtubeSite, setYoutubeSite] = useState(
-    user.companyDetails.promoVideoLink || ''
+    user.companyDetails.promoVideoLink || ""
   );
   const [country, setCountry] = useState(
-    user.companyDetails.country || 'Israel'
+    user.companyDetails.country || "Israel"
   );
   const [registered, setRegistered] = useState(
     user.companyDetails.registrarOfCompanies || false
   );
-  const [category, setCategory] = useState(user.companyDetails.category || '');
-  const [about, setAbout] = useState(user.companyDetails.about || '');
+  const [category, setCategory] = useState(user.companyDetails.category || "");
+  const [about, setAbout] = useState(user.companyDetails.about || "");
+  const { uploading, setUploading } = useAppStatus();
 
   useEffect(() => {
-    setCompanyName(user.name || '');
+    setCompanyName(user.name || "");
     setWebsite(user.companyDetails.website || companyName);
+    setImage(user.companyDetails.image || image);
+    setLogo(user.companyDetails.logo || logo);
     setYoutubeSite(user.companyDetails.promoVideoLink || youtubeSite);
     setCountry(user.companyDetails.country || country);
     setCategory(user.companyDetails.category || category);
@@ -60,7 +66,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
   const setAttr = (attrName: string, value: string) => {
     const updatedUser = new Company(
       user.uid,
-      attrName === 'name' ? value : user.name,
+      attrName === "name" ? value : user.name,
       user.email,
       {
         ...user.companyDetails,
@@ -70,6 +76,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
       user.uploadedDocuments
     );
     updateUser(updatedUser);
+    console.log(updatedUser);
   };
 
   return (
@@ -82,7 +89,39 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={companyName}
         onChange={(event) => {
           setCompanyName(event.target.value);
-          setAttr('name', event.target.value);
+          setAttr("name", event.target.value);
+        }}
+      />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={async (e) => {
+          if (e.target.files?.[0]) {
+            const imageUrl = await uploadDoc(
+              e.target.files[0],
+              user.uid,
+              ImageSection.Images,
+              setUploading
+            );
+            setImage(imageUrl);
+            setAttr("image", imageUrl);
+          }
+        }}
+      />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={async (e) => {
+          if (e.target.files?.[0]) {
+            const logoUrl = await uploadDoc(
+              e.target.files[0],
+              user.uid,
+              ImageSection.Logos,
+              setUploading
+            );
+            setLogo(logoUrl);
+            setAttr("logo", logoUrl);
+          }
         }}
       />
       <label>Company's website</label>
@@ -93,7 +132,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={website}
         onChange={(event) => {
           setWebsite(event.target.value);
-          setAttr('website', event.target.value);
+          setAttr("website", event.target.value);
         }}
       />
       <label>Youtube promotional video</label>
@@ -103,7 +142,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={youtubeSite}
         onChange={(event) => {
           setYoutubeSite(event.target.value);
-          setAttr('promoVideoLink', event.target.value);
+          setAttr("promoVideoLink", event.target.value);
         }}
       />
       <label>Country</label>
@@ -112,7 +151,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={country}
         onChange={(event) => {
           setCountry(event.target.value);
-          setAttr('country', event.target.value);
+          setAttr("country", event.target.value);
         }}
       >
         <option value="Israel">Israel</option>
@@ -127,7 +166,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={category}
         onChange={(event) => {
           setCategory(event.target.value);
-          setAttr('category', event.target.value);
+          setAttr("category", event.target.value);
         }}
       >
         {InvesmentsCategories.map((category) => (
@@ -145,9 +184,9 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={about}
         onChange={(event) => {
           setAbout(event.target.value);
-          setAttr('about', event.target.value);
+          setAttr("about", event.target.value);
         }}
-        style={{ width: '100%', height: '80px' }}
+        style={{ width: "100%", height: "80px" }}
       />
     </form>
   );

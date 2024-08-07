@@ -1,0 +1,129 @@
+.details-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+}
+
+.separator {
+  width: 1px;
+  background-color: var(--txtMain-color);
+  height: auto; /* Ensure it takes the height of its container */
+}
+
+.company-section {
+  flex: 1;
+  padding: 10px;
+}
+
+.docs-container,
+.info-container,
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.docs-container .document-links,
+.info-container .info-content,
+.contact-container .contact-form {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.document-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.document-card {
+  width: 100px; /* Adjust width for smaller size */
+  height: 120px; /* Adjust height for smaller size */
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  color: #333;
+}
+
+.document-card:hover {
+  background-color: #e2e3e5;
+}
+
+.document-card img {
+  width: 40px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.document-card .title {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #444648;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.form-group {
+  width: 100%;
+  max-width: 400px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--soft-color);
+  border-radius: 5px;
+  font-size: 1rem;
+  color: var(--txtSoftBlack-color);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.submit-button {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: var(--secondary-color);
+}
+
+@media (max-width: 768px) {
+  .details-container {
+    flex-direction: column;
+  }
+
+  .form-group {
+    width: 90%;
+  }
+}

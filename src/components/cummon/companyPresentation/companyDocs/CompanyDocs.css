@@ -1,0 +1,61 @@
+.docs-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.docs-title {
+  font-size: 1.5rem;
+  color: var(--soft-color);
+  margin-bottom: 10px;
+}
+
+.document-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.document-card {
+  width: 120px;
+  height: 160px;
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  color: #333;
+}
+
+.document-card:hover {
+  background-color: #e2e3e5;
+}
+
+.document-card img {
+  width: 40px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.document-card .title {
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #444648;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .document-card {
+    width: 100px;
+    height: 140px;
+  }
+
+  .document-card .title {
+    font-size: 0.9rem;
+  }
+}
