@@ -19,8 +19,8 @@ export const DocsForm: React.FC<props> = ({ user, updateUser }) => {
   useEffect(() => {
     const updatedUser = new Company(
       user.uid,
-      user.email,
       user.name,
+      user.email,
       user.companyDetails,
       user.raiseDetails,
       files
