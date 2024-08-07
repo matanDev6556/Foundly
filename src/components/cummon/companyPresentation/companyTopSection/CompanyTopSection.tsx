@@ -27,7 +27,7 @@ export const CompanyTopSection: React.FC<BuyInvestProps> = ({ company }) => {
               <InvestmentProgress progress={company.calculateProgress()} />
             </div>
             <p className="investment-card__investment1">
-              {formatTargetAmount(raiseDetails.targetAmount)}$ already invested!
+               {formatTargetAmount(raiseDetails.currentInvestmentsAmount)}$  כבר הושקעו
             </p>
           </div>
         </div>

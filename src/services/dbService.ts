@@ -107,9 +107,9 @@ export const fetchUserFromDb = async (uid: string): Promise<User | null> => {
 
       switch (userType) {
         case UserType.Investor:
-          return Investor.fromJSON(userData);
+          return Investor.fromJson(userData);
         case UserType.Company:
-          return Company.fromJSON(userData);
+          return Company.fromJson(userData);
         case UserType.Admin:
           return new Admin(uid, name, email, userType);
         default:
