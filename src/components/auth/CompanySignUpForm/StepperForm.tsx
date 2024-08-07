@@ -94,7 +94,7 @@ const StepContent: React.FC<StepContentProps> = ({
         </div>
       );
     case 2:
-      return <DocsForm user={user} updateUser={updateUser} />;
+      return <DocsForm />;
     default:
       return <div>Unknown Step</div>;
   }
