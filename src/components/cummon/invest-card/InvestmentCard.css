@@ -26,11 +26,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .investment-card__image {
   width: 100%;
   height: auto;
+  cursor: pointer;
 }
 
 .investment-card__like {
@@ -93,7 +95,15 @@
   height: 60%;
   border-right: 1px solid #ccc;
 }
-
+.investment-card__about {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  max-height: 4.5em; /* Approximately 3 lines of text */
+  line-height: 1.5em;
+}
 .investment-card__info-value {
   font-size: 0.9rem;
   font-weight: bold;
