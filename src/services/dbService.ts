@@ -10,14 +10,20 @@ import {
   where,
   deleteDoc,
   addDoc,
+  updateDoc,
 } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Admin from "../models/Admin";
 import Company from "../models/Company";
 import Investor from "../models/Investor";
 import User from "../models/User";
-import { UserType } from "../utils/enums";
+import { ImageSection, UserType } from "../utils/enums";
 import { handleFirebaseError } from "./FirebaseErrorService";
 import { FirebaseError } from "firebase/app";
+import { useAppStatus } from "../context/AppStatusContext";
+import { useState } from "react";
+
+import Invest from "../models/Invest";
 
 interface HasToJson {
   toJson: () => { [key: string]: any };
@@ -116,4 +122,55 @@ export const fetchUserFromDb = async (uid: string): Promise<User | null> => {
   }
 
   return null;
+};
+
+export const fetchAllInvestments = async (): Promise<Invest[]> => {
+  try {
+    const investmentsQuery = query(collection(db, "investments"));
+    const querySnapshot = await getDocs(investmentsQuery);
+    return querySnapshot.docs.map((doc) =>
+      Invest.fromJson({ ...doc.data(), id: doc.id })
+    );
+  } catch (error: any) {
+    console.error("Error fetching investments from db: ", error);
+    handleFirebaseError(error as FirebaseError);
+    throw error;
+  }
+};
+export const uploadDoc = (
+  image: File,
+  companyId: string,
+  section: string,
+  setUploading: React.Dispatch<React.SetStateAction<boolean>>
+): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const storageRef = ref(
+      storage,
+      `fundly/${section}/${companyId}/${image.name}`
+    );
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        setUploading(true);
+      },
+      (error) => {
+        console.error(error);
+        setUploading(false);
+        reject(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            setUploading(false);
+            resolve(downloadURL);
+          })
+          .catch((error) => {
+            setUploading(false);
+            reject(error);
+          });
+      }
+    );
+  });
 };
