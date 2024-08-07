@@ -16,6 +16,7 @@ interface UsersTableProps<T extends TableItem> {
   columns: Column<T>[];
   onDelete?: (id: string) => void;
   isUserTable?: boolean;
+  isAdmin?: boolean;
 }
 
 function GenericUsersTable<T extends TableItem>({
@@ -23,6 +24,7 @@ function GenericUsersTable<T extends TableItem>({
   columns,
   onDelete,
   isUserTable = false,
+  isAdmin = true,
 }: UsersTableProps<T>) {
   const handleDelete = (id: string) => {
     if (onDelete && window.confirm('האם אתה בטוח שברצונך למחוק פריט זה?')) {
@@ -51,7 +53,8 @@ function GenericUsersTable<T extends TableItem>({
                   }
                   className="delete-button"
                 >
-                  <FaTrashAlt size={23} />
+                  {isAdmin? <FaTrashAlt size={23} />:null}
+      
                   {isUserTable ? <FaBell color="#39958c" size={23} /> : ''}
                 </button>
               </td>

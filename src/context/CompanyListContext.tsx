@@ -26,7 +26,7 @@ export const CompanyListProvider: React.FC<{ children: React.ReactNode }> = ({
           'users',
           'userType',
           'Company',
-          Company.fromJSON
+          Company.fromJson
         );
         setCompanies(fetchedCompanies);
       } catch (error) {

@@ -22,11 +22,11 @@ const CompanyProfile: React.FC = () => {
   useEffect(() => {
     const getCompany = () => {
       if (location.state?.company) {
-        setCompany(Company.fromJSON(location.state.company));
+        setCompany(Company.fromJson(location.state.company));
       } else if (companyId) {
         const foundCompany = companies.find((c) => c.uid === companyId);
         if (foundCompany) {
-          setCompany(Company.fromJSON(foundCompany));
+          setCompany(Company.fromJson(foundCompany));
         } else {
           console.error("Company not found");
         }

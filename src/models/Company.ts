@@ -60,7 +60,7 @@ export default class Company extends User {
     this.uploadedDocuments = uploadedDocuments;
   }
 
-  static fromJSON(json: any): Company {
+  static fromJson(json: any): Company {
     return new Company(
       json.uid,
       json.name,
@@ -77,7 +77,7 @@ export default class Company extends User {
     );
   }
 
-  toJSON() {
+  toJson() {
     return {
       uid: this.uid,
       name: this.name,
