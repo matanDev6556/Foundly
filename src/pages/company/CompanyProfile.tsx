@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useUser } from '../../../context/UserContext';
-import { useModal } from '../../../context/popupContext';
-import Modal from '../../../components/cummon/popup/modal';
-import Company from '../../../models/Company';
-import BuyInvest from '../../../components/company/company-profile/buy-invest/BuyInvest';
-import { useLocation, useParams } from 'react-router-dom';
-import { useCompanyList } from '../../../context/CompanyListContext';
-import { CompanyTopSection } from '../../../components/cummon/companyPresentation/companyTopSection/CompanyTopSection';
-import { YoutubeVideoSection } from '../../../components/cummon/youtubeVideoSection/YoutubeVideoSection';
-import { CompanyDetails } from '../../../components/company/company-profile/CompanyDetails';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './CompanyProfile.css';
+import React, { useEffect, useState } from "react";
+import { useUser } from "../../context/UserContext";
+import { useModal } from "../../context/popupContext";
+import Modal from "../../components/cummon/popup/modal";
+import Company from "../../models/Company";
+import BuyInvest from "../../components/company/company-profile/buy-invest/BuyInvest";
+import { useLocation, useParams } from "react-router-dom";
+import { useCompanyList } from "../../context/CompanyListContext";
+import { CompanyTopSection } from "../../components/cummon/companyPresentation/companyTopSection/CompanyTopSection";
+import { YoutubeVideoSection } from "../../components/cummon/youtubeVideoSection/YoutubeVideoSection";
+import { CompanyDetails } from "../../components/company/company-profile/CompanyDetails";
+import "./CompanyProfile.css";
 
 const CompanyProfile: React.FC = () => {
   const { setModalType, modalType } = useModal();
@@ -30,7 +28,7 @@ const CompanyProfile: React.FC = () => {
         if (foundCompany) {
           setCompany(Company.fromJson(foundCompany));
         } else {
-          console.error('Company not found');
+          console.error("Company not found");
         }
       }
     };
@@ -43,15 +41,8 @@ const CompanyProfile: React.FC = () => {
   }
 
   const handleBuy = () => {
-    if (user) {
-      console.log(company.uid);
-      setModalType('Buy');
-    } else {
-      toast.warning('Please login for Buy investments!');
-    }
-
     console.log(company.uid);
-    setModalType('Buy');
+    setModalType("Buy");
   };
 
   return (
@@ -66,8 +57,7 @@ const CompanyProfile: React.FC = () => {
           I want to invest!
         </button>
       </div>
-
-      {modalType === 'Buy' && user?.uid && (
+      {modalType === "Buy" && user?.uid && (
         <Modal>
           <BuyInvest
             investorUid={user.uid}

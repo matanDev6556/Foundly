@@ -29,6 +29,7 @@ export const CompanyTopSection: React.FC<BuyInvestProps> = ({ company }) => {
             <p className="investment-card__investment1">
               {formatTargetAmount(raiseDetails.currentInvestmentsAmount)}$
               already invested!
+               {formatTargetAmount(raiseDetails.currentInvestmentsAmount)}$  כבר הושקעו
             </p>
           </div>
         </div>

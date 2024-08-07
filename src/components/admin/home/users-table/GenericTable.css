@@ -5,6 +5,7 @@
 }
 
 .users-table-container table {
+  color:#728f9e;
   width: 100%;
   border-collapse: collapse;
 }
@@ -17,11 +18,13 @@
 
 .users-table-container thead tr {
   background-color: var(--soft);
+  color:white ;
 }
 
 .users-table-container tbody tr {
   border-bottom: 1px solid var(--primary-color);
   background-color: var(--soft-color);
+  font-size: 25px;
 }
 
 .users-table-container .icon {
