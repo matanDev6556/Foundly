@@ -50,7 +50,8 @@ body {
 
 .investment-card__image1 img {
   width: 100%;
-  height: auto;
+  width: 500px;
+  height: 300px;
   border-radius: 10px; /* Ensure this is set to round all corners */
 }
 

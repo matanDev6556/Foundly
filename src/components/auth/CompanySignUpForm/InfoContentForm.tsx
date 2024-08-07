@@ -34,33 +34,14 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
 
   useEffect(() => {
     setCompanyName(user.name || "");
-    setWebsite(user.companyDetails.website || companyName);
-    setImage(user.companyDetails.image || image);
-    setLogo(user.companyDetails.logo || logo);
-    setYoutubeSite(user.companyDetails.promoVideoLink || youtubeSite);
-    setCountry(user.companyDetails.country || country);
-    setCategory(user.companyDetails.category || category);
-    setAbout(user.companyDetails.about || about);
+    setWebsite(user.companyDetails.website || "");
+    setImage(user.companyDetails.image || "");
+    setLogo(user.companyDetails.logo || "");
+    setYoutubeSite(user.companyDetails.promoVideoLink || "");
+    setCountry(user.companyDetails.country || "Israel");
+    setCategory(user.companyDetails.category || "");
+    setAbout(user.companyDetails.about || "");
     setRegistered(user.companyDetails.registrarOfCompanies || false);
-  }, [user]);
-
-  useEffect(() => {
-    const updatedUser = new Company(
-      user.uid,
-      user.name,
-      user.email,
-      {
-        ...user.companyDetails,
-        registrarOfCompanies: registered,
-      },
-      user.raiseDetails,
-      user.uploadedDocuments
-    );
-    updateUser(updatedUser);
-  }, [registered]);
-
-  useEffect(() => {
-    console.log(user);
   }, [user]);
 
   const setAttr = (attrName: string, value: string) => {
@@ -76,7 +57,6 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
       user.uploadedDocuments
     );
     updateUser(updatedUser);
-    console.log(updatedUser);
   };
 
   return (
@@ -92,6 +72,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
           setAttr("name", event.target.value);
         }}
       />
+      <label>Company Profile Image</label>
       <input
         type="file"
         accept="image/*"
@@ -108,6 +89,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
           }
         }}
       />
+      <label>Company Logo</label>
       <input
         type="file"
         accept="image/*"

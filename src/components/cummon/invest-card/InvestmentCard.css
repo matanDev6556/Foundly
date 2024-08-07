@@ -87,7 +87,7 @@
 }
 
 .investment-card__info-item:not(:last-child)::after {
-  content: '';
+  content: "";
   position: absolute;
   right: 0;
   top: 50%;
