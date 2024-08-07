@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   BarChart,
   Bar,
@@ -8,9 +8,9 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
-import { Timestamp } from 'firebase/firestore';
-import Invest from '../../../models/Invest';
+} from "recharts";
+import { Timestamp } from "firebase/firestore";
+import Invest from "../../../models/Invest";
 
 interface ChartData {
   date: string;
@@ -45,7 +45,7 @@ const LastInvestmentsChart: React.FC<LastInvestmentsChartProps> = ({
     .map((invest) => ({
       date: invest.investDate
         .toDate()
-        .toLocaleDateString('he-IL', { month: 'short', day: 'numeric' }),
+        .toLocaleDateString("he-IL", { month: "short", day: "numeric" }),
       amount: invest.investAmount,
     }));
 

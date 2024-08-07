@@ -105,7 +105,7 @@ const StepperForm: React.FC = () => {
   const [localUser, setLocalUser] = useState<Company>(new Company());
   const [activeStep, setActiveStep] = useState(0);
   const { closeModal } = useModal();
-  const { loading, setLoading, error, setError } = useAppStatus();
+  const { loading, setLoading, error, setError, uploading } = useAppStatus();
 
   useEffect(() => {
     if (user) {
@@ -180,10 +180,25 @@ const StepperForm: React.FC = () => {
               <Box sx={{ flex: "1 1 auto" }} />
               {loading ? (
                 <ClipLoader color="#39958c" loading={loading} size={50} />
+              ) : !uploading ? (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    if (activeStep < steps.length - 1) {
+                      handleNext();
+                    } else {
+                      saveDataInDb();
+                    }
+                  }}
+                >
+                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                </Button>
               ) : (
                 <Button
                   variant="contained"
                   color="primary"
+                  disabled
                   onClick={() => {
                     if (activeStep < steps.length - 1) {
                       handleNext();

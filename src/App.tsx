@@ -13,6 +13,7 @@ import SearchInvestments from "./pages/investor/all-investments/SearchInvest";
 import MyInvestments from "./pages/investor/my-investments/myInvestments";
 import { CompanyListProvider } from "./context/CompanyListContext";
 import { PurchedProvider } from "./context/PurchedContext";
+import CompanyProfile from "./pages/company/CompanyProfile";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -36,6 +37,7 @@ const AppContent: React.FC = () => {
     <Routes>
       <Route path={RoutePath.Home} element={<Home />} />
       <Route path={RoutePath.SearchInvests} element={<SearchInvestments />} />
+
       <Route
         path={RoutePath.MyInvestments}
         element={
@@ -45,6 +47,10 @@ const AppContent: React.FC = () => {
             </LikesProvider>
           </>
         }
+      />
+      <Route
+        path={RoutePath.CompanyProfile + "/:companyId"}
+        element={<CompanyProfile />}
       />
     </Routes>
   );
