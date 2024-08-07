@@ -85,7 +85,7 @@
 }
 
 .investment-card__info-item:not(:last-child)::after {
-  content: '';
+  content: "";
   position: absolute;
   right: 0;
   top: 50%;
@@ -104,8 +104,8 @@
   color: #777;
   margin-top: 2px;
 }
-.investment-card__title{
-  color: var(  --txtMain-color);
+.investment-card__title {
+  color: var(--txtMain-color);
 }
 
 .investment-card__progress {

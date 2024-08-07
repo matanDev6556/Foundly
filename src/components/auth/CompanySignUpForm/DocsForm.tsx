@@ -30,15 +30,15 @@ export const DocsForm: React.FC<props> = ({ user, updateUser }) => {
   return (
     <div>
       <Box display="flex" flexWrap="wrap" gap={2} p={2}>
-        <Grid container direction="row" spacing={2}>
+        <Grid container direction="row" spacing={5}>
           {[...Array(numOfFiles)].map((_, index) => (
             <Grid item xs={4} key={index} gap={2} p={2}>
               <FileSelect
+                index={index}
                 files={files}
                 setFiles={setFiles}
                 user={user}
                 updateUser={updateUser}
-                key={index}
               />
             </Grid>
           ))}
@@ -54,10 +54,10 @@ export const DocsForm: React.FC<props> = ({ user, updateUser }) => {
       >
         <Button
           variant="contained"
-          style={{ width: "10px" }}
+          style={{ width: "auto" }}
           onClick={() => setNumOfFiles((prev) => prev + 1)}
         >
-          +
+          Add document
         </Button>
       </Box>
 

@@ -92,6 +92,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
           setAttr("name", event.target.value);
         }}
       />
+      <label>Company Profile Image</label>
       <input
         type="file"
         accept="image/*"
@@ -108,6 +109,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
           }
         }}
       />
+      <label>Company Logo</label>
       <input
         type="file"
         accept="image/*"
