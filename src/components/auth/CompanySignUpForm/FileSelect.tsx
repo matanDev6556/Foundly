@@ -1,37 +1,40 @@
 import { Box } from "@mui/system";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import fileIconUpdated from "../../../assets/images/fileIconUpdated.svg";
-import { Button, CircularProgress, Grid, TextField } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  IconButton,
+  TextField,
+  Tooltip,
+} from "@mui/material";
 import { useAppStatus } from "../../../context/AppStatusContext";
 import { useUser } from "../../../context/UserContext";
 import Company from "../../../models/Company";
 import { ImageSection } from "../../../utils/enums";
 import { uploadDoc } from "../../../services/dbService";
+import { extractFileName } from "../../../utils/functions";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+
 interface props {
-  key: number;
+  index: number;
   files: string[];
   setFiles: React.Dispatch<React.SetStateAction<string[]>>;
   user: Company;
   updateUser: (updatedUser: Company) => void;
 }
-interface FileObject {
-  name: string;
-  size: number;
-  type: string;
-  lastModified: number;
-  content: string;
-}
 
 export const FileSelect: React.FC<props> = ({
+  index,
   files,
   setFiles,
   user,
   updateUser,
 }) => {
-  const [selectedFileAddress, setSelectedFileAddress] = useState(
-    user.companyDetails.logo || ""
-  );
+  const [selectedFileAddress, setSelectedFileAddress] = useState("");
   const { uploading, setUploading, error, setError } = useAppStatus();
+
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
       const fileUrl = await uploadDoc(
@@ -41,28 +44,51 @@ export const FileSelect: React.FC<props> = ({
         setUploading
       );
       setSelectedFileAddress(fileUrl);
-      setFiles((prev) => [...prev, selectedFileAddress]);
+      setFiles((prev) => {
+        const newFiles = [...prev];
+        newFiles[index] = fileUrl;
+        return newFiles;
+      });
     }
   };
+
   return (
     <form onSubmit={() => {}}>
-      <Box>
-        <Grid container direction="column" spacing={2}>
-          <img
-            src={fileIconUpdated}
-            alt="Main Illustration"
-            className="main-section__image"
-            style={{ width: "20%", height: "30%" }}
-          />
-        </Grid>
-        <Grid container direction="column" spacing={2}>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => handleChange(e)}
-          />
-        </Grid>
-      </Box>
+      <div>
+        <Box>
+          <Grid container direction="column" spacing={2}>
+            <img
+              src={fileIconUpdated}
+              alt="Main Illustration"
+              className="main-section__image"
+              style={{ width: "20%", height: "30%" }}
+            />
+          </Grid>
+          <Grid container direction="column" spacing={2}>
+            <input
+              type="file"
+              accept="image/*"
+              id={`file-upload-${index}`}
+              style={{ display: "none" }}
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor={`file-upload-${index}`}>
+              <Tooltip title="Upload Image">
+                <IconButton
+                  color="primary"
+                  style={{ width: "100px", height: "100px" }}
+                  component="span"
+                >
+                  <AddCircleOutlineIcon style={{ fontSize: 40 }} />
+                </IconButton>
+              </Tooltip>
+            </label>
+            <label style={{ fontSize: "16px" }}>
+              {selectedFileAddress ? extractFileName(selectedFileAddress) : ""}
+            </label>
+          </Grid>
+        </Box>
+      </div>
     </form>
   );
 };
