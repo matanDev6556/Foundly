@@ -1,33 +1,33 @@
-import Company from '../models/Company';
-import img1 from '../assets/images/company1.png';
-import img2 from '../assets/images/company2.png';
-import img3 from '../assets/images/company3.png';
-import logo1 from '../assets/images/logo1.png';
-import { Timestamp } from 'firebase/firestore';
+import Company from "../models/Company";
+import img1 from "../assets/images/company1.png";
+import img2 from "../assets/images/company2.png";
+import img3 from "../assets/images/company3.png";
+import logo1 from "../assets/images/logo1.png";
+import { Timestamp } from "firebase/firestore";
 
 export const RaisePurpose: string[] = [
-  'Marketing',
-  'Development',
-  'Distribution',
-  'Branding',
-  'Pilot',
-  'Production',
-  'Design',
+  "Marketing",
+  "Development",
+  "Distribution",
+  "Branding",
+  "Pilot",
+  "Production",
+  "Design",
 ];
 export const InvesmentsCategories: string[] = [
-  'Ai',
-  'Technology',
-  'Health',
-  'Renewable Energy',
-  'Real Estate',
-  'Food',
-  'Finance',
-  'Electric Cars',
-  'Water',
+  "Ai",
+  "Technology",
+  "Health",
+  "Renewable Energy",
+  "Real Estate",
+  "Food",
+  "Finance",
+  "Electric Cars",
+  "Water",
 ];
 
-export const InvestmentRange = ['0-100k', '100k-500k', '500k-1M', '1M+'];
-export const countries = ['Israel', 'Others'];
+export const InvestmentRange = ["0-100k", "100k-500k", "500k-1M", "1M+"];
+export const countries = ["Israel", "Others"];
 
 /*
 export const companies: Company[] = [

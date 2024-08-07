@@ -1,24 +1,45 @@
-import React, { useState } from 'react';
-import { Box, Button, Grid, Typography } from '@mui/material';
-import { useAppStatus } from '../../../context/AppStatusContext';
-import { useUser } from '../../../context/UserContext';
-import { FileSelect } from './FileSelect';
+import React, { useEffect, useState } from "react";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { useAppStatus } from "../../../context/AppStatusContext";
+import { useUser } from "../../../context/UserContext";
+import { FileSelect } from "./FileSelect";
+import Company from "../../../models/Company";
+interface props {
+  user: Company;
+  updateUser: (updatedUser: Company) => void;
+}
 
-export const DocsForm: React.FC = () => {
-  const [files, setFiles] = useState<File[]>([]);
+export const DocsForm: React.FC<props> = ({ user, updateUser }) => {
+  const [files, setFiles] = useState<string[]>([]);
   const { error, setError } = useAppStatus();
   const [done, setDone] = useState(false);
-  const [fileContent, setFileContent] = useState('');
+  const [fileContent, setFileContent] = useState("");
   const [numOfFiles, setNumOfFiles] = useState(1);
-  const { user, setUser } = useUser();
 
+  useEffect(() => {
+    const updatedUser = new Company(
+      user.uid,
+      user.email,
+      user.name,
+      user.companyDetails,
+      user.raiseDetails,
+      files
+    );
+    updateUser(updatedUser);
+  }, [files]);
   return (
     <div>
       <Box display="flex" flexWrap="wrap" gap={2} p={2}>
         <Grid container direction="row" spacing={2}>
           {[...Array(numOfFiles)].map((_, index) => (
             <Grid item xs={4} key={index} gap={2} p={2}>
-              <FileSelect files={files} key={index} />
+              <FileSelect
+                files={files}
+                setFiles={setFiles}
+                user={user}
+                updateUser={updateUser}
+                key={index}
+              />
             </Grid>
           ))}
         </Grid>
@@ -33,7 +54,7 @@ export const DocsForm: React.FC = () => {
       >
         <Button
           variant="contained"
-          style={{ width: '10px' }}
+          style={{ width: "10px" }}
           onClick={() => setNumOfFiles((prev) => prev + 1)}
         >
           +

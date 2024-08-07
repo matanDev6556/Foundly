@@ -1,0 +1,142 @@
+:root {
+  --primary-color: #39958c;
+  --secondary-color: #7fcbc4;
+  --soft-color: #d0ebea;
+  --txtMain-color: #728f9e;
+  --txtSoftBlack-color: #444648;
+  --bg-color: #fdffff;
+  --bgGray-color: #f8f9fa;
+  --red-color: #da678a;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bgGray-color);
+  margin: 0;
+  padding: 20px;
+}
+
+.company-top-section1 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.investment-card1 {
+  display: flex;
+  overflow: hidden;
+  background-color: var(--bgGray-color);
+  margin: 10px auto;
+  padding: 20px;
+  width: 100%;
+}
+
+.left-side {
+  flex: 0 0 40%; /* Make the left section take 40% of the width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 20px; /* Adjust padding as needed */
+}
+
+.investment-card__image1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden; /* Add this line to ensure the image's border-radius is respected */
+  border-radius: 10px; /* Add this line to ensure the parent respects the border-radius */
+}
+
+.investment-card__image1 img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px; /* Ensure this is set to round all corners */
+}
+
+.investment-card__progress-content1 {
+  width: 100%;
+  padding-top: 20px;
+}
+
+.investment-card__progress-bar1 {
+  position: relative;
+  background-color: var(--bgGray-color);
+  border-radius: 10px;
+  height: 20px;
+  overflow: hidden;
+  padding: 10px 10px;
+}
+
+.investment-card__progress-bar1 div {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: 10px;
+}
+
+.investment-card__investment1 {
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-top: 10px; /* Add some space between the progress bar and the text */
+  text-align: center;
+}
+
+.investment-card__content1 {
+  flex: 2;
+  padding: 20px;
+}
+
+.investment-card__header1 {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.investment-card__logo1 {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.investment-card__title1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: auto;
+  color: var(--txtSoftBlack-color);
+}
+
+.investment-card__badge1 {
+  background-color: var(--primary-color);
+  color: var(--bg-color);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.investment-card__description1 {
+  margin: 20px 0;
+  color: var(--txtMain-color);
+}
+
+.investment-card__progress-text1 {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--bg-color);
+}
+
+@media (max-width: 768px) {
+  .investment-card1 {
+    flex-direction: column;
+  }
+
+  .investment-card__image1,
+  .investment-card__content1 {
+    padding: 10px;
+  }
+
+  .investment-card__image1 img {
+    width: 100%;
+  }
+}

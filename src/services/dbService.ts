@@ -1,5 +1,5 @@
 // src/services/dbService.ts
-import { db } from '../firebaseConfig';
+import { db, storage } from "../firebaseConfig";
 import {
   doc,
   setDoc,
@@ -10,14 +10,18 @@ import {
   where,
   deleteDoc,
   addDoc,
-} from 'firebase/firestore';
-import Admin from '../models/Admin';
-import Company from '../models/Company';
-import Investor from '../models/Investor';
-import User from '../models/User';
-import { UserType } from '../utils/enums';
-import { handleFirebaseError } from './FirebaseErrorService';
-import { FirebaseError } from 'firebase/app';
+  updateDoc,
+} from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import Admin from "../models/Admin";
+import Company from "../models/Company";
+import Investor from "../models/Investor";
+import User from "../models/User";
+import { ImageSection, UserType } from "../utils/enums";
+import { handleFirebaseError } from "./FirebaseErrorService";
+import { FirebaseError } from "firebase/app";
+import { useAppStatus } from "../context/AppStatusContext";
+import { useState } from "react";
 
 interface HasToJson {
   toJson: () => { [key: string]: any };
@@ -35,7 +39,7 @@ export const fetchForUser = async <T>(
   try {
     const q = query(
       collection(db, collectionName),
-      where(attr, '==', equalAttr)
+      where(attr, "==", equalAttr)
     );
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => fromJson(doc.data()));
@@ -83,10 +87,10 @@ export const deleteDocument = async (collectionName: string, docId: string) => {
 // user
 export const saveUserToDb = async (user: User) => {
   try {
-    await setDoc(doc(db, 'users', user.uid), user.userToJSON());
-    console.log('User data saved successfully');
+    await setDoc(doc(db, "users", user.uid), user.userToJSON());
+    console.log("User data saved successfully");
   } catch (error) {
-    console.error('Error saving user data: ', error);
+    console.error("Error saving user data: ", error);
     handleFirebaseError(error as FirebaseError);
     throw error;
   }
@@ -94,7 +98,7 @@ export const saveUserToDb = async (user: User) => {
 
 export const fetchUserFromDb = async (uid: string): Promise<User | null> => {
   try {
-    const userDoc = await getDoc(doc(db, 'users', uid));
+    const userDoc = await getDoc(doc(db, "users", uid));
     if (userDoc.exists()) {
       const userData = userDoc.data();
       const { userType, name, email } = userData;
@@ -111,9 +115,46 @@ export const fetchUserFromDb = async (uid: string): Promise<User | null> => {
       }
     }
   } catch (error) {
-    console.error('Error fetch user feom db: ', error);
+    console.error("Error fetch user feom db: ", error);
     handleFirebaseError(error as FirebaseError);
   }
 
   return null;
+};
+export const uploadDoc = (
+  image: File,
+  companyId: string,
+  section: string,
+  setUploading: React.Dispatch<React.SetStateAction<boolean>>
+): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const storageRef = ref(
+      storage,
+      `fundly/${section}/${companyId}/${image.name}`
+    );
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        setUploading(true);
+      },
+      (error) => {
+        console.error(error);
+        setUploading(false);
+        reject(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            setUploading(false);
+            resolve(downloadURL);
+          })
+          .catch((error) => {
+            setUploading(false);
+            reject(error);
+          });
+      }
+    );
+  });
 };

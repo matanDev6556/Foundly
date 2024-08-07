@@ -1,19 +1,19 @@
 // src/App.tsx
-import React from 'react';
-import './assets/styles/colors.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { RoutePath } from './utils/enums';
-import { AppStatusProvider } from './context/AppStatusContext';
-import { UserProvider } from './context/UserContext';
-import { ModalProvider } from './context/popupContext';
-import Home from './pages/home/Home';
-import { LikesProvider } from './context/LikesContext';
-import Header from './components/cummon/header/Header';
-import SearchInvestments from './pages/investor/all-investments/SearchInvest';
-import MyInvestments from './pages/investor/my-investments/myInvestments';
-import { CompanyListProvider } from './context/CompanyListContext';
-import { PurchedProvider } from './context/PurchedContext';
-import CompanyProfile from './pages/investor/companyProfile';
+import React from "react";
+import "./assets/styles/colors.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { RoutePath } from "./utils/enums";
+import { AppStatusProvider } from "./context/AppStatusContext";
+import { UserProvider } from "./context/UserContext";
+import { ModalProvider } from "./context/popupContext";
+import Home from "./pages/home/Home";
+import { LikesProvider } from "./context/LikesContext";
+import Header from "./components/cummon/header/Header";
+import SearchInvestments from "./pages/investor/all-investments/SearchInvest";
+import MyInvestments from "./pages/investor/my-investments/myInvestments";
+import { CompanyListProvider } from "./context/CompanyListContext";
+import { PurchedProvider } from "./context/PurchedContext";
+import CompanyProfile from "./pages/company/CompanyProfile";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -46,9 +46,11 @@ const AppContent: React.FC = () => {
             </LikesProvider>
           </>
         }
-        
       />
-     <Route path={RoutePath.CompanyProfile + '/:companyId'} element={<CompanyProfile />} />
+      <Route
+        path={RoutePath.CompanyProfile + "/:companyId"}
+        element={<CompanyProfile />}
+      />
     </Routes>
   );
 };
