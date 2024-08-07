@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useUser } from '../../../context/UserContext';
-import { useModal } from '../../../context/popupContext';
-import Modal from '../../../components/cummon/popup/modal';
-import Company from '../../../models/Company';
+import { useParams, useLocation } from 'react-router-dom';
 import BuyInvest from '../../../components/company/company-profile/buy-invest/BuyInvest';
-import { useLocation, useParams } from 'react-router-dom';
-import { useCompanyList } from '../../../context/CompanyListContext';
-import { CompanyTopSection } from '../../../components/cummon/companyPresentation/companyTopSection/CompanyTopSection';
-import { YoutubeVideoSection } from '../../../components/cummon/youtubeVideoSection/YoutubeVideoSection';
 import { CompanyDetails } from '../../../components/company/company-profile/CompanyDetails';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './CompanyProfile.css';
+import CompanyTopSection from '../../../components/cummon/companyPresentation/companyTopSection/CompanyTopSection';
+import { YoutubeVideoSection } from '../../../components/cummon/youtubeVideoSection/YoutubeVideoSection';
+import { useCompanyList } from '../../../context/CompanyListContext';
+import { useModal } from '../../../context/popupContext';
+import { useUser } from '../../../context/UserContext';
+import Company from '../../../models/Company';
+import Modal from '../../../components/cummon/popup/modal';
 
+import './CompanyProfile.css';
 const CompanyProfile: React.FC = () => {
   const { setModalType, modalType } = useModal();
   const { user } = useUser();
@@ -43,13 +41,6 @@ const CompanyProfile: React.FC = () => {
   }
 
   const handleBuy = () => {
-    if (user) {
-      console.log(company.uid);
-      setModalType('Buy');
-    } else {
-      toast.warning('Please login for Buy investments!');
-    }
-
     console.log(company.uid);
     setModalType('Buy');
   };
@@ -66,7 +57,6 @@ const CompanyProfile: React.FC = () => {
           I want to invest!
         </button>
       </div>
-
       {modalType === 'Buy' && user?.uid && (
         <Modal>
           <BuyInvest
