@@ -1,12 +1,12 @@
 // src/components/SignUpForm.tsx
-import React, { useState, useEffect } from "react";
-import User, { UserType } from "../../models/User";
-import { useUser } from "../../context/UserContext";
-import { registerUser } from "../../services/authService";
-import ClipLoader from "react-spinners/ClipLoader";
-import { useAppStatus } from "../../context/AppStatusContext";
-import { handleFirebaseError } from "../../services/FirebaseErrorService";
-import { FirebaseError } from "firebase/app";
+import React, { useState, useEffect } from 'react';
+import User, { UserType } from '../../models/User';
+import { useUser } from '../../context/UserContext';
+import { registerUser } from '../../services/authService';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { useAppStatus } from '../../context/AppStatusContext';
+import { handleFirebaseError } from '../../services/FirebaseErrorService';
+import { FirebaseError } from 'firebase/app';
 
 interface SignUpFormProps {
   userType: UserType;
@@ -17,9 +17,9 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ userType, moveStep }) => {
   const { setUser } = useUser();
   const { loading, setLoading, error, setError } = useAppStatus();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,7 +39,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ userType, moveStep }) => {
       moveStep();
     } catch (error: any) {
       setError(handleFirebaseError(error as FirebaseError));
-      console.error("Error signing up: ", error);
+      console.error('Error signing up: ', error);
       setLoading(false);
     } finally {
       setLoading(false);
@@ -50,6 +50,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ userType, moveStep }) => {
     <form onSubmit={handleFormSubmit}>
       <label>{userType} Name</label>
       <input
+        id="name"
         required
         type="text"
         name="name"
@@ -58,6 +59,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ userType, moveStep }) => {
       />
       <label>Email</label>
       <input
+        id="email"
         required
         type="email"
         name="email"
@@ -66,6 +68,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ userType, moveStep }) => {
       />
       <label>Password</label>
       <input
+        id="password"
         required
         type="password"
         name="password"

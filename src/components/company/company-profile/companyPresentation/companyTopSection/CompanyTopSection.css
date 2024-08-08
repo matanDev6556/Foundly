@@ -1,19 +1,9 @@
-:root {
-  --primary-color: #39958c;
-  --secondary-color: #7fcbc4;
-  --soft-color: #d0ebea;
-  --txtMain-color: #728f9e;
-  --txtSoftBlack-color: #444648;
-  --bg-color: #fdffff;
-  --bgGray-color: #f8f9fa;
-  --red-color: #da678a;
-}
-
 body {
   font-family: Arial, sans-serif;
   background-color: var(--bgGray-color);
   margin: 0;
   padding: 20px;
+  background-color: var(--bg-color);
 }
 
 .company-top-section1 {
@@ -25,7 +15,7 @@ body {
 .investment-card1 {
   display: flex;
   overflow: hidden;
-  background-color: var(--bgGray-color);
+  background-color: var(--bg-color);
   margin: 10px auto;
   padding: 20px;
   width: 100%;
@@ -50,7 +40,7 @@ body {
 
 .investment-card__image1 img {
   width: 100%;
-  width: 500px;
+  width: 580px;
   height: 300px;
   border-radius: 10px; /* Ensure this is set to round all corners */
 }
@@ -62,7 +52,7 @@ body {
 
 .investment-card__progress-bar1 {
   position: relative;
-  background-color: var(--bgGray-color);
+  background-color: var(--bg-color);
   border-radius: 10px;
   height: 20px;
   overflow: hidden;
@@ -94,8 +84,8 @@ body {
 }
 
 .investment-card__logo1 {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   margin-right: 10px;
 }
 
@@ -107,16 +97,38 @@ body {
 }
 
 .investment-card__badge1 {
-  background-color: var(--primary-color);
-  color: var(--bg-color);
-  padding: 5px 10px;
+  background-color: white;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  padding: 12px 12px;
   border-radius: 5px;
   font-size: 14px;
 }
 
 .investment-card__description1 {
-  margin: 20px 0;
-  color: var(--txtMain-color);
+  font-family: 'Arial', sans-serif; /* או כל פונט עדין אחר שתעדיף */
+  font-size: 0.75em; /* מעט קטן יותר מהטקסט הרגיל */
+  font-weight: 300; /* משקל קל יותר */
+  line-height: 1.2; /* מרווח גדול יותר בין השורות */
+  color: #666; /* צבע אפור עדין */
+  margin-top: 15px;
+  margin-bottom: 20px;
+  text-align: justify; /* יישור לשני הצדדים לתצוגה מסודרת */
+  max-width: 600px; /* הגבלת רוחב מקסימלי לשורות קצרות יותר */
+}
+
+/* אם אתה רוצה להוסיף אפקט מעבר עדין בעת טעינת הדף */
+.investment-card__description1 {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .investment-card__progress-text1 {
@@ -140,4 +152,16 @@ body {
   .investment-card__image1 img {
     width: 100%;
   }
+}
+.investment-amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.already-invested-text {
+  font-size: 0.9rem;
+  color: var(--txtMain-color);
+  font-weight: normal;
+  display: block;
 }

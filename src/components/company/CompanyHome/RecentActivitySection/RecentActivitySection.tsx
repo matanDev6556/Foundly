@@ -4,18 +4,23 @@ import { useUser } from '../../../../context/UserContext';
 import { fetchForUser } from '../../../../services/dbService';
 import Company from '../../../../models/Company';
 import Invest from '../../../../models/Invest';
-import GenericUsersTable from '../../../admin/home/users-table/GenericTable';
+import GenericUsersTable from '../../../cummon/users-table/GenericTable';
 import { Timestamp } from 'firebase/firestore';
 import OpenAll from '../../../cummon/open-all/OpenAll';
 
 const RecentActivitySection = () => {
   const { user } = useUser();
   const [allInvestments, setAllInvestments] = useState<Invest[]>([]);
-  const [displayedInvestments, setDisplayedInvestments] = useState<Invest[]>([]);
+  const [displayedInvestments, setDisplayedInvestments] = useState<Invest[]>(
+    []
+  );
   const [showAll, setShowAll] = useState<boolean>(false);
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('he-IL', { style: 'currency', currency: 'ILS' }).format(amount);
+    return new Intl.NumberFormat('he-IL', {
+      style: 'currency',
+      currency: 'ILS',
+    }).format(amount);
   };
 
   const toggleUsersDisplay = () => {
@@ -33,31 +38,39 @@ const RecentActivitySection = () => {
       month: '2-digit',
       day: '2-digit',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
   };
 
-  const columns = useMemo(() => [
-    {
-      header: 'סכום השקעה',
-      render: (invest: Invest) => formatCurrency(invest.investAmount),
-    },
-    {
-      header: 'כמות מניות',
-      render: (invest: Invest) => invest.investNumber.toLocaleString(),
-    },
-    {
-      header: 'תאריך',
-      render: (invest: Invest) => formatDate(invest.investDate),
-    },
-  ], []);
+  const columns = useMemo(
+    () => [
+      {
+        header: 'סכום השקעה',
+        render: (invest: Invest) => formatCurrency(invest.investAmount),
+      },
+      {
+        header: 'כמות מניות',
+        render: (invest: Invest) => invest.investNumber.toLocaleString(),
+      },
+      {
+        header: 'תאריך',
+        render: (invest: Invest) => formatDate(invest.investDate),
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     const getData = async () => {
       if (user) {
         try {
           const company = user as Company;
-          const Investors = await fetchForUser("investments", "companyUid", company.uid, Invest.fromJson);
+          const Investors = await fetchForUser(
+            'investments',
+            'companyUid',
+            company.uid,
+            Invest.fromJson
+          );
           setAllInvestments(Investors);
           setDisplayedInvestments(Investors.slice(0, 4)); // Show only the first 4 investments initially
         } catch (error) {
@@ -71,8 +84,16 @@ const RecentActivitySection = () => {
 
   return (
     <>
-      <OpenAll title={'השקעות אחרונות'} onClick={toggleUsersDisplay} buttonText={showAll?"נקה":"הכל"}/>
-      <GenericUsersTable data={displayedInvestments} columns={columns} isAdmin={false} />
+      <OpenAll
+        title={'השקעות אחרונות'}
+        onClick={toggleUsersDisplay}
+        buttonText={showAll ? 'נקה' : 'הכל'}
+      />
+      <GenericUsersTable
+        data={displayedInvestments}
+        columns={columns}
+        isAdmin={false}
+      />
     </>
   );
 };

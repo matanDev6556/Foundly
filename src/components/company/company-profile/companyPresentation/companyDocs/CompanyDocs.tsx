@@ -1,7 +1,7 @@
-import Company from "../../../../models/Company";
-import pdfIcon from "../../../../assets/images/fileIcon.png";
-import { extractFileName } from "../../../../utils/functions";
-import "./CompanyDocs.css";
+import Company from '../../../../../models/Company';
+import pdfIcon from '../../../../../assets/images/fileIcon.png';
+import { extractFileName } from '../../../../../utils/functions';
+import './CompanyDocs.css';
 interface docsProps {
   company: Company;
 }

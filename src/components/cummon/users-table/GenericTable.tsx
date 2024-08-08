@@ -15,6 +15,7 @@ interface UsersTableProps<T extends TableItem> {
   data: T[];
   columns: Column<T>[];
   onDelete?: (id: string) => void;
+  onRowClick?: (item: T) => void;
   isUserTable?: boolean;
   isAdmin?: boolean;
 }
@@ -23,11 +24,13 @@ function GenericUsersTable<T extends TableItem>({
   data,
   columns,
   onDelete,
+  onRowClick,
   isUserTable = false,
   isAdmin = true,
 }: UsersTableProps<T>) {
-  const handleDelete = (id: string) => {
-    if (onDelete && window.confirm('האם אתה בטוח שברצונך למחוק פריט זה?')) {
+  const handleDelete = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    if (onDelete) {
       onDelete(id);
     }
   };
@@ -45,21 +48,26 @@ function GenericUsersTable<T extends TableItem>({
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr key={index}>
-              <td>
-                <button
-                  onClick={() =>
-                    handleDelete(item.id || item.uid || item.investId)
-                  }
-                  className="delete-button"
-                >
-                  {isAdmin? <FaTrashAlt size={23} />:null}
-      
-                  {isUserTable ? <FaBell color="#39958c" size={23} /> : ''}
+            <tr 
+              key={item.id || item.uid || index} 
+              onClick={() => onRowClick && onRowClick(item)}
+              style={{ cursor: onRowClick ? 'pointer' : 'default' }}
+            >
+              <td onClick={(e) => e.stopPropagation()}>
+                <button className="delete-button">
+                  {isAdmin && onDelete && (
+                    <FaTrashAlt
+                      onClick={(e) => handleDelete(e, item.id || item.uid)}
+                      size={23}
+                    />
+                  )}
+                  {isUserTable && <FaBell color="#39958c" size={23} />}
                 </button>
               </td>
               {columns.map((column, columnIndex) => (
-                <td key={columnIndex}>{column.render(item)}</td>
+                <td key={columnIndex} data-label={column.header}>
+                  {column.render(item)}
+                </td>
               ))}
             </tr>
           ))}

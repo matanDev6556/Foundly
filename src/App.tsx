@@ -13,7 +13,7 @@ import SearchInvestments from './pages/investor/all-investments/SearchInvest';
 import MyInvestments from './pages/investor/my-investments/myInvestments';
 import { CompanyListProvider } from './context/CompanyListContext';
 import { PurchedProvider } from './context/PurchedContext';
-import CompanyProfile from './pages/investor/company-profile/companyProfile';
+import CompanyProfile from './pages/company/company-profile/companyProfile';
 
 interface ProvidersProps {
   children: React.ReactNode;

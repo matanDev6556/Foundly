@@ -20,7 +20,7 @@ const InvestmentsView: React.FC<InvestmentsViewProps> = ({
   if (companies.length == 0) {
     return (
       <>
-        <NoData img={noDataImg} messeage={'לא השקעת באף חברה'} />
+        <NoData img={noDataImg} messeage={'No investments yet'} />
         <Button
           label={'Find Investments!'}
           onClick={() => nagivate(RoutePath.SearchInvests)}

@@ -1,13 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import OpenAll from '../../components/cummon/open-all/OpenAll';
 import ManagmentInfo from '../../components/admin/home/managment-info/ManagmentInfo';
-
 import { useUsersManagement } from './hooks/useUsersManagement';
 import { useLastInvestments } from './hooks/useLastInvestments';
-import GenericUsersTable from '../../components/admin/home/users-table/GenericTable';
+import GenericUsersTable from '../../components/cummon/users-table/GenericTable';
 import LastInvestmentsChart from '../../components/admin/home/LastInvestmentChart';
+import { deleteDocument } from '../../services/dbService';
+import Company from '../../models/Company';
+import { RoutePath } from '../../utils/enums';
 
 const AdminHome: React.FC = () => {
+  const navigate = useNavigate();
   const limitedRowsCount = 4;
   const {
     investors,
@@ -15,7 +19,9 @@ const AdminHome: React.FC = () => {
     displayedUsers,
     showAllUsers,
     toggleUsersDisplay,
+    deleteUser,
     columns: userColumns,
+    reloadUsers,
   } = useUsersManagement(limitedRowsCount);
 
   const {
@@ -28,6 +34,26 @@ const AdminHome: React.FC = () => {
   const totalUsers = investors.length + companies.length;
   const totalInvestments = displayedInvestments.length;
 
+  const handleDeleteUser = async (userId: string) => {
+    if (window.confirm('האם אתה בטוח שברצונך למחוק משתמש זה?')) {
+      try {
+        await deleteDocument('users', userId);
+        deleteUser(userId);
+      } catch (error) {
+        console.error('Error deleting user:', error);
+        alert('שגיאה במחיקת המשתמש. אנא נסה שוב.');
+        reloadUsers();
+      }
+    }
+  };
+
+  const handleUserRowClick = (user: any) => {
+    if (user instanceof Company) {
+      navigate(`${RoutePath.CompanyProfile}/${user.uid}`);
+    }
+    // You can add more conditions here for other user types if needed
+  };
+
   return (
     <>
       <h1 style={{ textAlign: 'center', color: '#728f9e' }}>
@@ -39,22 +65,25 @@ const AdminHome: React.FC = () => {
         title={'Users'}
         onClick={toggleUsersDisplay}
         buttonText={
-          showAllUsers || totalUsers < limitedRowsCount ? 'פחות' : 'הכל'
+          showAllUsers || totalUsers <= limitedRowsCount ? 'פחות' : 'הכל'
         }
       />
       <GenericUsersTable
         isUserTable={true}
+        isAdmin={true}
         data={displayedUsers}
         columns={userColumns}
+        onDelete={handleDeleteUser}
+        onRowClick={handleUserRowClick}
       />
 
       <OpenAll
         title={'Last Investments'}
         onClick={toggleInvestmentsDisplay}
         buttonText={
-          showAllInvestments || totalInvestments > limitedRowsCount
-            ? 'הכל'
-            : 'פחות'
+          showAllInvestments || totalInvestments <= limitedRowsCount
+            ? 'פחות'
+            : 'הכל'
         }
       />
       <GenericUsersTable

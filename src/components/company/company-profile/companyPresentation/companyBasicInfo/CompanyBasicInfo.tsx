@@ -1,5 +1,5 @@
-import Company from "../../../../models/Company";
-import "./CompanyBasicInfo.css";
+import Company from '../../../../../models/Company';
+import './CompanyBasicInfo.css';
 interface props {
   company: Company;
 }
@@ -13,17 +13,17 @@ export const CompanyBasicInfo: React.FC<props> = ({ company }) => {
           <strong>Country:</strong> {company.companyDetails.country}
         </p>
         <p>
-          <strong>Web:</strong>{" "}
+          <strong>Web:</strong>{' '}
           <a href={company.companyDetails.website} target="_blank">
             {company.companyDetails.website}
           </a>
         </p>
         <p>
-          <strong>Registered As company:</strong>{" "}
-          {company.companyDetails.registrarOfCompanies ? "Yes" : "No"}
+          <strong>Registered As company:</strong>{' '}
+          {company.companyDetails.registrarOfCompanies ? 'Yes' : 'No'}
         </p>
         <p>
-          <strong>Minimum Investment:</strong>{" "}
+          <strong>Minimum Investment:</strong>{' '}
           {company.raiseDetails.minInvestment}
         </p>
       </div>
