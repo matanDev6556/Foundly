@@ -4,29 +4,41 @@ import { useUser } from '../../../../context/UserContext';
 import { fetchForUser } from '../../../../services/dbService';
 import Company from '../../../../models/Company';
 import Invest from '../../../../models/Invest';
-import { calculateRemainingDays, formatRemainingTime, formatTargetAmount } from '../../../../utils/functions';
+import {
+  calculateRemainingDays,
+  formatRemainingTime,
+  formatTargetAmount,
+} from '../../../../utils/functions';
 
 const MiddleSection = () => {
-  const {user } = useUser();
+  const { user } = useUser();
   const [data, setData] = useState({
     target: 0,
     total: 0,
     investoramount: 0,
     daysToComplete: 0,
     remainingTimeValue: '',
-    remainingTimeUnit: ''
+    remainingTimeUnit: '',
   });
 
   useEffect(() => {
     const getData = async () => {
-      if (user){
+      if (user) {
         try {
           const company = user as Company;
-          const investoramount = await fetchForUser("investments","companyUid",company.uid,Invest.fromJson); 
+          const investoramount = await fetchForUser(
+            'investments',
+            'companyUid',
+            company.uid,
+            Invest.fromJson
+          );
           const targetPrecent = company.calculateProgress();
           const totalRaised = company.raiseDetails.currentInvestmentsAmount;
-          const daysComplete = calculateRemainingDays(company.raiseDetails.deadline);
-          const { value: remainingTimeValue, unit: remainingTimeUnit } = formatRemainingTime(daysComplete);
+          const daysComplete = calculateRemainingDays(
+            company.raiseDetails.deadline
+          );
+          const { value: remainingTimeValue, unit: remainingTimeUnit } =
+            formatRemainingTime(daysComplete);
 
           setData({
             target: targetPrecent,
@@ -34,9 +46,8 @@ const MiddleSection = () => {
             investoramount: investoramount.length,
             daysToComplete: daysComplete,
             remainingTimeValue,
-            remainingTimeUnit
+            remainingTimeUnit,
           });
-          
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -44,17 +55,31 @@ const MiddleSection = () => {
     };
 
     getData();
-  },[user]); 
+  }, [user]);
 
   return (
     <div className="middle-section">
       <div className="content">
-        <p className="information">
-          <p className="target">{data.target}% <br/> מהיעד </p>
-          <p className="total">{formatTargetAmount(data.total) + '$'} <br/> הושקעו </p>
-          <p className="investors">{data.investoramount} <br/> משקיעים </p>
-          <p className="days">  {data.remainingTimeValue} {data.remainingTimeUnit} <br/> נותרו</p>
-        </p>
+        <div className="information">
+          <p className="target">
+            <span>{data.target}%</span>
+            <span>מהיעד</span>
+          </p>
+          <p className="total">
+            <span>{formatTargetAmount(data.total)}$</span>
+            <span>הושקעו</span>
+          </p>
+          <p className="investors">
+            <span>{data.investoramount}</span>
+            <span>משקיעים</span>
+          </p>
+          <p className="days">
+            <span>
+              {data.remainingTimeValue} {data.remainingTimeUnit}
+            </span>
+            <span>נותרו</span>
+          </p>
+        </div>
       </div>
     </div>
   );

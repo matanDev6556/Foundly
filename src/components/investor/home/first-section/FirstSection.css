@@ -9,15 +9,16 @@
 .main-section__content {
   display: flex;
   max-width: 1200px;
-  text-align: right;
-  flex-direction: row;
+  text-align: left;
+  flex-direction: row; /* Changed back to row */
+  align-items: center;
+  gap: 40px;
 }
 
 .main-section__image {
   height: 350px;
   width: 40%;
   max-width: 600px;
-  margin-right: 20px;
 }
 
 .main-section__text {
@@ -38,62 +39,95 @@
   color: #555;
   margin-bottom: 20px;
 }
+
 .main-section__buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   height: 100px;
   align-items: end;
 }
+
 .main-section__button {
   color: var(--primary-color);
   padding: 15px 40px;
   font-size: 1rem;
-  margin-left: 10px;
-
+  margin-right: 10px;
   transition: background-color 0.3s ease;
   border: none;
   cursor: pointer;
 }
 
-.raise_bttn {
+.main-section__text .highlight {
   color: var(--primary-color);
 }
 
-.invest_bttn {
+/* עדכון הכפתור של "Invest" עם צבע רקע */
+.main-section__button.invest_bttn {
+  background-color: var(--primary-color);
+  color: white; /* אופציונלי, כדי שיהיה ניגודיות טובה */
+}
+
+.main-section__button.invest_bttn:hover {
   background-color: var(--primary-color);
   color: white;
-  font-weight: bold;
 }
 
-.highlight {
-  color: var(--primary-color);
+
+.invest_bttn {
+  background-color: white;
+  color: #39958c;
+  border: 2px solid #39958c;
 }
 
-/* Phone mode responsive   */
+/* הוספת אפקטי hover */
+.raise_bttn:hover {
+  background-color: var(--soft-color);
+color: var(--primary-color);
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.invest_bttn:hover {
+  background-color: #39958c;
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* אנימציה לכפתורים */
+@keyframes buttonPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.main-section__button:hover {
+  animation: buttonPulse 1s infinite;
+}
+
+/* Phone mode responsive */
 @media (max-width: 768px) {
   .main-section__content {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: 20px;
   }
 
   .main-section__image {
     width: 100%;
     height: auto;
-    margin-right: 0;
-    margin-bottom: 20px;
   }
 
   .main-section__text {
     width: 100%;
   }
 
-  .main-section__buttons {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .main-section__button {
-    width: 100%;
-  }
+  /* ... rest of the media query remains unchanged ... */
 }

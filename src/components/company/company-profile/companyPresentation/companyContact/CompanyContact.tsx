@@ -1,5 +1,5 @@
-import Company from "../../../../models/Company";
-import "./CompanyContact.css";
+import Company from '../../../../../models/Company';
+import './CompanyContact.css';
 interface props {
   companyId: string;
 }

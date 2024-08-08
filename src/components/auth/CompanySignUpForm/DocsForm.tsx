@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
-import { useAppStatus } from "../../../context/AppStatusContext";
-import { useUser } from "../../../context/UserContext";
-import { FileSelect } from "./FileSelect";
-import Company from "../../../models/Company";
+import React, { useEffect, useState } from 'react';
+import { Box, Button, Grid, Typography } from '@mui/material';
+import { useAppStatus } from '../../../context/AppStatusContext';
+import { useUser } from '../../../context/UserContext';
+import { FileSelect } from './FileSelect';
+import Company from '../../../models/Company';
 interface props {
   user: Company;
   updateUser: (updatedUser: Company) => void;
@@ -13,7 +13,7 @@ export const DocsForm: React.FC<props> = ({ user, updateUser }) => {
   const [files, setFiles] = useState<string[]>([]);
   const { error, setError } = useAppStatus();
   const [done, setDone] = useState(false);
-  const [fileContent, setFileContent] = useState("");
+  const [fileContent, setFileContent] = useState('');
   const [numOfFiles, setNumOfFiles] = useState(1);
 
   useEffect(() => {
@@ -29,6 +29,7 @@ export const DocsForm: React.FC<props> = ({ user, updateUser }) => {
   }, [files]);
   return (
     <div>
+      <h4 style={{ color: '#7fcbc4' }}> Last step and we finish!</h4>
       <Box display="flex" flexWrap="wrap" gap={2} p={2}>
         <Grid container direction="row" spacing={5}>
           {[...Array(numOfFiles)].map((_, index) => (
@@ -54,7 +55,7 @@ export const DocsForm: React.FC<props> = ({ user, updateUser }) => {
       >
         <Button
           variant="contained"
-          style={{ width: "auto" }}
+          style={{ width: 'auto' }}
           onClick={() => setNumOfFiles((prev) => prev + 1)}
         >
           Add document
