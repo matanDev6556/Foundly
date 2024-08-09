@@ -14,13 +14,12 @@ const MainSection: React.FC = () => {
         <div className="main-section__text">
           <h1>
             Invest today in the private companies of{" "}
-            <span className="highlight">Tomorrow</span>
+            <span className="highlight">tomorrow</span>
           </h1>
           <p>
             It's easy to invest in Israeli startups and become true partners in
             success. Our platform offers transparent and focused fundraising
-            with full regulatory information to support every investment
-            decision.
+            with full regulatory information to back every investment decision.
           </p>
           {!user ? (
             <div className="main-section__buttons">
@@ -41,7 +40,7 @@ const MainSection: React.FC = () => {
                   setUserType(UserType.Investor);
                 }}
               >
-                Want to Invest
+                Want to invest
               </button>
             </div>
           ) : (
@@ -53,7 +52,7 @@ const MainSection: React.FC = () => {
                   color: "#39958c",
                 }}
               >
-                Welcome, {user.name}!
+                !Welcome, {user.name}
               </h1>
             </>
           )}
