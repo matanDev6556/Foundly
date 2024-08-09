@@ -5,6 +5,7 @@ import { InvesmentsCategories } from "../../../utils/constant";
 import Company from "../../../models/Company";
 import { ImageSection } from "../../../utils/enums";
 import { uploadDoc } from "../../../services/dbService";
+import { extractFileName } from "../../../utils/functions";
 
 interface InfoContentFormProps {
   user: Company;
