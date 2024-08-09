@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
-import './ManagementInfo.css';
-import Investor from '../../../../models/Investor';
-import Company from '../../../../models/Company';
-import { formatTargetAmount } from '../../../../utils/functions';
+import React, { useMemo } from "react";
+import "./ManagementInfo.css";
+import Investor from "../../../../models/Investor";
+import Company from "../../../../models/Company";
+import { formatTargetAmount } from "../../../../utils/functions";
 
 interface Info {
   value: string;
@@ -19,19 +19,19 @@ const ManagementInfo: React.FC<ManagementInfoProps> = ({
   companies,
 }) => {
   const info = useMemo(() => {
-    // חישוב סכום ההשקעות
+    // Calculate the total investment amount
     const totalInvestment = companies.reduce((sum, company) => {
       const amount =
-        typeof company.raiseDetails.currentInvestmentsAmount === 'number'
+        typeof company.raiseDetails.currentInvestmentsAmount === "number"
           ? company.raiseDetails.currentInvestmentsAmount
           : parseFloat(company.raiseDetails.currentInvestmentsAmount) || 0;
       return sum + amount;
     }, 0);
 
     return [
-      { value: `${formatTargetAmount(totalInvestment)}$`, label: 'הושקעו' },
-      { value: companies.length.toString(), label: 'חברות' },
-      { value: investors.length.toString(), label: 'משקיעים' },
+      { value: `${formatTargetAmount(totalInvestment)}$`, label: "Invested" },
+      { value: companies.length.toString(), label: "Companies" },
+      { value: investors.length.toString(), label: "Investors" },
     ];
   }, [investors, companies]);
 
