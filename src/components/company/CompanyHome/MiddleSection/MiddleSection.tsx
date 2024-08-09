@@ -60,26 +60,21 @@ const MiddleSection = () => {
   return (
     <div className="middle-section">
       <div className="content">
-        <div className="information">
+        <p className="information">
           <p className="target">
-            <span>{data.target}%</span>
-            <span>מהיעד</span>
+            {data.target}% <br /> of target{" "}
           </p>
           <p className="total">
-            <span>{formatTargetAmount(data.total)}$</span>
-            <span>הושקעו</span>
+            {formatTargetAmount(data.total) + "$"} <br /> invested{" "}
           </p>
           <p className="investors">
-            <span>{data.investoramount}</span>
-            <span>משקיעים</span>
+            {data.investoramount} <br /> investors{" "}
           </p>
           <p className="days">
-            <span>
-              {data.remainingTimeValue} {data.remainingTimeUnit}
-            </span>
-            <span>נותרו</span>
+            {" "}
+            {data.remainingTimeValue} {data.remainingTimeUnit} <br /> remaining
           </p>
-        </div>
+        </p>
       </div>
     </div>
   );
