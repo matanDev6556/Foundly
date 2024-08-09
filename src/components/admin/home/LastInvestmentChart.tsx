@@ -33,6 +33,7 @@ class EnrichedInvest extends Invest {
     this.companyName = companyName;
   }
 }
+
 interface LastInvestmentsChartProps {
   investments: EnrichedInvest[];
 }
@@ -57,7 +58,7 @@ const LastInvestmentsChart: React.FC<LastInvestmentsChartProps> = ({
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="amount" fill="#d0ebea" name="סכום השקעה" />
+        <Bar dataKey="amount" fill="#d0ebea" name="Investment Amount" />
       </BarChart>
     </ResponsiveContainer>
   );

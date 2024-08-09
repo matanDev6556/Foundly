@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
-import Company from '../../../models/Company';
-import Investor from '../../../models/Investor';
-import { fetchForUser } from '../../../services/dbService';
+import { useState, useEffect, useMemo, useCallback } from "react";
+import Company from "../../../models/Company";
+import Investor from "../../../models/Investor";
+import { fetchForUser } from "../../../services/dbService";
 
 type TableUser = Investor | Company;
 
@@ -14,22 +14,22 @@ export const useUsersManagement = (limitedRowsCount: number) => {
   const loadUsers = useCallback(async () => {
     try {
       const fetchedInvestors = await fetchForUser(
-        'users',
-        'userType',
-        'Investor',
+        "users",
+        "userType",
+        "Investor",
         Investor.fromJson
       );
       const fetchedCompanies = await fetchForUser(
-        'users',
-        'userType',
-        'Company',
+        "users",
+        "userType",
+        "Company",
         Company.fromJson
       );
       setInvestors(fetchedInvestors);
       setCompanies(fetchedCompanies);
       updateDisplayedUsers(fetchedInvestors, fetchedCompanies);
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error("Error fetching users:", error);
     }
   }, []);
 
@@ -63,26 +63,26 @@ export const useUsersManagement = (limitedRowsCount: number) => {
   const columns = useMemo(
     () => [
       {
-        header: 'שם משתמש',
+        header: "Username",
         render: (user: TableUser) => user.name,
       },
       {
-        header: 'סוג',
+        header: "Type",
         render: (user: TableUser) => user.userType,
       },
       {
-        header: 'אימייל',
+        header: "Email",
         render: (user: TableUser) => user.email,
       },
       {
-        header: 'פרטים נוספים',
+        header: "Additional Details",
         render: (user: TableUser) => {
           if (user instanceof Company) {
-            return `${user.companyDetails.category}, ${user.raiseDetails.currentInvestmentsAmount}₪ הושקעו`;
+            return `${user.companyDetails.category}, ${user.raiseDetails.currentInvestmentsAmount}₪ invested`;
           } else if (user instanceof Investor) {
-            return user.preferences.categories.join(', ');
+            return user.preferences.categories.join(", ");
           }
-          return '';
+          return "";
         },
       },
     ],

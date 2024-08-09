@@ -1,11 +1,11 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Company from '../../../models/Company';
-import { RoutePath } from '../../../utils/enums';
-import NoData from '../../cummon/NoData';
-import InvestmentList from '../../cummon/invest-card/InvestList';
-import Button from '../../cummon/Button';
-import noDataImg from '../../../assets/images/no_data.png';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Company from "../../../models/Company";
+import { RoutePath } from "../../../utils/enums";
+import NoData from "../../cummon/NoData";
+import InvestmentList from "../../cummon/invest-card/InvestList";
+import Button from "../../cummon/Button";
+import noDataImg from "../../../assets/images/no_data.png";
 
 interface LikedCompaniesViewProps {
   companies: Company[];
@@ -33,13 +33,13 @@ const EmptyLikeView: React.FC<{ onFindInvestments: () => void }> = ({
   onFindInvestments,
 }) => (
   <>
-    <NoData img={noDataImg} messeage={'לא שמרת אף השקעה'} />
+    <NoData img={noDataImg} messeage={"You haven't saved any investments"} />
     <Button
-      label={'מצא השקעות!'}
+      label={"Find Investments!"}
       onClick={onFindInvestments}
-      color={'white'}
-      backgroundColor={'#39958c'}
-      borderColor={''}
+      color={"white"}
+      backgroundColor={"#39958c"}
+      borderColor={""}
     />
   </>
 );
@@ -49,7 +49,7 @@ const PopulatedLikeView: React.FC<{ title: string; companies: Company[] }> = ({
   companies,
 }) => (
   <div>
-    <h2 style={{ color: '#728f9e' }}>{title}</h2>
+    <h2 style={{ color: "#728f9e" }}>{title}</h2>
     <InvestmentList companies={companies} />
   </div>
 );
