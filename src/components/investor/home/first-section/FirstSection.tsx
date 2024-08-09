@@ -31,7 +31,7 @@ const MainSection: React.FC = () => {
                   setUserType(UserType.Company);
                 }}
               >
-                Want to Raise
+                Want to raise funds
               </button>
 
               <button
