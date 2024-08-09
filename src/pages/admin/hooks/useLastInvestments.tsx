@@ -1,9 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
-import Company from '../../../models/Company';
-import Invest from '../../../models/Invest';
-import Investor from '../../../models/Investor';
-import { fetchAllInvestments, fetchForUser } from '../../../services/dbService';
-import { Timestamp } from 'firebase/firestore';
+import { useState, useEffect, useMemo } from "react";
+import Company from "../../../models/Company";
+import Invest from "../../../models/Invest";
+import Investor from "../../../models/Investor";
+import { fetchAllInvestments, fetchForUser } from "../../../services/dbService";
+import { Timestamp } from "firebase/firestore";
 
 class EnrichedInvest extends Invest {
   investorName: string;
@@ -34,15 +34,15 @@ export const useLastInvestments = (limitedRowsCount: number) => {
       try {
         const fetchedInvestments = await fetchAllInvestments();
         const investors = await fetchForUser(
-          'users',
-          'userType',
-          'Investor',
+          "users",
+          "userType",
+          "Investor",
           Investor.fromJson
         );
         const companies = await fetchForUser(
-          'users',
-          'userType',
-          'Company',
+          "users",
+          "userType",
+          "Company",
           Company.fromJson
         );
 
@@ -56,8 +56,8 @@ export const useLastInvestments = (limitedRowsCount: number) => {
             );
             return new EnrichedInvest(
               invest,
-              investor?.name || 'Unknown Investor',
-              company?.name || 'Unknown Company'
+              investor?.name || "Unknown Investor",
+              company?.name || "Unknown Company"
             );
           }
         );
@@ -68,7 +68,7 @@ export const useLastInvestments = (limitedRowsCount: number) => {
         setInvestments(enrichedInvestments);
         setDisplayedInvestments(enrichedInvestments.slice(0, limitedRowsCount));
       } catch (error) {
-        console.error('Error fetching investments:', error);
+        console.error("Error fetching investments:", error);
       }
     };
     loadInvestments();
@@ -86,32 +86,32 @@ export const useLastInvestments = (limitedRowsCount: number) => {
   const columns = useMemo(
     () => [
       {
-        header: 'משקיע',
+        header: "Investor",
         render: (invest: EnrichedInvest) => invest.investorName,
       },
       {
-        header: 'חברה',
+        header: "Company",
         render: (invest: EnrichedInvest) => invest.companyName,
       },
       {
-        header: 'סכום השקעה',
+        header: "Investment Amount",
         render: (invest: EnrichedInvest) =>
           `${invest.investAmount.toLocaleString()}₪`,
       },
       {
-        header: 'תאריך',
+        header: "Date",
         render: (invest: EnrichedInvest) => {
           if (invest.investDate instanceof Timestamp) {
-            return invest.investDate.toDate().toLocaleDateString('he-IL', {
-              year: 'numeric',
-              month: '2-digit',
-              day: '2-digit',
-              hour: '2-digit',
-              minute: '2-digit',
+            return invest.investDate.toDate().toLocaleDateString("he-IL", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
             });
           } else {
             // Fallback in case investDate is not a Timestamp
-            return 'תאריך לא זמין';
+            return "Date not available";
           }
         },
       },

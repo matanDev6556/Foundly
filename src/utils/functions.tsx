@@ -22,17 +22,18 @@ export const formatRemainingTime = (
 ): { value: string; unit: string } => {
   if (days >= 365) {
     const years = Math.floor(days / 365);
-    return { value: years.toString(), unit: years === 1 ? "שנה" : "שנים" };
+    return { value: years.toString(), unit: years === 1 ? "year" : "years" };
   } else if (days >= 30) {
     const months = Math.floor(days / 30);
     return {
       value: months.toString(),
-      unit: months === 1 ? "חודש" : "חודשים",
+      unit: months === 1 ? "month" : "months",
     };
   } else {
-    return { value: days.toString(), unit: days === 1 ? "יום" : "ימים" };
+    return { value: days.toString(), unit: days === 1 ? "day" : "days" };
   }
 };
+
 export const extractFileName = (url: string): string => {
   try {
     const urlObj = new URL(url);

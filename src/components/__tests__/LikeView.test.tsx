@@ -88,7 +88,7 @@ describe("LikedCompaniesView", () => {
 
     expect(screen.getByTestId("no-data")).toHaveTextContent("לא שמרת אף השקעה");
     expect(
-      screen.getByRole("button", { name: /מצא השקעות!/i })
+      screen.getByRole("button", { name: /find investments/i })
     ).toBeInTheDocument();
   });
 

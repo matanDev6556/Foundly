@@ -10,15 +10,14 @@
   display: flex;
   max-width: 1200px;
   text-align: left;
-  flex-direction: row; /* Changed back to row */
-  align-items: center;
-  gap: 40px;
+  /* Switches the image and text sides */
 }
 
 .main-section__image {
   height: 350px;
   width: 40%;
   max-width: 600px;
+  margin-left: 20px; /* Adjusts the spacing to the left instead of the right */
 }
 
 .main-section__text {
@@ -72,7 +71,6 @@
   color: white;
 }
 
-
 .invest_bttn {
   background-color: white;
   color: #39958c;
@@ -82,7 +80,7 @@
 /* הוספת אפקטי hover */
 .raise_bttn:hover {
   background-color: var(--soft-color);
-color: var(--primary-color);
+  color: var(--primary-color);
   transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

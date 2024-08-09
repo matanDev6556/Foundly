@@ -1,14 +1,14 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import OpenAll from '../../components/cummon/open-all/OpenAll';
-import ManagmentInfo from '../../components/admin/home/managment-info/ManagmentInfo';
-import { useUsersManagement } from './hooks/useUsersManagement';
-import { useLastInvestments } from './hooks/useLastInvestments';
-import GenericUsersTable from '../../components/cummon/users-table/GenericTable';
-import LastInvestmentsChart from '../../components/admin/home/LastInvestmentChart';
-import { deleteDocument } from '../../services/dbService';
-import Company from '../../models/Company';
-import { RoutePath } from '../../utils/enums';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import OpenAll from "../../components/cummon/open-all/OpenAll";
+import ManagmentInfo from "../../components/admin/home/managment-info/ManagmentInfo";
+import { useUsersManagement } from "./hooks/useUsersManagement";
+import { useLastInvestments } from "./hooks/useLastInvestments";
+import GenericUsersTable from "../../components/cummon/users-table/GenericTable";
+import LastInvestmentsChart from "../../components/admin/home/LastInvestmentChart";
+import { deleteDocument } from "../../services/dbService";
+import Company from "../../models/Company";
+import { RoutePath } from "../../utils/enums";
 
 const AdminHome: React.FC = () => {
   const navigate = useNavigate();
@@ -35,13 +35,13 @@ const AdminHome: React.FC = () => {
   const totalInvestments = displayedInvestments.length;
 
   const handleDeleteUser = async (userId: string) => {
-    if (window.confirm('האם אתה בטוח שברצונך למחוק משתמש זה?')) {
+    if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await deleteDocument('users', userId);
+        await deleteDocument("users", userId);
         deleteUser(userId);
       } catch (error) {
-        console.error('Error deleting user:', error);
-        alert('שגיאה במחיקת המשתמש. אנא נסה שוב.');
+        console.error("Error deleting user:", error);
+        alert("Error deleting user. Please try again.");
         reloadUsers();
       }
     }
@@ -56,16 +56,16 @@ const AdminHome: React.FC = () => {
 
   return (
     <>
-      <h1 style={{ textAlign: 'center', color: '#728f9e' }}>
+      <h1 style={{ textAlign: "center", color: "#728f9e" }}>
         Management Panel
       </h1>
       <ManagmentInfo investors={investors} companies={companies} />
 
       <OpenAll
-        title={'Users'}
+        title={"Users"}
         onClick={toggleUsersDisplay}
         buttonText={
-          showAllUsers || totalUsers <= limitedRowsCount ? 'פחות' : 'הכל'
+          showAllUsers || totalUsers <= limitedRowsCount ? "Less" : "All"
         }
       />
       <GenericUsersTable
@@ -78,19 +78,19 @@ const AdminHome: React.FC = () => {
       />
 
       <OpenAll
-        title={'Last Investments'}
+        title={"Last Investments"}
         onClick={toggleInvestmentsDisplay}
         buttonText={
           showAllInvestments || totalInvestments <= limitedRowsCount
-            ? 'פחות'
-            : 'הכל'
+            ? "Less"
+            : "All"
         }
       />
       <GenericUsersTable
         data={displayedInvestments}
         columns={investmentColumns}
       />
-      <OpenAll title={'Chart'} onClick={() => {}} buttonText={''} />
+      <OpenAll title={"Chart"} onClick={() => {}} buttonText={""} />
       <LastInvestmentsChart investments={displayedInvestments} />
     </>
   );

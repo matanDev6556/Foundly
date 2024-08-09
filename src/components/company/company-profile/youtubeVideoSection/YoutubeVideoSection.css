@@ -18,7 +18,7 @@
 .youtube-section__title {
   font-size: 2rem;
   color: var(--txtMain-color);
-  text-align: right;
+  text-align: left;
 }
 .video-section__header {
   margin-left: 40px;
