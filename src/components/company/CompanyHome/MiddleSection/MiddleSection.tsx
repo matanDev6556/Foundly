@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import './MiddleSection.css';
-import { useUser } from '../../../../context/UserContext';
-import { fetchForUser } from '../../../../services/dbService';
-import Company from '../../../../models/Company';
-import Invest from '../../../../models/Invest';
+import React, { useEffect, useState } from "react";
+import "./MiddleSection.css";
+import { useUser } from "../../../../context/UserContext";
+import { fetchForUser } from "../../../../services/dbService";
+import Company from "../../../../models/Company";
+import Invest from "../../../../models/Invest";
 import {
   calculateRemainingDays,
   formatRemainingTime,
   formatTargetAmount,
-} from '../../../../utils/functions';
+} from "../../../../utils/functions";
 
 const MiddleSection = () => {
   const { user } = useUser();
@@ -17,8 +17,8 @@ const MiddleSection = () => {
     total: 0,
     investoramount: 0,
     daysToComplete: 0,
-    remainingTimeValue: '',
-    remainingTimeUnit: '',
+    remainingTimeValue: "",
+    remainingTimeUnit: "",
   });
 
   useEffect(() => {
@@ -27,8 +27,8 @@ const MiddleSection = () => {
         try {
           const company = user as Company;
           const investoramount = await fetchForUser(
-            'investments',
-            'companyUid',
+            "investments",
+            "companyUid",
             company.uid,
             Invest.fromJson
           );
@@ -49,7 +49,7 @@ const MiddleSection = () => {
             remainingTimeUnit,
           });
         } catch (error) {
-          console.error('Error fetching data:', error);
+          console.error("Error fetching data:", error);
         }
       }
     };

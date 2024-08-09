@@ -25,7 +25,7 @@ export const YoutubeVideoSection: React.FC<YoutubeVideoSectionProps> = ({
 
   return (
     <>
-      <h2 className="youtube-section__title">סרטון תדמית</h2>
+      <h2 className="youtube-section__title">Promotional Video</h2>
       <div className="video-container">
         {embedUrl ? (
           <iframe

@@ -1,11 +1,11 @@
-import React from 'react';
-import './investmentsSection.css';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import "./investmentsSection.css";
+import { useNavigate } from "react-router-dom";
 
-import InvestmentList from '../../../cummon/invest-card/InvestList';
-import { useCompanyList } from '../../../../context/CompanyListContext';
-import { useAppStatus } from '../../../../context/AppStatusContext';
-import { ClipLoader } from 'react-spinners';
+import InvestmentList from "../../../cummon/invest-card/InvestList";
+import { useCompanyList } from "../../../../context/CompanyListContext";
+import { useAppStatus } from "../../../../context/AppStatusContext";
+import { ClipLoader } from "react-spinners";
 
 const InvestmentsSection: React.FC = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const InvestmentsSection: React.FC = () => {
   const { companies } = useCompanyList();
 
   const handleAllClick = () => {
-    navigate('allInvestments');
+    navigate("allInvestments");
   };
 
   if (loading) {

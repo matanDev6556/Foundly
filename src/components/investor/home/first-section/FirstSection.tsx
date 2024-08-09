@@ -1,9 +1,9 @@
-import React from 'react';
-import './FirstSection.css';
-import analyticImg from '../../../../assets/images/analytic_image.png';
-import { useUser } from '../../../../context/UserContext';
-import { useModal } from '../../../../context/popupContext';
-import { UserType } from '../../../../utils/enums';
+import React from "react";
+import "./FirstSection.css";
+import analyticImg from "../../../../assets/images/analytic_image.png";
+import { useUser } from "../../../../context/UserContext";
+import { useModal } from "../../../../context/popupContext";
+import { UserType } from "../../../../utils/enums";
 
 const MainSection: React.FC = () => {
   const { user } = useUser();
@@ -13,7 +13,7 @@ const MainSection: React.FC = () => {
       <div data-testid="check" className="main-section__content">
         <div className="main-section__text">
           <h1>
-            Invest today in the private companies of{' '}
+            Invest today in the private companies of{" "}
             <span className="highlight">Tomorrow</span>
           </h1>
           <p>
@@ -27,7 +27,7 @@ const MainSection: React.FC = () => {
               <button
                 className="main-section__button raise_bttn"
                 onClick={() => {
-                  openModal('Sign Up As');
+                  openModal("Sign Up As");
                   setUserType(UserType.Company);
                 }}
               >
@@ -37,7 +37,7 @@ const MainSection: React.FC = () => {
               <button
                 className="main-section__button invest_bttn"
                 onClick={() => {
-                  openModal('Sign Up As');
+                  openModal("Sign Up As");
                   setUserType(UserType.Investor);
                 }}
               >
@@ -48,9 +48,9 @@ const MainSection: React.FC = () => {
             <>
               <h1
                 style={{
-                  marginTop: '70px',
-                  textAlign: 'center',
-                  color: '#39958c',
+                  marginTop: "70px",
+                  textAlign: "center",
+                  color: "#39958c",
                 }}
               >
                 Welcome, {user.name}!
