@@ -19,13 +19,13 @@ const MainSection: React.FC = () => {
         />
         <div className="main-section__text">
           <h1>
-            השקיעו היום בחברות הפרטיות של{" "}
-            <span className="highlight">המחר</span>
+            Invest today in the private companies of{" "}
+            <span className="highlight">tomorrow</span>
           </h1>
           <p>
-            קל להשקיע בסטארטאפים ישראליים ולהפוך לשותפים אמיתיים בהצלחה.
-            הפלטפורמה שלנו מציעה גיוס כספים שקוף וממוקד עם מידע רגולטורי מלא
-            לגיבוי כל החלטת השקעה.
+            It's easy to invest in Israeli startups and become true partners in
+            success. Our platform offers transparent and focused fundraising
+            with full regulatory information to back every investment decision.
           </p>
           {!user ? (
             <div className="main-section__buttons">
@@ -36,7 +36,7 @@ const MainSection: React.FC = () => {
                   setUserType(UserType.Company);
                 }}
               >
-                רוצה לגייס
+                Want to raise funds
               </button>
 
               <button
@@ -46,7 +46,7 @@ const MainSection: React.FC = () => {
                   setUserType(UserType.Investor);
                 }}
               >
-                רוצה להשקיע
+                Want to invest
               </button>
             </div>
           ) : (
@@ -58,7 +58,7 @@ const MainSection: React.FC = () => {
                   color: "#39958c",
                 }}
               >
-                !{user.name} ברוך הבא
+                !Welcome, {user.name}
               </h1>
             </>
           )}

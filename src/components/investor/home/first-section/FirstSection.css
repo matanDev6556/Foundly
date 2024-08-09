@@ -9,15 +9,15 @@
 .main-section__content {
   display: flex;
   max-width: 1200px;
-  text-align: right;
-  flex-direction: row;
+  text-align: left;
+  flex-direction: row-reverse; /* Switches the image and text sides */
 }
 
 .main-section__image {
   height: 350px;
   width: 40%;
   max-width: 600px;
-  margin-right: 20px;
+  margin-left: 20px; /* Adjusts the spacing to the left instead of the right */
 }
 
 .main-section__text {
@@ -69,7 +69,7 @@
   color: var(--primary-color);
 }
 
-/* Phone mode responsive   */
+/* Phone mode responsive */
 @media (max-width: 768px) {
   .main-section__content {
     flex-direction: column;
@@ -80,7 +80,7 @@
   .main-section__image {
     width: 100%;
     height: auto;
-    margin-right: 0;
+    margin-left: 0; /* Removes margin when in mobile view */
     margin-bottom: 20px;
   }
 

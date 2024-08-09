@@ -5,6 +5,7 @@ import { InvesmentsCategories } from "../../../utils/constant";
 import Company from "../../../models/Company";
 import { ImageSection } from "../../../utils/enums";
 import { uploadDoc } from "../../../services/dbService";
+import { extractFileName } from "../../../utils/functions";
 
 interface InfoContentFormProps {
   user: Company;
@@ -89,6 +90,9 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
           }
         }}
       />
+      <label style={{ fontSize: "20px" }}>
+        {image ? extractFileName(image) : ""}
+      </label>
       <label>Company Logo</label>
       <input
         type="file"
