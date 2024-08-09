@@ -91,9 +91,10 @@
     font-weight: bold;
   }
 
-  .users-table-container .delete-button {
+  .users-table-container .delete-button .notification-button{
     width: 100%;
     text-align: center;
-    margin-bottom: 6px; /* Slightly increased */
+    margin-bottom: 6px; 
+    background: none;
   }
 }

@@ -1,7 +1,9 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-import Company from "../../../models/Company";
-import Investor from "../../../models/Investor";
-import { fetchForUser } from "../../../services/dbService";
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import Company from '../../../models/Company';
+import Investor from '../../../models/Investor';
+import { fetchForUser, saveToDb } from '../../../services/dbService';
+import { useModal } from '../../../context/popupContext';
+import Notification from '../../../models/Notification';
 
 type TableUser = Investor | Company;
 
@@ -10,26 +12,28 @@ export const useUsersManagement = (limitedRowsCount: number) => {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [displayedUsers, setDisplayedUsers] = useState<TableUser[]>([]);
   const [showAllUsers, setShowAllUsers] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const { setModalType, modalType } = useModal();
 
   const loadUsers = useCallback(async () => {
     try {
       const fetchedInvestors = await fetchForUser(
-        "users",
-        "userType",
-        "Investor",
+        'users',
+        'userType',
+        'Investor',
         Investor.fromJson
       );
       const fetchedCompanies = await fetchForUser(
-        "users",
-        "userType",
-        "Company",
+        'users',
+        'userType',
+        'Company',
         Company.fromJson
       );
       setInvestors(fetchedInvestors);
       setCompanies(fetchedCompanies);
       updateDisplayedUsers(fetchedInvestors, fetchedCompanies);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error('Error fetching users:', error);
     }
   }, []);
 
@@ -60,29 +64,52 @@ export const useUsersManagement = (limitedRowsCount: number) => {
     setCompanies((prev) => prev.filter((comp) => comp.uid !== userId));
   }, []);
 
+  const handleNotificationClick = useCallback(
+    (userId: string) => {
+      setSelectedUserId(userId);
+      setModalType('Notifications');
+    },
+    [setModalType]
+  );
+
+  const handleSendNotification = useCallback(
+    async (userId: string, subject: string, description: string) => {
+      try {
+        const notification = new Notification(userId, subject, description);
+        await saveToDb('notifications', null, notification);
+        alert('Notification sent successfully!');
+        setModalType('');
+      } catch (error) {
+        console.error('Error sending notification:', error);
+        alert('Error sending notification. Please try again.');
+      }
+    },
+    [setModalType]
+  );
+
   const columns = useMemo(
     () => [
       {
-        header: "Username",
+        header: 'Username',
         render: (user: TableUser) => user.name,
       },
       {
-        header: "Type",
+        header: 'Type',
         render: (user: TableUser) => user.userType,
       },
       {
-        header: "Email",
+        header: 'Email',
         render: (user: TableUser) => user.email,
       },
       {
-        header: "Additional Details",
+        header: 'Additional Details',
         render: (user: TableUser) => {
           if (user instanceof Company) {
             return `${user.companyDetails.category}, ${user.raiseDetails.currentInvestmentsAmount}₪ invested`;
           } else if (user instanceof Investor) {
-            return user.preferences.categories.join(", ");
+            return user.preferences.categories.join(', ');
           }
-          return "";
+          return '';
         },
       },
     ],
@@ -98,5 +125,9 @@ export const useUsersManagement = (limitedRowsCount: number) => {
     deleteUser,
     columns,
     reloadUsers: loadUsers,
+    handleNotificationClick,
+    handleSendNotification,
+    selectedUserId,
+    modalType,
   };
 };

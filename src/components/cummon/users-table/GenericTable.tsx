@@ -16,6 +16,7 @@ interface UsersTableProps<T extends TableItem> {
   columns: Column<T>[];
   onDelete?: (id: string) => void;
   onRowClick?: (item: T) => void;
+  onNotificationClick?: (id: string) => void; // Updated to accept an id
   isUserTable?: boolean;
   isAdmin?: boolean;
 }
@@ -25,6 +26,7 @@ function GenericUsersTable<T extends TableItem>({
   columns,
   onDelete,
   onRowClick,
+  onNotificationClick,
   isUserTable = false,
   isAdmin = true,
 }: UsersTableProps<T>) {
@@ -32,6 +34,13 @@ function GenericUsersTable<T extends TableItem>({
     e.stopPropagation();
     if (onDelete) {
       onDelete(id);
+    }
+  };
+
+  const handleNotificationClick = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    if (onNotificationClick) {
+      onNotificationClick(id);
     }
   };
 
@@ -48,8 +57,8 @@ function GenericUsersTable<T extends TableItem>({
         </thead>
         <tbody>
           {data.map((item, index) => (
-            <tr 
-              key={item.id || item.uid || index} 
+            <tr
+              key={item.id || item.uid || index}
               onClick={() => onRowClick && onRowClick(item)}
               style={{ cursor: onRowClick ? 'pointer' : 'default' }}
             >
@@ -61,8 +70,19 @@ function GenericUsersTable<T extends TableItem>({
                       size={23}
                     />
                   )}
-                  {isUserTable && <FaBell color="#39958c" size={23} />}
                 </button>
+
+                {isUserTable && (
+                  <button className="notification-button">
+                    <FaBell
+                      color="#39958c"
+                      size={23}
+                      onClick={(e) =>
+                        handleNotificationClick(e, item.id || item.uid)
+                      }
+                    />
+                  </button>
+                )}
               </td>
               {columns.map((column, columnIndex) => (
                 <td key={columnIndex} data-label={column.header}>
