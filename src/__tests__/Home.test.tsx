@@ -1,19 +1,22 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Home from "../../pages/home/Home"; // Update with the correct path
-import { useUser } from "../../context/UserContext";
-import { UserType } from "../../utils/enums";
+import Home from "../pages/home/Home";
+import { useUser } from "../context/UserContext";
+import { UserType } from "../utils/enums";
 
 // Mock components
-jest.mock("../../pages/admin/AdminHome", () => () => <div>Admin Home</div>);
-jest.mock("../../pages/investor/home/InvstorHome", () => () => (
+jest.mock("../pages/admin/AdminHome", () => () => <div>Admin Home</div>);
+jest.mock("../pages/company/home/CompanyHome", () => () => (
+  <div>Company Home</div>
+));
+jest.mock("../pages/investor/home/InvstorHome", () => () => (
   <div>Investor Home</div>
 ));
-jest.mock("../../pages/home/GuestHome", () => () => <div>Guest Home</div>);
+jest.mock("../pages/home/GuestHome", () => () => <div>Guest Home</div>);
 
 // Mock useUser hook
-jest.mock("../../context/UserContext", () => ({
+jest.mock("../context/UserContext", () => ({
   useUser: jest.fn(),
 }));
 
