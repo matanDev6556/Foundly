@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import { useAppStatus } from "../../context/AppStatusContext";
-import { useCompanyList } from "../../context/CompanyListContext";
-import InvestmentsSection from "../investor/home/body-section/InvestmentSection";
+import { useAppStatus } from "../context/AppStatusContext";
+import { useCompanyList } from "../context/CompanyListContext";
+import InvestmentsSection from "../components/investor/home/body-section/InvestmentSection";
 
 // Define types for mock data
 interface Company {
@@ -13,11 +13,11 @@ interface Company {
 }
 
 // Mock context and external modules
-jest.mock("../../context/CompanyListContext", () => ({
+jest.mock("../context/CompanyListContext", () => ({
   useCompanyList: jest.fn(),
 }));
 
-jest.mock("../../context/AppStatusContext", () => ({
+jest.mock("../context/AppStatusContext", () => ({
   useAppStatus: jest.fn(),
 }));
 
@@ -26,7 +26,7 @@ jest.mock("react-spinners", () => ({
 }));
 
 // Define the mock for InvestmentList
-jest.mock("../cummon/invest-card/InvestList", () => {
+jest.mock("../components/cummon/invest-card/InvestList", () => {
   return {
     __esModule: true,
     default: ({ companies }: { companies: Company[] }) => (

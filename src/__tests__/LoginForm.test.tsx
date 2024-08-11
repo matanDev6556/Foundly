@@ -1,17 +1,17 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import LoginForm from "../auth/LoginForm";
+import LoginForm from "../components/auth/LoginForm";
 
 // Mock all external dependencies
-jest.mock("../../context/UserContext", () => ({
+jest.mock("../context/UserContext", () => ({
   useUser: () => ({ setUser: jest.fn() }),
 }));
 
-jest.mock("../../context/popupContext", () => ({
+jest.mock("../context/popupContext", () => ({
   useModal: () => ({ closeModal: jest.fn() }),
 }));
 
-jest.mock("../../context/AppStatusContext", () => ({
+jest.mock("../context/AppStatusContext", () => ({
   useAppStatus: () => ({
     loading: false,
     setLoading: jest.fn(),
@@ -20,11 +20,11 @@ jest.mock("../../context/AppStatusContext", () => ({
   }),
 }));
 
-jest.mock("../../services/authService", () => ({
+jest.mock("../services/authService", () => ({
   loginUser: jest.fn(),
 }));
 
-jest.mock("../../services/dbService", () => ({
+jest.mock("../services/dbService", () => ({
   fetchUserFromDb: jest.fn(),
 }));
 

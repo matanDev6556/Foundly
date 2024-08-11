@@ -3,8 +3,8 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Timestamp } from "firebase/firestore";
-import Company from "../../models/Company";
-import LikedCompaniesView from "../investor/my-investments/LikeView";
+import Company from "../models/Company";
+import LikedCompaniesView from "../components/investor/my-investments/LikeView";
 
 // Mock useNavigate hook
 jest.mock("react-router-dom", () => ({
@@ -12,10 +12,10 @@ jest.mock("react-router-dom", () => ({
 }));
 
 // Mock NoData, Button, and InvestmentList components
-jest.mock("../cummon/NoData", () => (props: any) => (
+jest.mock("../components/cummon/NoData", () => (props: any) => (
   <div data-testid="no-data">{props.messeage}</div>
 ));
-jest.mock("../cummon/Button", () => (props: any) => (
+jest.mock("../components/cummon/Button", () => (props: any) => (
   <button
     onClick={props.onClick}
     style={{ backgroundColor: props.backgroundColor }}
@@ -23,7 +23,7 @@ jest.mock("../cummon/Button", () => (props: any) => (
     {props.label}
   </button>
 ));
-jest.mock("../cummon/invest-card/InvestList", () => (props: any) => (
+jest.mock("../components/cummon/invest-card/InvestList", () => (props: any) => (
   <div data-testid="investment-list">
     InvestmentList with {props.companies.length} companies
   </div>
@@ -86,7 +86,9 @@ describe("LikedCompaniesView", () => {
   it("renders EmptyLikeView when there are no companies", () => {
     render(<LikedCompaniesView companies={[]} title="Liked Companies" />);
 
-    expect(screen.getByTestId("no-data")).toHaveTextContent("לא שמרת אף השקעה");
+    expect(screen.getByTestId("no-data")).toHaveTextContent(
+      "You haven't saved any investments"
+    );
     expect(
       screen.getByRole("button", { name: /find investments/i })
     ).toBeInTheDocument();
