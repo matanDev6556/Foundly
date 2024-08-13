@@ -63,9 +63,10 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/text-encoding": "^0.0.39",
     "@types/uuid": "^10.0.0",
+    "identity-obj-proxy": "latest",
+    "jest-environment-jsdom": "^29.7.0",
     "text-encoding": "^0.7.0",
-    "typescript": "^4.9.5",
     "ts-jest": "latest",
-    "identity-obj-proxy": "latest"
+    "typescript": "^4.9.5"
   }
 }
