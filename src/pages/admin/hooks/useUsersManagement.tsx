@@ -3,9 +3,11 @@ import Company from '../../../models/Company';
 import Investor from '../../../models/Investor';
 import { fetchForUser, saveToDb } from '../../../services/dbService';
 import { useModal } from '../../../context/popupContext';
-import Notification from '../../../models/Notification';
+import MyNotification from '../../../models/Notification';
+import { useUser } from '../../../context/UserContext';
 
 type TableUser = Investor | Company;
+type UserType = 'All' | 'Admin' | 'Company' | 'Investor';
 
 export const useUsersManagement = (limitedRowsCount: number) => {
   const [investors, setInvestors] = useState<Investor[]>([]);
@@ -13,7 +15,10 @@ export const useUsersManagement = (limitedRowsCount: number) => {
   const [displayedUsers, setDisplayedUsers] = useState<TableUser[]>([]);
   const [showAllUsers, setShowAllUsers] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedUserType, setSelectedUserType] = useState<UserType>('All');
   const { setModalType, modalType } = useModal();
+  const { user } = useUser();
 
   const loadUsers = useCallback(async () => {
     try {
@@ -55,10 +60,6 @@ export const useUsersManagement = (limitedRowsCount: number) => {
     updateDisplayedUsers(investors, companies);
   }, [investors, companies, updateDisplayedUsers]);
 
-  const toggleUsersDisplay = useCallback(() => {
-    setShowAllUsers((prev) => !prev);
-  }, []);
-
   const deleteUser = useCallback((userId: string) => {
     setInvestors((prev) => prev.filter((inv) => inv.uid !== userId));
     setCompanies((prev) => prev.filter((comp) => comp.uid !== userId));
@@ -73,9 +74,20 @@ export const useUsersManagement = (limitedRowsCount: number) => {
   );
 
   const handleSendNotification = useCallback(
-    async (userId: string, subject: string, description: string) => {
+    async (receiverId: string, subject: string, description: string) => {
+      if (!user) {
+        console.error('No user logged in');
+        alert('You must be logged in to send notifications.');
+        return;
+      }
+
       try {
-        const notification = new Notification(userId, subject, description);
+        const notification = new MyNotification(
+          user.uid,
+          receiverId,
+          subject,
+          description
+        );
         await saveToDb('notifications', null, notification);
         alert('Notification sent successfully!');
         setModalType('');
@@ -84,8 +96,33 @@ export const useUsersManagement = (limitedRowsCount: number) => {
         alert('Error sending notification. Please try again.');
       }
     },
-    [setModalType]
+    [user, setModalType]
   );
+
+  const filteredUsers = useMemo(() => {
+    const allUsers = [...investors, ...companies];
+    return allUsers.filter(
+      (user) =>
+        (selectedUserType === 'All' || user.userType === selectedUserType) &&
+        (user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          user.email.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  }, [companies, investors, searchTerm, selectedUserType]);
+
+  useEffect(() => {
+    const usersToDisplay = showAllUsers
+      ? filteredUsers
+      : filteredUsers.slice(0, limitedRowsCount);
+    setDisplayedUsers(usersToDisplay);
+  }, [filteredUsers, showAllUsers, limitedRowsCount]);
+
+  const handleUserTypeChange = useCallback((userType: UserType) => {
+    setSelectedUserType(userType);
+  }, []);
+
+  const toggleUsersDisplay = useCallback(() => {
+    setShowAllUsers((prev) => !prev);
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -129,5 +166,9 @@ export const useUsersManagement = (limitedRowsCount: number) => {
     handleSendNotification,
     selectedUserId,
     modalType,
+    searchTerm,
+    setSearchTerm,
+    selectedUserType,
+    handleUserTypeChange,
   };
 };

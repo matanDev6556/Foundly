@@ -10,19 +10,15 @@ import {
   where,
   deleteDoc,
   addDoc,
-  updateDoc,
 } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import Admin from '../models/Admin';
 import Company from '../models/Company';
 import Investor from '../models/Investor';
 import User from '../models/User';
-import { ImageSection, UserType } from '../utils/enums';
+import { UserType } from '../utils/enums';
 import { handleFirebaseError } from './FirebaseErrorService';
 import { FirebaseError } from 'firebase/app';
-import { useAppStatus } from '../context/AppStatusContext';
-import { useState } from 'react';
-
 import Invest from '../models/Invest';
 
 interface HasToJson {

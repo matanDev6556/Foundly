@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import styles from './Notifications.module.css';
 
 interface AdminNotificationProps {
-  userId: string;
+  receiverId: string;
   onSendNotification: (
-    userId: string,
+    receiverId: string,
     subject: string,
     description: string
   ) => void;
 }
 
 const AdminNotification: React.FC<AdminNotificationProps> = ({
-  userId,
+  receiverId,
   onSendNotification,
 }) => {
   const [subject, setSubject] = useState('');
@@ -19,7 +19,7 @@ const AdminNotification: React.FC<AdminNotificationProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSendNotification(userId, subject, description);
+    onSendNotification(receiverId, subject, description);
     setSubject('');
     setDescription('');
   };
