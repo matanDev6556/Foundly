@@ -1,9 +1,7 @@
 // src/components/common/FilterDropdown.tsx
-import React from 'react';
-import Button from '../Button';
-import { InvesmentsCategories } from '../../../utils/constant';
-
-import GenericSelector from '../drop-down/Selector';
+import React from "react";
+import Button from "../Button";
+import { InvesmentsCategories } from "../../../utils/constant";
 
 interface FilterDropdownProps {
   selectedFilters: string[];
@@ -30,11 +28,11 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
       ))}
 
       <Button
-        label={'Apply'}
+        label={"Apply"}
         onClick={onApply}
-        color={'white'}
-        backgroundColor={'#39958c'}
-        borderColor={''}
+        color={"white"}
+        backgroundColor={"#39958c"}
+        borderColor={""}
       />
     </div>
   );

@@ -9,7 +9,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { Timestamp } from "firebase/firestore";
 import Invest from "../../../models/Invest";
 
 interface ChartData {

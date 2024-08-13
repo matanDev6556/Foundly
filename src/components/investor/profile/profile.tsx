@@ -1,11 +1,9 @@
 import React from "react";
 import PreferencesStep from "../../auth/InvestorSignUpForm/PreferencesStep";
 import "./profile.css";
-import { useUser } from "../../../context/UserContext";
 import Button from "../../cummon/Button";
 
 const Profile: React.FC = () => {
-  const { user } = useUser();
   return (
     <div className="profile-container">
       <PreferencesStep isEditing={true} />

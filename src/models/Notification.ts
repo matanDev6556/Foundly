@@ -1,4 +1,4 @@
-import { Timestamp, FirestoreDataConverter } from 'firebase/firestore';
+import { Timestamp } from "firebase/firestore";
 
 class Notification {
   constructor(
