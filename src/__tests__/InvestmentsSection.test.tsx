@@ -2,7 +2,6 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { BrowserRouter as Router } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
 import { useAppStatus } from "../context/AppStatusContext";
 import { useCompanyList } from "../context/CompanyListContext";
 import InvestmentsSection from "../components/investor/home/body-section/InvestmentSection";
@@ -40,6 +39,7 @@ jest.mock("../components/cummon/invest-card/InvestList", () => {
 });
 
 describe("InvestmentsSection Component", () => {
+  //Integretion test
   it("renders the investments section with company data", () => {
     (useAppStatus as jest.Mock).mockReturnValue({ loading: false });
     (useCompanyList as jest.Mock).mockReturnValue({
@@ -64,6 +64,7 @@ describe("InvestmentsSection Component", () => {
     expect(screen.queryByText("Company D")).not.toBeInTheDocument();
   });
 
+  //Integration test
   it("renders without company data", () => {
     (useAppStatus as jest.Mock).mockReturnValue({ loading: false });
     (useCompanyList as jest.Mock).mockReturnValue({
@@ -78,5 +79,20 @@ describe("InvestmentsSection Component", () => {
 
     expect(screen.getByText("Suggested Investments")).toBeInTheDocument();
     expect(screen.queryByText("Company A")).not.toBeInTheDocument();
+  });
+
+  //Unit test
+  it("displays loading container when data is loading", () => {
+    (useAppStatus as jest.Mock).mockReturnValue({ loading: true });
+    (useCompanyList as jest.Mock).mockReturnValue({ companies: [] });
+
+    const { container } = render(
+      <Router>
+        <InvestmentsSection />
+      </Router>
+    );
+
+    expect(container.querySelector(".loading-container")).toBeInTheDocument();
+    expect(screen.queryByText("Suggested Investments")).not.toBeInTheDocument();
   });
 });

@@ -1,8 +1,5 @@
-// src/components/__tests__/BuyInvest.test.tsx
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import BuyInvest from "../components/company/company-profile/buy-invest/BuyInvest";
 
@@ -45,6 +42,7 @@ describe("BuyInvest", () => {
     jest.clearAllMocks();
   });
 
+  //Unit test
   it("renders without crashing", () => {
     render(
       <BuyInvest
@@ -61,6 +59,7 @@ describe("BuyInvest", () => {
     ).toBeInTheDocument();
   });
 
+  //Integration test
   it("shows error toast when total amount is less than minInvest", async () => {
     const toastErrorMock = jest.fn();
     (toast.error as jest.Mock).mockImplementation(toastErrorMock);
