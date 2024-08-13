@@ -72,7 +72,6 @@ export const DocsForm: React.FC<Props> = ({ user, updateUser }) => {
         <Button
           variant="contained"
           style={{ width: "auto" }}
-          style={{ width: "auto" }}
           onClick={() => setNumOfFiles((prev) => prev + 1)}
         >
           Add document
