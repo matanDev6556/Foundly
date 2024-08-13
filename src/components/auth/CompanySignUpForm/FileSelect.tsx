@@ -1,94 +1,107 @@
-import { Box } from "@mui/system";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import fileIconUpdated from "../../../assets/images/fileIconUpdated.svg";
-import {
-  Button,
-  CircularProgress,
-  Grid,
-  IconButton,
-  TextField,
-  Tooltip,
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Button, Grid, IconButton } from "@mui/material";
 import { useAppStatus } from "../../../context/AppStatusContext";
-import { useUser } from "../../../context/UserContext";
 import Company from "../../../models/Company";
 import { ImageSection } from "../../../utils/enums";
 import { uploadDoc } from "../../../services/dbService";
-import { extractFileName } from "../../../utils/functions";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { extractFileName, shortFileName } from "../../../utils/functions";
+import DeleteIcon from "@mui/icons-material/Delete";
+import fileImage from "../../.././assets/images/file input.jpg";
+import fileNoPlus from "../../.././assets/images/file_No_Plus.jpg";
 
-interface props {
+interface Props {
   index: number;
   files: string[];
   setFiles: React.Dispatch<React.SetStateAction<string[]>>;
   user: Company;
   updateUser: (updatedUser: Company) => void;
+  fileAddress: string;
 }
 
-export const FileSelect: React.FC<props> = ({
+export const FileSelect: React.FC<Props> = ({
   index,
   files,
   setFiles,
   user,
   updateUser,
+  fileAddress,
 }) => {
-  const [selectedFileAddress, setSelectedFileAddress] = useState("");
-  const { uploading, setUploading, error, setError } = useAppStatus();
+  const [selectedFileAddress, setSelectedFileAddress] = useState(fileAddress);
+  const { setUploading } = useAppStatus();
+
+  useEffect(() => {
+    if (fileAddress) {
+      setSelectedFileAddress(fileAddress);
+    }
+  }, [fileAddress]);
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
       const fileUrl = await uploadDoc(
-        e.target.files?.[0],
+        e.target.files[0],
         user.uid,
         ImageSection.Docs,
         setUploading
       );
       setSelectedFileAddress(fileUrl);
-      setFiles((prev) => {
-        const newFiles = [...prev];
-        newFiles[index] = fileUrl;
-        return newFiles;
-      });
+      setFiles((prev) => [...prev, fileUrl]);
     }
   };
 
+  const handleDelete = () => {
+    setFiles((prev) => prev.filter((file) => file !== selectedFileAddress));
+    setSelectedFileAddress("");
+  };
+
   return (
-    <form onSubmit={() => {}}>
-      <div>
-        <Box>
-          <Grid container direction="column" spacing={2}>
+    <form onSubmit={(e) => e.preventDefault()}>
+      <Box>
+        <Grid container direction="column" spacing={2}>
+          <label
+            {...(!selectedFileAddress
+              ? { htmlFor: `file-upload-${index}` }
+              : {})}
+            style={{ cursor: "pointer" }}
+          >
             <img
-              src={fileIconUpdated}
+              src={!selectedFileAddress ? fileImage : fileNoPlus}
               alt="Main Illustration"
               className="main-section__image"
-              style={{ width: "20%", height: "30%" }}
+              style={{ width: "80px", height: "95px" }}
             />
-          </Grid>
-          <Grid container direction="column" spacing={2}>
-            <input
-              type="file"
-              accept="image/*"
-              id={`file-upload-${index}`}
-              style={{ display: "none" }}
-              onChange={(e) => handleChange(e)}
-            />
-            <label htmlFor={`file-upload-${index}`}>
-              <Tooltip title="Upload Image">
-                <IconButton
-                  color="primary"
-                  style={{ width: "100px", height: "100px" }}
-                  component="span"
-                >
-                  <AddCircleOutlineIcon style={{ fontSize: 40 }} />
-                </IconButton>
-              </Tooltip>
-            </label>
-            <label style={{ fontSize: "16px" }}>
-              {selectedFileAddress ? extractFileName(selectedFileAddress) : ""}
-            </label>
-          </Grid>
-        </Box>
-      </div>
+          </label>
+        </Grid>
+        <Grid container direction="row" alignItems="center" spacing={2}>
+          <input
+            type="file"
+            accept="image/*"
+            id={`file-upload-${index}`}
+            style={{ display: "none" }}
+            onChange={handleChange}
+          />
+          <label
+            style={{
+              fontSize: "16px",
+              marginLeft: "2px",
+              marginTop: "30px",
+            }}
+          >
+            {selectedFileAddress
+              ? shortFileName(extractFileName(selectedFileAddress))
+              : ""}
+          </label>
+          {selectedFileAddress && (
+            <IconButton
+              onClick={handleDelete}
+              color="secondary"
+              aria-label="delete file"
+              style={{ marginLeft: "10px", marginTop: "20px" }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          )}
+        </Grid>
+      </Box>
     </form>
   );
 };

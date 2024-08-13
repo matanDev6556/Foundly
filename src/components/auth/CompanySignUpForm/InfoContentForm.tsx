@@ -6,7 +6,7 @@ import Company from "../../../models/Company";
 import { ImageSection } from "../../../utils/enums";
 import { uploadDoc } from "../../../services/dbService";
 import { extractFileName } from "../../../utils/functions";
-
+import "./InfoContentForm.css";
 interface InfoContentFormProps {
   user: Company;
   updateUser: (updatedUser: Company) => void;
@@ -77,6 +77,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
       <input
         type="file"
         accept="image/*"
+        src={image || "default-image.jpg"}
         onChange={async (e) => {
           if (e.target.files?.[0]) {
             const imageUrl = await uploadDoc(
@@ -90,13 +91,26 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
           }
         }}
       />
-      <label style={{ fontSize: "20px" }}>
-        {image ? extractFileName(image) : ""}
-      </label>
+      {image && (
+        <>
+          <img
+            src={image}
+            style={{ width: "40px", height: "40px", alignSelf: "flex-start" }}
+            alt="Company Profile"
+            className="w-10 h-10 object-cover"
+          />
+          <td />
+          <label style={{ fontSize: "10px" }}>
+            Current File: {extractFileName(image)}
+          </label>
+        </>
+      )}
+
       <label>Company Logo</label>
       <input
         type="file"
         accept="image/*"
+        src={image || "default-image.jpg"}
         onChange={async (e) => {
           if (e.target.files?.[0]) {
             const logoUrl = await uploadDoc(
@@ -110,6 +124,21 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
           }
         }}
       />
+      {logo && (
+        <>
+          <img
+            src={logo}
+            style={{ width: "40px", height: "40px", alignSelf: "flex-start" }}
+            alt="Company Profile"
+            className="w-10 h-10 object-cover"
+          />
+          <td />
+          <label style={{ fontSize: "10px" }}>
+            Current File: {extractFileName(image)}
+          </label>
+        </>
+      )}
+
       <label>Company's website</label>
       <input
         required

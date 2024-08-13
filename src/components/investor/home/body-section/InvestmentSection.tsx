@@ -34,8 +34,6 @@ const InvestmentsSection: React.FC = () => {
         >
           All
         </button>
-
-        <h2 className="investments-section__title">השקעות פתוחות</h2>
       </div>
       <div className="investments-section__list">
         <InvestmentList companies={companies.slice(0, 3)} />
