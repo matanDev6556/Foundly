@@ -1,8 +1,7 @@
-import StepperForm from '../../auth/CompanySignUpForm/StepperForm';
-import PreferencesStep from '../../auth/InvestorSignUpForm/PreferencesStep';
-import LoginForm from '../../auth/LoginForm';
-import SignUpForm from '../../auth/SignUpForm';
-import Profile from '../../investor/profile/profile';
+import StepperForm from "../../auth/CompanySignUpForm/StepperForm";
+import PreferencesStep from "../../auth/InvestorSignUpForm/PreferencesStep";
+import LoginForm from "../../auth/LoginForm";
+import SignUpForm from "../../auth/SignUpForm";
 
 interface RenderFormProps {
   modalType: string;
@@ -18,7 +17,7 @@ const renderSignUpForm = (
   step: number,
   setStep: React.Dispatch<React.SetStateAction<number>>
 ) => {
-  if (userType === 'Investor') {
+  if (userType === "Investor") {
     return step === 1 ? (
       <SignUpForm moveStep={() => setStep(2)} userType="Investor" />
     ) : (
@@ -26,7 +25,7 @@ const renderSignUpForm = (
     );
   }
 
-  if (userType === 'Company') {
+  if (userType === "Company") {
     return step === 1 ? (
       <SignUpForm moveStep={() => setStep(2)} userType="Company" />
     ) : (
@@ -47,9 +46,9 @@ export const renderForm = ({
   setStep,
 }: RenderFormProps) => {
   switch (modalType) {
-    case 'Login':
+    case "Login":
       return renderLoginForm();
-    case 'Sign Up As':
+    case "Sign Up As":
       return renderSignUpForm(userType, step, setStep);
     default:
       return null;
@@ -59,7 +58,7 @@ export const renderForm = ({
 // function for get the title of the pop up (login | sign up based on usert type and step)
 export const getTitle = (modalType: string, userType: string, step: number) => {
   if (step > 1) {
-    return userType === 'Investor' ? 'Preferences' : 'Verification process';
+    return userType === "Investor" ? "Preferences" : "Verification process";
   }
   return modalType;
 };
@@ -72,17 +71,17 @@ export const renderSignUpAsButtons = (
   <div className="sign-up-as">
     <button
       className={
-        userType === 'Company' ? 'activeSignUpButton' : 'unActiveSignUpButton'
+        userType === "Company" ? "activeSignUpButton" : "unActiveSignUpButton"
       }
-      onClick={() => setUserType('Company')}
+      onClick={() => setUserType("Company")}
     >
       Company
     </button>
     <button
       className={
-        userType === 'Investor' ? 'activeSignUpButton' : 'unActiveSignUpButton'
+        userType === "Investor" ? "activeSignUpButton" : "unActiveSignUpButton"
       }
-      onClick={() => setUserType('Investor')}
+      onClick={() => setUserType("Investor")}
     >
       Investor
     </button>

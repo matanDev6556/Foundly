@@ -4,11 +4,6 @@ import Investor from "../../../../models/Investor";
 import Company from "../../../../models/Company";
 import { formatTargetAmount } from "../../../../utils/functions";
 
-interface Info {
-  value: string;
-  label: string;
-}
-
 interface ManagementInfoProps {
   investors: Investor[];
   companies: Company[];

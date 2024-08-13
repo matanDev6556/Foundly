@@ -1,5 +1,5 @@
 // src/components/SignUpForm.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import User, { UserType } from "../../models/User";
 import { useUser } from "../../context/UserContext";
 import { registerUser } from "../../services/authService";
@@ -15,7 +15,7 @@ interface SignUpFormProps {
 
 const SignUpForm: React.FC<SignUpFormProps> = ({ userType, moveStep }) => {
   const { setUser } = useUser();
-  const { loading, setLoading, error, setError } = useAppStatus();
+  const { loading, setLoading, setError } = useAppStatus();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

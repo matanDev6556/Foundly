@@ -1,16 +1,8 @@
 import { Box } from "@mui/system";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useState } from "react";
 import fileIconUpdated from "../../../assets/images/fileIconUpdated.svg";
-import {
-  Button,
-  CircularProgress,
-  Grid,
-  IconButton,
-  TextField,
-  Tooltip,
-} from "@mui/material";
+import { Grid, IconButton, Tooltip } from "@mui/material";
 import { useAppStatus } from "../../../context/AppStatusContext";
-import { useUser } from "../../../context/UserContext";
 import Company from "../../../models/Company";
 import { ImageSection } from "../../../utils/enums";
 import { uploadDoc } from "../../../services/dbService";
@@ -30,10 +22,9 @@ export const FileSelect: React.FC<props> = ({
   files,
   setFiles,
   user,
-  updateUser,
 }) => {
   const [selectedFileAddress, setSelectedFileAddress] = useState("");
-  const { uploading, setUploading, error, setError } = useAppStatus();
+  const { setUploading } = useAppStatus();
 
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {

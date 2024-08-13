@@ -1,10 +1,3 @@
-import Company from "../models/Company";
-import img1 from "../assets/images/company1.png";
-import img2 from "../assets/images/company2.png";
-import img3 from "../assets/images/company3.png";
-import logo1 from "../assets/images/logo1.png";
-import { Timestamp } from "firebase/firestore";
-
 export const RaisePurpose: string[] = [
   "Marketing",
   "Development",

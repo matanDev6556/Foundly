@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./myInvestments.css";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import InvestmentsView from "../../../components/investor/my-investments/InvestmentsView";
-import { usePurchasedCompanies } from "./hooks/usePurchedCompanies";
 import { useFilteredPurchasedCompanies } from "./hooks/useFilterPurchedCompanies";
 import { useFilteredLikedCompanies } from "./hooks/useFilterLikedCompany";
 import { useToggleView } from "./hooks/useToggleView";
