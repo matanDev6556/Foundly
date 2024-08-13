@@ -10,17 +10,17 @@ import {
   where,
   deleteDoc,
   addDoc,
-} from "firebase/firestore";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import Admin from "../models/Admin";
-import Company from "../models/Company";
-import Investor from "../models/Investor";
-import User from "../models/User";
-import { UserType } from "../utils/enums";
-import { handleFirebaseError } from "./FirebaseErrorService";
-import { FirebaseError } from "firebase/app";
+} from 'firebase/firestore';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import Admin from '../models/Admin';
+import Company from '../models/Company';
+import Investor from '../models/Investor';
+import User from '../models/User';
+import { UserType } from '../utils/enums';
+import { handleFirebaseError } from './FirebaseErrorService';
+import { FirebaseError } from 'firebase/app';
+import Invest from '../models/Invest';
 
-import Invest from "../models/Invest";
 
 interface HasToJson {
   toJson: () => { [key: string]: any };

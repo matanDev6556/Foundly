@@ -1,8 +1,9 @@
 import { Timestamp } from "firebase/firestore";
 
-class Notification {
+class MyNotification {
   constructor(
-    public userId: string,
+    public senderId: string,
+    public reciverId:string,
     public subject: string,
     public description: string,
     public createdAt: Timestamp = Timestamp.now()
@@ -10,16 +11,18 @@ class Notification {
 
   toJson(): object {
     return {
-      userId: this.userId,
+      senderId: this.senderId,
+      reciverId:this.reciverId,
       subject: this.subject,
       description: this.description,
       createdAt: this.createdAt, // Firestore can directly store Timestamp objects
     };
   }
 
-  static fromJson(json: any): Notification {
-    return new Notification(
-      json.userId,
+  static fromJson(json: any): MyNotification {
+    return new MyNotification(
+      json.senderId,
+      json.reciverId,
       json.subject,
       json.description,
       json.createdAt instanceof Timestamp ? json.createdAt : Timestamp.now()
@@ -27,4 +30,4 @@ class Notification {
   }
 }
 
-export default Notification;
+export default MyNotification;
