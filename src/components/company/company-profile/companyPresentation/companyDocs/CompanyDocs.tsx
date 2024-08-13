@@ -1,7 +1,8 @@
-import Company from '../../../../../models/Company';
-import pdfIcon from '../../../../../assets/images/fileIcon.png';
-import { extractFileName } from '../../../../../utils/functions';
-import './CompanyDocs.css';
+import Company from "../../../../../models/Company";
+import pdfIcon from "../../../../../assets/images/fileIcon.png";
+import { extractFileName } from "../../../../../utils/functions";
+import fileNoPlus from "../../../../../assets/images/file_No_Plus.jpg";
+import "./CompanyDocs.css";
 interface docsProps {
   company: Company;
 }
@@ -15,7 +16,7 @@ export const CompanyDocs: React.FC<docsProps> = ({ company }) => {
         <div className="document-links">
           {uploadedDocuments.map((docAddress, index) => (
             <a href={docAddress} key={index} className="document-card" download>
-              <img src={pdfIcon} alt="PDF icon" />
+              <img src={fileNoPlus} alt="PDF icon" />
               <div className="title">{extractFileName(docAddress)}</div>
             </a>
           ))}
