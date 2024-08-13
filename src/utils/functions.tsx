@@ -1,11 +1,11 @@
-import { differenceInDays } from "date-fns";
-import { Timestamp } from "firebase/firestore";
+import { differenceInDays } from 'date-fns';
+import { Timestamp } from 'firebase/firestore';
 
 export const formatTargetAmount = (amount: number): string => {
   if (amount >= 1000000) {
-    return (amount / 1000000).toFixed(0) + "M";
+    return (amount / 1000000).toFixed(0) + 'M';
   } else if (amount >= 1000) {
-    return (amount / 1000).toFixed(0) + "K";
+    return (amount / 1000).toFixed(0) + 'K';
   } else {
     return amount.toString();
   }
@@ -22,15 +22,15 @@ export const formatRemainingTime = (
 ): { value: string; unit: string } => {
   if (days >= 365) {
     const years = Math.floor(days / 365);
-    return { value: years.toString(), unit: years === 1 ? "year" : "years" };
+    return { value: years.toString(), unit: years === 1 ? 'year' : 'years' };
   } else if (days >= 30) {
     const months = Math.floor(days / 30);
     return {
       value: months.toString(),
-      unit: months === 1 ? "month" : "months",
+      unit: months === 1 ? 'month' : 'months',
     };
   } else {
-    return { value: days.toString(), unit: days === 1 ? "day" : "days" };
+    return { value: days.toString(), unit: days === 1 ? 'day' : 'days' };
   }
 };
 
@@ -39,23 +39,23 @@ export const extractFileName = (url: string): string => {
     const urlObj = new URL(url);
     const pathname = urlObj.pathname;
     const filenameWithEncodedChars = pathname.substring(
-      pathname.lastIndexOf("/") + 1
+      pathname.lastIndexOf('/') + 1
     );
     const filename = decodeURIComponent(filenameWithEncodedChars);
-    const segments = filename.split("?")[0].split("/");
+    const segments = filename.split('?')[0].split('/');
     return segments[segments.length - 1]; // Remove any query parameters if present
   } catch (error) {
-    console.error("Invalid URL:", error);
-    return "Unknown";
+    console.error('Invalid URL:', error);
+    return 'Unknown';
   }
 };
 export const shortFileName = (fileName: string, numOfChars: number) => {
-  if (fileName === "Unknown") {
+  if (fileName === 'Unknown') {
     return fileName; // Return as is if it's already "Unknown"
   }
 
   if (fileName.length > numOfChars) {
-    return fileName.substring(0, numOfChars) + "...";
+    return fileName.substring(0, numOfChars) + '...';
   }
 
   return fileName; // Return full name if it's 5 characters or less

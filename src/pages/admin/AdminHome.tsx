@@ -10,8 +10,8 @@ import { deleteDocument } from '../../services/dbService';
 import Company from '../../models/Company';
 import { RoutePath } from '../../utils/enums';
 import Modal from '../../components/cummon/popup/modal';
-import AdminNotification from '../../components/admin/home/notifications/Notifications';
 import SearchBar from '../../components/cummon/search/SearchBar';
+import AdminNotification from '../../components/admin/home/notifications/Notifications';
 
 const AdminHome: React.FC = () => {
   const navigate = useNavigate();

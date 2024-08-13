@@ -64,11 +64,11 @@ export const CompanyTopSection: React.FC<BuyInvestProps> = ({ company }) => {
             />
             <h2 className="investment-card__title1">{company.name}</h2>
             <span className="investment-card__badge1">
-              {companyDetails?.category ?? 'Uncategorized'}
+              {companyDetails?.category ?? ''}
             </span>
           </div>
           <p className="investment-card__description1">
-            {companyDetails?.description ?? 'No description available'}
+            {companyDetails?.about ?? ''}
           </p>
         </div>
       </div>
