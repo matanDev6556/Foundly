@@ -87,7 +87,7 @@ export const FileSelect: React.FC<Props> = ({
             }}
           >
             {selectedFileAddress
-              ? shortFileName(extractFileName(selectedFileAddress))
+              ? shortFileName(extractFileName(selectedFileAddress), 5)
               : ""}
           </label>
           {selectedFileAddress && (

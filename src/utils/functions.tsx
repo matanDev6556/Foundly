@@ -49,13 +49,13 @@ export const extractFileName = (url: string): string => {
     return "Unknown";
   }
 };
-export const shortFileName = (fileName: string) => {
+export const shortFileName = (fileName: string, numOfChars: number) => {
   if (fileName === "Unknown") {
     return fileName; // Return as is if it's already "Unknown"
   }
 
-  if (fileName.length > 5) {
-    return fileName.substring(0, 5) + "...";
+  if (fileName.length > numOfChars) {
+    return fileName.substring(0, numOfChars) + "...";
   }
 
   return fileName; // Return full name if it's 5 characters or less
