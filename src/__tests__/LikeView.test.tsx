@@ -1,5 +1,3 @@
-// src/components/__tests__/LikedCompaniesView.test.tsx
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Timestamp } from "firebase/firestore";
@@ -83,6 +81,7 @@ const mockCompany2 = new Company(
 );
 
 describe("LikedCompaniesView", () => {
+  //Integration test
   it("renders EmptyLikeView when there are no companies", () => {
     render(<LikedCompaniesView companies={[]} title="Liked Companies" />);
 
@@ -94,6 +93,7 @@ describe("LikedCompaniesView", () => {
     ).toBeInTheDocument();
   });
 
+  //Integration test
   it("renders PopulatedLikeView when there are companies", () => {
     render(
       <LikedCompaniesView
@@ -106,5 +106,15 @@ describe("LikedCompaniesView", () => {
     expect(screen.getByTestId("investment-list")).toHaveTextContent(
       "InvestmentList with 2 companies"
     );
+  });
+
+  //Unit test
+  it("applies correct title", () => {
+    const testTitle = "Test Liked Companies";
+    render(<LikedCompaniesView companies={[mockCompany1]} title={testTitle} />);
+
+    const titleElement = screen.getByText(testTitle);
+    expect(titleElement).toBeInTheDocument();
+    expect(titleElement.tagName).toBe("H2");
   });
 });

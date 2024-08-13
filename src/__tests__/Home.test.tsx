@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Home from "../pages/home/Home";
@@ -21,6 +20,7 @@ jest.mock("../context/UserContext", () => ({
 }));
 
 describe("Home Component", () => {
+  //Integrain test
   it("renders AdminHome when user is an Admin", () => {
     (useUser as jest.Mock).mockReturnValue({
       user: { userType: UserType.Admin },
@@ -34,6 +34,7 @@ describe("Home Component", () => {
     expect(screen.queryByText("Guest Home")).toBeNull();
   });
 
+  //Integration test
   it("renders InvestorHome when user is an Investor", () => {
     (useUser as jest.Mock).mockReturnValue({
       user: { userType: UserType.Investor },
@@ -47,6 +48,7 @@ describe("Home Component", () => {
     expect(screen.queryByText("Guest Home")).toBeNull();
   });
 
+  //Integration test
   it("renders Company Home when user is a Company", () => {
     (useUser as jest.Mock).mockReturnValue({
       user: { userType: UserType.Company },
@@ -60,6 +62,7 @@ describe("Home Component", () => {
     expect(screen.queryByText("Guest Home")).toBeNull();
   });
 
+  //Integration test
   it("renders GuestHome when no user is logged in", () => {
     (useUser as jest.Mock).mockReturnValue({
       user: null,
@@ -71,5 +74,14 @@ describe("Home Component", () => {
     expect(screen.queryByText("Admin Home")).toBeNull();
     expect(screen.queryByText("Investor Home")).toBeNull();
     expect(screen.queryByText("Company Home")).toBeNull();
+  });
+
+  //Unit test
+  it("renders a single child component", () => {
+    (useUser as jest.Mock).mockReturnValue({
+      user: null,
+    });
+    const { container } = render(<Home />);
+    expect(container.firstChild?.childNodes.length).toBe(1);
   });
 });

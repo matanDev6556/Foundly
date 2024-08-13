@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Timestamp } from "firebase/firestore";
@@ -82,6 +81,7 @@ const mockCompany2 = new Company(
 );
 
 describe("InvestmentsView", () => {
+  //Integration test
   it("renders NoData and Button when there are no companies", () => {
     render(<InvestmentsView companies={[]} title="Investments" />);
 
@@ -93,6 +93,7 @@ describe("InvestmentsView", () => {
     ).toBeInTheDocument();
   });
 
+  //Integration test
   it("renders InvestmentList when there are companies", () => {
     render(
       <InvestmentsView
@@ -102,6 +103,31 @@ describe("InvestmentsView", () => {
     );
 
     expect(screen.getByText("Investments")).toBeInTheDocument();
+    expect(screen.getByTestId("investment-list")).toHaveTextContent(
+      "InvestmentList with 2 companies"
+    );
+  });
+
+  //Unit test
+  it("renders correct elements when there are no companies", () => {
+    render(<InvestmentsView companies={[]} title="Test Investments" />);
+
+    // Check for the "No investments yet" message
+    expect(screen.getByText("No investments yet")).toBeInTheDocument();
+
+    // Check for the "Find Investments!" button
+    const button = screen.getByRole("button", { name: /Find Investments!/i });
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveStyle("background-color: rgb(57, 149, 140)");
+  });
+
+  //Unit test
+  it("renders InvestmentList when companies are provided", () => {
+    const mockCompanies = [mockCompany1, mockCompany2];
+    render(
+      <InvestmentsView companies={mockCompanies} title="Test Investments" />
+    );
+
     expect(screen.getByTestId("investment-list")).toHaveTextContent(
       "InvestmentList with 2 companies"
     );

@@ -23,7 +23,6 @@ jest.mock("../context/AppStatusContext", () => ({
   }),
 }));
 
-// Correct paths for mocking components
 jest.mock("../components/auth/CompanySignUpForm/StepperForm", () => ({
   __esModule: true,
   default: () => <div>Stepper Form</div>,
@@ -40,6 +39,7 @@ const renderSignUpForm = (userType: UserType) => {
   return render(<SignUpForm userType={userType} moveStep={mockMoveStep} />);
 };
 
+//Unit test
 test("renders Sign Up form with required elements", () => {
   renderSignUpForm(UserType.Investor);
 
@@ -50,6 +50,7 @@ test("renders Sign Up form with required elements", () => {
   expect(screen.getByRole("button", { name: /Sign Up/i })).toBeInTheDocument();
 });
 
+//Integration test
 test("form submission triggers moveStep", async () => {
   // Mock the API call to avoid real network requests
   jest
