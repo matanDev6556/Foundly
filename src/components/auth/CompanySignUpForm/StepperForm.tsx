@@ -9,7 +9,6 @@ import { DocsForm } from "./DocsForm";
 import { saveUserToDb } from "../../../services/dbService";
 import { useUser } from "../../../context/UserContext";
 import Company from "../../../models/Company";
-import { User } from "firebase/auth";
 import { ClipLoader } from "react-spinners";
 
 const primaryColor = "#39958c";
@@ -105,7 +104,7 @@ const StepperForm: React.FC = () => {
   const [localUser, setLocalUser] = useState<Company>(new Company());
   const [activeStep, setActiveStep] = useState(0);
   const { closeModal } = useModal();
-  const { loading, setLoading, error, setError, uploading } = useAppStatus();
+  const { loading, setLoading, uploading } = useAppStatus();
 
   useEffect(() => {
     if (user) {

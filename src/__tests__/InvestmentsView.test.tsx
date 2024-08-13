@@ -1,10 +1,8 @@
-// src/components/__tests__/LikedCompaniesView.test.tsx
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Timestamp } from "firebase/firestore";
-import Company from "../../models/Company";
-import LikedCompaniesView from "../investor/my-investments/LikeView";
+import Company from "../models/Company";
+import InvestmentsView from "../components/investor/my-investments/InvestmentsView";
 
 // Mock useNavigate hook
 jest.mock("react-router-dom", () => ({
@@ -12,10 +10,10 @@ jest.mock("react-router-dom", () => ({
 }));
 
 // Mock NoData, Button, and InvestmentList components
-jest.mock("../cummon/NoData", () => (props: any) => (
+jest.mock("../components/cummon/NoData", () => (props: any) => (
   <div data-testid="no-data">{props.messeage}</div>
 ));
-jest.mock("../cummon/Button", () => (props: any) => (
+jest.mock("../components/cummon/Button", () => (props: any) => (
   <button
     onClick={props.onClick}
     style={{ backgroundColor: props.backgroundColor }}
@@ -23,7 +21,7 @@ jest.mock("../cummon/Button", () => (props: any) => (
     {props.label}
   </button>
 ));
-jest.mock("../cummon/invest-card/InvestList", () => (props: any) => (
+jest.mock("../components/cummon/invest-card/InvestList", () => (props: any) => (
   <div data-testid="investment-list">
     InvestmentList with {props.companies.length} companies
   </div>
@@ -47,7 +45,7 @@ const mockCompany1 = new Company(
   },
   {
     targetAmount: 100000,
-    deadline: Timestamp.now(), // Use Timestamp instance
+    deadline: Timestamp.now(),
     minInvestment: 1000,
     raisePurpose: ["Purpose 1"],
     raisedAmount: 50000,
@@ -73,7 +71,7 @@ const mockCompany2 = new Company(
   },
   {
     targetAmount: 200000,
-    deadline: Timestamp.now(), // Use Timestamp instance
+    deadline: Timestamp.now(),
     minInvestment: 2000,
     raisePurpose: ["Purpose 2"],
     raisedAmount: 100000,
@@ -82,25 +80,54 @@ const mockCompany2 = new Company(
   ["doc3.pdf", "doc4.pdf"]
 );
 
-describe("LikedCompaniesView", () => {
-  it("renders EmptyLikeView when there are no companies", () => {
-    render(<LikedCompaniesView companies={[]} title="Liked Companies" />);
+describe("InvestmentsView", () => {
+  //Integration test
+  it("renders NoData and Button when there are no companies", () => {
+    render(<InvestmentsView companies={[]} title="Investments" />);
 
-    expect(screen.getByTestId("no-data")).toHaveTextContent("לא שמרת אף השקעה");
+    expect(screen.getByTestId("no-data")).toHaveTextContent(
+      "No investments yet"
+    );
     expect(
-      screen.getByRole("button", { name: /find investments/i })
+      screen.getByRole("button", { name: /find investments!/i })
     ).toBeInTheDocument();
   });
 
-  it("renders PopulatedLikeView when there are companies", () => {
+  //Integration test
+  it("renders InvestmentList when there are companies", () => {
     render(
-      <LikedCompaniesView
+      <InvestmentsView
         companies={[mockCompany1, mockCompany2]}
-        title="Liked Companies"
+        title="Investments"
       />
     );
 
-    expect(screen.getByText("Liked Companies")).toBeInTheDocument();
+    expect(screen.getByText("Investments")).toBeInTheDocument();
+    expect(screen.getByTestId("investment-list")).toHaveTextContent(
+      "InvestmentList with 2 companies"
+    );
+  });
+
+  //Unit test
+  it("renders correct elements when there are no companies", () => {
+    render(<InvestmentsView companies={[]} title="Test Investments" />);
+
+    // Check for the "No investments yet" message
+    expect(screen.getByText("No investments yet")).toBeInTheDocument();
+
+    // Check for the "Find Investments!" button
+    const button = screen.getByRole("button", { name: /Find Investments!/i });
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveStyle("background-color: rgb(57, 149, 140)");
+  });
+
+  //Unit test
+  it("renders InvestmentList when companies are provided", () => {
+    const mockCompanies = [mockCompany1, mockCompany2];
+    render(
+      <InvestmentsView companies={mockCompanies} title="Test Investments" />
+    );
+
     expect(screen.getByTestId("investment-list")).toHaveTextContent(
       "InvestmentList with 2 companies"
     );

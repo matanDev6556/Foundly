@@ -11,6 +11,7 @@ import {
   calculateRemainingDays,
   formatRemainingTime,
   formatTargetAmount,
+  shortFileName,
 } from "../../../utils/functions";
 import { useNavigate } from "react-router-dom";
 import { RoutePath } from "../../../utils/enums";
@@ -59,9 +60,11 @@ const InvestmentCard: React.FC<InvestmentCardProps> = ({ company }) => {
 
       <h3 className="investment-card__title">{company.name}</h3>
       <p className="investment-card__description">
-        {companyDetails.description}
+        {shortFileName(companyDetails.description, 110)}
       </p>
-      <p className="investment-card__about">{companyDetails.about}</p>
+      <p className="investment-card__about">
+        {shortFileName(companyDetails.about, 50)}
+      </p>
 
       <InvestmentProgress progress={company.calculateProgress()} />
     </div>

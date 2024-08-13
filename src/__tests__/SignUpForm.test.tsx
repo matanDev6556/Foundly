@@ -1,18 +1,18 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { UserType } from "../../utils/enums";
-import SignUpForm from "../auth/SignUpForm";
+import { UserType } from "../utils/enums";
+import SignUpForm from "../components/auth/SignUpForm";
 
 // Mock Context Providers
-jest.mock("../../context/UserContext", () => ({
+jest.mock("../context/UserContext", () => ({
   useUser: () => ({
     user: null,
     setUser: jest.fn(),
   }),
 }));
 
-jest.mock("../../context/AppStatusContext", () => ({
+jest.mock("../context/AppStatusContext", () => ({
   useAppStatus: () => ({
     loading: false,
     setLoading: jest.fn(),
@@ -23,13 +23,12 @@ jest.mock("../../context/AppStatusContext", () => ({
   }),
 }));
 
-// Correct paths for mocking components
-jest.mock("../../components/auth/CompanySignUpForm/StepperForm", () => ({
+jest.mock("../components/auth/CompanySignUpForm/StepperForm", () => ({
   __esModule: true,
   default: () => <div>Stepper Form</div>,
 }));
 
-jest.mock("../../components/auth/InvestorSignUpForm/PreferencesStep", () => ({
+jest.mock("../components/auth/InvestorSignUpForm/PreferencesStep", () => ({
   __esModule: true,
   default: () => <div>Preferences Step</div>,
 }));
@@ -40,6 +39,7 @@ const renderSignUpForm = (userType: UserType) => {
   return render(<SignUpForm userType={userType} moveStep={mockMoveStep} />);
 };
 
+//Unit test
 test("renders Sign Up form with required elements", () => {
   renderSignUpForm(UserType.Investor);
 
@@ -50,10 +50,11 @@ test("renders Sign Up form with required elements", () => {
   expect(screen.getByRole("button", { name: /Sign Up/i })).toBeInTheDocument();
 });
 
+//Integration test
 test("form submission triggers moveStep", async () => {
   // Mock the API call to avoid real network requests
   jest
-    .spyOn(require("../../services/authService"), "registerUser")
+    .spyOn(require("../services/authService"), "registerUser")
     .mockResolvedValue({
       user: { uid: "test-uid" },
     });

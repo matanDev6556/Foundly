@@ -1,13 +1,10 @@
 // LikeButton.tsx
-import React from 'react';
-import { FaRegHeart, FaHeart } from 'react-icons/fa';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useLikes } from '../../../context/LikesContext';
-import { useUser } from '../../../context/UserContext';
-
-
-
+import React from "react";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useLikes } from "../../../context/LikesContext";
+import { useUser } from "../../../context/UserContext";
 
 interface LikeButtonProps {
   companyId: string;
@@ -21,11 +18,11 @@ const LikeButton: React.FC<LikeButtonProps> = ({ companyId }) => {
 
   const handleLikeClick = () => {
     if (!user) {
-      toast.warning('Please log in to save investments!');
+      toast.warning("Please log in to save investments!");
       return;
     }
-    if (user.userType != 'Investor') {
-      toast.warning('Premmision denined!');
+    if (user.userType !== "Investor") {
+      toast.warning("Premmision denined!");
       return;
     }
 
@@ -34,7 +31,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ companyId }) => {
 
   return (
     <button
-      className={`like-button ${liked ? 'liked' : ''}`}
+      className={`like-button ${liked ? "liked" : ""}`}
       onClick={handleLikeClick}
     >
       {liked ? <FaHeart /> : <FaRegHeart />}

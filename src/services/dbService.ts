@@ -1,5 +1,5 @@
 // src/services/dbService.ts
-import { db, storage } from '../firebaseConfig';
+import { db, storage } from "../firebaseConfig";
 import {
   doc,
   setDoc,
@@ -21,6 +21,7 @@ import { handleFirebaseError } from './FirebaseErrorService';
 import { FirebaseError } from 'firebase/app';
 import Invest from '../models/Invest';
 
+
 interface HasToJson {
   toJson: () => { [key: string]: any };
 }
@@ -36,7 +37,7 @@ export const fetchForUser = async <T>(
   try {
     const q = query(
       collection(db, collectionName),
-      where(attr, '==', equalAttr)
+      where(attr, "==", equalAttr)
     );
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => fromJson(doc.data()));
@@ -84,10 +85,10 @@ export const deleteDocument = async (collectionName: string, docId: string) => {
 // user
 export const saveUserToDb = async (user: User) => {
   try {
-    await setDoc(doc(db, 'users', user.uid), user.userToJSON());
-    console.log('User data saved successfully');
+    await setDoc(doc(db, "users", user.uid), user.userToJSON());
+    console.log("User data saved successfully");
   } catch (error) {
-    console.error('Error saving user data: ', error);
+    console.error("Error saving user data: ", error);
     handleFirebaseError(error as FirebaseError);
     throw error;
   }
@@ -95,7 +96,7 @@ export const saveUserToDb = async (user: User) => {
 
 export const fetchUserFromDb = async (uid: string): Promise<User | null> => {
   try {
-    const userDoc = await getDoc(doc(db, 'users', uid));
+    const userDoc = await getDoc(doc(db, "users", uid));
     if (userDoc.exists()) {
       const userData = userDoc.data();
       const { userType, name, email } = userData;
@@ -112,7 +113,7 @@ export const fetchUserFromDb = async (uid: string): Promise<User | null> => {
       }
     }
   } catch (error) {
-    console.error('Error fetch user feom db: ', error);
+    console.error("Error fetch user feom db: ", error);
     handleFirebaseError(error as FirebaseError);
   }
 
@@ -121,13 +122,13 @@ export const fetchUserFromDb = async (uid: string): Promise<User | null> => {
 
 export const fetchAllInvestments = async (): Promise<Invest[]> => {
   try {
-    const investmentsQuery = query(collection(db, 'investments'));
+    const investmentsQuery = query(collection(db, "investments"));
     const querySnapshot = await getDocs(investmentsQuery);
     return querySnapshot.docs.map((doc) =>
       Invest.fromJson({ ...doc.data(), id: doc.id })
     );
   } catch (error: any) {
-    console.error('Error fetching investments from db: ', error);
+    console.error("Error fetching investments from db: ", error);
     handleFirebaseError(error as FirebaseError);
     throw error;
   }
@@ -146,7 +147,7 @@ export const uploadDoc = (
     const uploadTask = uploadBytesResumable(storageRef, image);
 
     uploadTask.on(
-      'state_changed',
+      "state_changed",
       (snapshot) => {
         setUploading(true);
       },
