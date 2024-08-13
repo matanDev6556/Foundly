@@ -3,8 +3,9 @@ import Company from '../../../models/Company';
 import Investor from '../../../models/Investor';
 import { fetchForUser, saveToDb } from '../../../services/dbService';
 import { useModal } from '../../../context/popupContext';
-import MyNotification from '../../../models/Notification';
+
 import { useUser } from '../../../context/UserContext';
+import MyNotification from '../../../models/Notification';
 
 type TableUser = Investor | Company;
 type UserType = 'All' | 'Admin' | 'Company' | 'Investor';

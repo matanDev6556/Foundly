@@ -87,6 +87,7 @@ body {
   width: 70px;
   height: 70px;
   margin-right: 10px;
+  border-radius: 10px;
 }
 
 .investment-card__title1 {
@@ -110,7 +111,7 @@ body {
   font-size: 0.75em; /* מעט קטן יותר מהטקסט הרגיל */
   font-weight: 300; /* משקל קל יותר */
   line-height: 1.2; /* מרווח גדול יותר בין השורות */
-  color: #666; /* צבע אפור עדין */
+  color: #7f7f7f; /* צבע אפור עדין */
   margin-top: 15px;
   margin-bottom: 20px;
   text-align: justify; /* יישור לשני הצדדים לתצוגה מסודרת */
@@ -160,7 +161,7 @@ body {
 }
 
 .already-invested-text {
-  font-size: 0.9rem;
+  font-size: 0.99rem;
   color: var(--txtMain-color);
   font-weight: normal;
   display: block;

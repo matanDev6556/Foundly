@@ -12,7 +12,7 @@ import Modal from '../../../components/cummon/popup/modal';
 
 import './CompanyProfile.css';
 const CompanyProfile: React.FC = () => {
-  const { setModalType, modalType } = useModal();
+  const { setModalType, modalType, openModal } = useModal();
   const { user } = useUser();
   const { companyId } = useParams<{ companyId: string }>();
   const location = useLocation();
@@ -41,6 +41,10 @@ const CompanyProfile: React.FC = () => {
   }
 
   const handleBuy = () => {
+    if (!user) {
+      openModal('Login');
+      return;
+    }
     console.log(company.uid);
     setModalType('Buy');
   };

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useAppStatus } from "../../../context/AppStatusContext";
-import YesNoSelector from "../InvestorSignUpForm/yes-no/YesNoSelector";
-import { InvesmentsCategories } from "../../../utils/constant";
-import Company from "../../../models/Company";
-import { ImageSection } from "../../../utils/enums";
-import { uploadDoc } from "../../../services/dbService";
-import { extractFileName } from "../../../utils/functions";
-import "./InfoContentForm.css";
+import React, { useEffect, useState } from 'react';
+import { useAppStatus } from '../../../context/AppStatusContext';
+import YesNoSelector from '../InvestorSignUpForm/yes-no/YesNoSelector';
+import { InvesmentsCategories } from '../../../utils/constant';
+import Company from '../../../models/Company';
+import { ImageSection } from '../../../utils/enums';
+import { uploadDoc } from '../../../services/dbService';
+import { extractFileName } from '../../../utils/functions';
+import './InfoContentForm.css';
 interface InfoContentFormProps {
   user: Company;
   updateUser: (updatedUser: Company) => void;
@@ -16,39 +16,43 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
   user,
   updateUser,
 }) => {
-  const [companyName, setCompanyName] = useState(user.name || "");
-  const [website, setWebsite] = useState(user.companyDetails.website || "");
-  const [image, setImage] = useState(user.companyDetails.image || "");
-  const [logo, setLogo] = useState(user.companyDetails.logo || "");
+  const [companyName, setCompanyName] = useState(user.name || '');
+  const [website, setWebsite] = useState(user.companyDetails.website || '');
+  const [image, setImage] = useState(user.companyDetails.image || '');
+  const [logo, setLogo] = useState(user.companyDetails.logo || '');
   const [youtubeSite, setYoutubeSite] = useState(
-    user.companyDetails.promoVideoLink || ""
+    user.companyDetails.promoVideoLink || ''
   );
   const [country, setCountry] = useState(
-    user.companyDetails.country || "Israel"
+    user.companyDetails.country || 'Israel'
   );
   const [registered, setRegistered] = useState(
     user.companyDetails.registrarOfCompanies || false
   );
-  const [category, setCategory] = useState(user.companyDetails.category || "");
-  const [about, setAbout] = useState(user.companyDetails.about || "");
+  const [category, setCategory] = useState(user.companyDetails.category || '');
+  const [about, setAbout] = useState(user.companyDetails.about || '');
+  const [description, setDescription] = useState(
+    user.companyDetails.description || ''
+  );
   const { uploading, setUploading } = useAppStatus();
 
   useEffect(() => {
-    setCompanyName(user.name || "");
-    setWebsite(user.companyDetails.website || "");
-    setImage(user.companyDetails.image || "");
-    setLogo(user.companyDetails.logo || "");
-    setYoutubeSite(user.companyDetails.promoVideoLink || "");
-    setCountry(user.companyDetails.country || "Israel");
-    setCategory(user.companyDetails.category || "");
-    setAbout(user.companyDetails.about || "");
+    setCompanyName(user.name || '');
+    setWebsite(user.companyDetails.website || '');
+    setImage(user.companyDetails.image || '');
+    setLogo(user.companyDetails.logo || '');
+    setYoutubeSite(user.companyDetails.promoVideoLink || '');
+    setCountry(user.companyDetails.country || 'Israel');
+    setCategory(user.companyDetails.category || '');
+    setDescription(user.companyDetails.description || '');
+    setAbout(user.companyDetails.about || '');
     setRegistered(user.companyDetails.registrarOfCompanies || false);
   }, [user]);
 
   const setAttr = (attrName: string, value: string) => {
     const updatedUser = new Company(
       user.uid,
-      attrName === "name" ? value : user.name,
+      attrName === 'name' ? value : user.name,
       user.email,
       {
         ...user.companyDetails,
@@ -70,14 +74,14 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={companyName}
         onChange={(event) => {
           setCompanyName(event.target.value);
-          setAttr("name", event.target.value);
+          setAttr('name', event.target.value);
         }}
       />
       <label>Company Profile Image</label>
       <input
         type="file"
         accept="image/*"
-        src={image || "default-image.jpg"}
+        src={image || 'default-image.jpg'}
         onChange={async (e) => {
           if (e.target.files?.[0]) {
             const imageUrl = await uploadDoc(
@@ -87,7 +91,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
               setUploading
             );
             setImage(imageUrl);
-            setAttr("image", imageUrl);
+            setAttr('image', imageUrl);
           }
         }}
       />
@@ -95,12 +99,12 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         <>
           <img
             src={image}
-            style={{ width: "40px", height: "40px", alignSelf: "flex-start" }}
+            style={{ width: '40px', height: '40px', alignSelf: 'flex-start' }}
             alt="Company Profile"
             className="w-10 h-10 object-cover"
           />
           <td />
-          <label style={{ fontSize: "10px" }}>
+          <label style={{ fontSize: '10px' }}>
             Current File: {extractFileName(image)}
           </label>
         </>
@@ -110,7 +114,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
       <input
         type="file"
         accept="image/*"
-        src={image || "default-image.jpg"}
+        src={image || 'default-image.jpg'}
         onChange={async (e) => {
           if (e.target.files?.[0]) {
             const logoUrl = await uploadDoc(
@@ -120,7 +124,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
               setUploading
             );
             setLogo(logoUrl);
-            setAttr("logo", logoUrl);
+            setAttr('logo', logoUrl);
           }
         }}
       />
@@ -128,12 +132,12 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         <>
           <img
             src={logo}
-            style={{ width: "40px", height: "40px", alignSelf: "flex-start" }}
+            style={{ width: '40px', height: '40px', alignSelf: 'flex-start' }}
             alt="Company Profile"
             className="w-10 h-10 object-cover"
           />
           <td />
-          <label style={{ fontSize: "10px" }}>
+          <label style={{ fontSize: '10px' }}>
             Current File: {extractFileName(image)}
           </label>
         </>
@@ -147,7 +151,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={website}
         onChange={(event) => {
           setWebsite(event.target.value);
-          setAttr("website", event.target.value);
+          setAttr('website', event.target.value);
         }}
       />
       <label>Youtube promotional video</label>
@@ -157,7 +161,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={youtubeSite}
         onChange={(event) => {
           setYoutubeSite(event.target.value);
-          setAttr("promoVideoLink", event.target.value);
+          setAttr('promoVideoLink', event.target.value);
         }}
       />
       <label>Country</label>
@@ -166,14 +170,13 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={country}
         onChange={(event) => {
           setCountry(event.target.value);
-          setAttr("country", event.target.value);
+          setAttr('country', event.target.value);
         }}
       >
         <option value="Israel">Israel</option>
         <option value="Others">Others</option>
       </select>
-      <label>Is the company registered in the Companies Registry?</label>
-      <YesNoSelector setYesNo={setRegistered} />
+
       <label>Category</label>
       <select
         className="select"
@@ -181,7 +184,7 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={category}
         onChange={(event) => {
           setCategory(event.target.value);
-          setAttr("category", event.target.value);
+          setAttr('category', event.target.value);
         }}
       >
         {InvesmentsCategories.map((category) => (
@@ -190,7 +193,18 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
           </option>
         ))}
       </select>
-      <label>Few words about the company</label>
+      <label>Few words about {user.name ?? ''}</label>
+      <textarea
+        required
+        name="description"
+        value={description}
+        onChange={(event) => {
+          setDescription(event.target.value);
+          setAttr('description', event.target.value);
+        }}
+        style={{ width: '100%', height: '40px', border: ' 1px solid #d0ebea' }}
+      />
+      <label>About {user.name ?? ''}</label>
       <textarea
         required
         name="about"
@@ -199,10 +213,12 @@ export const InfoContentForm: React.FC<InfoContentFormProps> = ({
         value={about}
         onChange={(event) => {
           setAbout(event.target.value);
-          setAttr("about", event.target.value);
+          setAttr('about', event.target.value);
         }}
-        style={{ width: "100%", height: "80px" }}
+        style={{ width: '100%', height: '80px', border: ' 1px solid #d0ebea' }}
       />
+      <label>Is the company registered in the Companies Registry?</label>
+      <YesNoSelector setYesNo={setRegistered} />
     </form>
   );
 };
