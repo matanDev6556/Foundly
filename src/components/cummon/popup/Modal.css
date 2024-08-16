@@ -12,8 +12,23 @@
   z-index: 1000;
 }
 
-.modalContainer {
+.modal.fixed-size {
   width: 32%;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  max-width: 600px;
+  max-height: 80vh; /* הגדרת גובה מקסימלי */
+  overflow-y: auto; /* מאפשר גלילה אנכית */
+}
+.modal.dynamic-size {
+  width: auto;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

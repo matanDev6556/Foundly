@@ -1,9 +1,10 @@
 // CompanyHeader.tsx
-import React from 'react';
-import { FaBell, FaSignOutAlt } from 'react-icons/fa';
-import { useModal } from '../../../context/popupContext';
-import Modal from '../popup/modal';
-import StepperForm from '../../auth/CompanySignUpForm/StepperForm';
+import React from "react";
+import { FaBell, FaSignOutAlt } from "react-icons/fa";
+import { useModal } from "../../../context/popupContext";
+import Modal from "../popup/modal";
+import StepperForm from "../../auth/CompanySignUpForm/StepperForm";
+import NotificationPanel from "../notificationPanel/NotificationPanel";
 
 const CompanyHeader: React.FC<{ handleLogout: () => void }> = ({
   handleLogout,
@@ -15,13 +16,13 @@ const CompanyHeader: React.FC<{ handleLogout: () => void }> = ({
       <button
         className="header__button header_button--border"
         onClick={() => {
-          setModalType('Profile');
+          setModalType("Profile");
         }}
       >
         Profile
       </button>
 
-      {modalType === 'Profile' && (
+      {modalType === "Profile" && (
         <Modal>
           <StepperForm />
         </Modal>
@@ -29,11 +30,11 @@ const CompanyHeader: React.FC<{ handleLogout: () => void }> = ({
       <FaBell
         size={25}
         color="#da678a"
-        onClick={() => setModalType('Notifications')}
+        onClick={() => setModalType("Notifications")}
       />
-      {modalType === 'Notifications' && (
+      {modalType === "Notifications" && (
         <Modal>
-          <h1>Notifications</h1>
+          <NotificationPanel />
         </Modal>
       )}
       <FaSignOutAlt size={25} color="#da678a" onClick={handleLogout} />
