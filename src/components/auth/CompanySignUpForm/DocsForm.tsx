@@ -4,7 +4,7 @@ import { useAppStatus } from "../../../context/AppStatusContext";
 import { useUser } from "../../../context/UserContext";
 import { FileSelect } from "./FileSelect";
 import Company from "../../../models/Company";
-import docImage from "../../.././assets/images/file input.jpg";
+import docImage from "../../../assets/images/file_No_Plus.jpg";
 
 interface Props {
   user: Company;
