@@ -1,8 +1,9 @@
 import Company from "../../../models/Company";
 import { CompanyBasicInfo } from "./companyPresentation/companyBasicInfo/CompanyBasicInfo";
-import { CompanyContact } from "./companyPresentation/companyContact/CompanyContact";
+import { Contact } from "../../cummon/contact/Contact";
 import { CompanyDocs } from "./companyPresentation/companyDocs/CompanyDocs";
 import "./CompanyDetails.css";
+import { useEffect } from "react";
 interface props {
   company: Company;
 }
@@ -19,7 +20,7 @@ export const CompanyDetails: React.FC<props> = ({ company }) => {
         </div>
         <div className="separator"></div>
         <div className="contact-container company-section">
-          <CompanyContact companyId={company.uid} />
+          <Contact receiver={company} />
         </div>
       </div>
     </>

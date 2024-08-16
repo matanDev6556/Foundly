@@ -1,0 +1,10 @@
+.button-notification {
+  background-color: var(--primary-color);
+  color: white;
+  margin-left: 20px;
+  padding: 8px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
