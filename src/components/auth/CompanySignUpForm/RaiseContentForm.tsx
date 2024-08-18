@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { RaisePurpose } from "../../../utils/constant";
-import Company from "../../../models/Company";
-import Slider from "@mui/material/Slider";
-import { format, isValid, parseISO } from "date-fns";
-import ListSelector from "../../cummon/list-selector/ListSelector";
-import { Timestamp } from "firebase/firestore";
+import React, { useState, useEffect } from 'react';
+import { RaisePurpose } from '../../../utils/constant';
+import Company from '../../../models/Company';
+import Slider from '@mui/material/Slider';
+import { format, isValid, parseISO } from 'date-fns';
+import ListSelector from '../../cummon/list-selector/ListSelector';
+import { Timestamp } from 'firebase/firestore';
 
 interface RaiseContentFormProps {
   user: Company;
@@ -66,7 +66,7 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
       {
         ...user.raiseDetails,
         [attrName]:
-          attrName === "deadline" ? Timestamp.fromDate(value as Date) : value,
+          attrName === 'deadline' ? Timestamp.fromDate(value as Date) : value,
       },
       user.uploadedDocuments
     );
@@ -92,7 +92,7 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
           const value = parseInt(event.target.value, 10);
           if (!isNaN(value)) {
             setRaisedAmount(value);
-            setAttr("raisedAmount", value);
+            setAttr('raisedAmount', value);
           }
         }}
       />
@@ -105,9 +105,9 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
         min={1000}
         max={6000000}
         onChange={(e, newValue) => {
-          if (typeof newValue === "number") {
+          if (typeof newValue === 'number') {
             setTargetAmount(newValue);
-            setAttr("targetAmount", newValue);
+            setAttr('targetAmount', newValue);
           }
         }}
         valueLabelFormat={formatValueLabel}
@@ -118,28 +118,28 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
         value={formatValueLabel(targetAmount)}
         onChange={(e) => {
           const value =
-            parseInt(e.target.value.replace(/[KM]/g, ""), 10) * 1000;
+            parseInt(e.target.value.replace(/[KM]/g, ''), 10) * 1000;
           if (!isNaN(value)) {
             setTargetAmount(value);
-            setAttr("targetAmount", value);
+            setAttr('targetAmount', value);
           }
         }}
         style={{
-          textAlign: "center",
+          textAlign: 'center',
           color: `var(--primary-color)`,
-          fontWeight: "bold",
+          fontWeight: 'bold',
         }}
       />
       <label>What's your estimated deadline for the raise?</label>
       <input
         type="date"
         required
-        value={format(deadLine, "yyyy-MM-dd")}
+        value={format(deadLine, 'yyyy-MM-dd')}
         onChange={(e) => {
           const newDate = parseISO(e.target.value);
           if (isValid(newDate)) {
             setDeadline(newDate);
-            setAttr("deadline", newDate);
+            setAttr('deadline', newDate);
           }
         }}
       />
@@ -152,9 +152,9 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
         min={1000}
         max={1000000}
         onChange={(e, newValue) => {
-          if (typeof newValue === "number") {
+          if (typeof newValue === 'number') {
             setMinInvestment(newValue);
-            setAttr("minInvestment", newValue);
+            setAttr('minInvestment', newValue);
           }
         }}
         valueLabelFormat={formatValueLabel}
@@ -165,16 +165,16 @@ export const RaiseContentForm: React.FC<RaiseContentFormProps> = ({
         value={formatValueLabel(minInvestment)}
         onChange={(e) => {
           const value =
-            parseInt(e.target.value.replace(/[KM]/g, ""), 10) * 1000;
+            parseInt(e.target.value.replace(/[KM]/g, ''), 10) * 1000;
           if (!isNaN(value)) {
             setMinInvestment(value);
-            setAttr("minInvestment", value);
+            setAttr('minInvestment', value);
           }
         }}
         style={{
-          textAlign: "center",
+          textAlign: 'center',
           color: `var(--primary-color)`,
-          fontWeight: "bold",
+          fontWeight: 'bold',
         }}
       />
       <label>What's the raise purpose?</label>
