@@ -4,6 +4,7 @@ import { useUserDetails } from '../../../pages/investor/hooks/notifications/useU
 import { formatTimestamp } from '../../../utils/functions';
 import { ReplyForm } from './ReplayForm';
 import './NotificationPanel.css';
+import { UserType } from '../../../utils/enums';
 
 interface NotificationItemProps {
   notification: MyNotification;
@@ -13,37 +14,36 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
   notification,
 }) => {
   const [replying, setReplying] = useState(false);
-  const { user: replyReceiver, loading } = useUserDetails(
-    notification.senderId
-  );
+  const { user: sender, loading } = useUserDetails(notification.senderId);
 
-  if (loading || !replyReceiver) {
+  if (loading || !sender) {
     return null;
   }
+
+  const isCompanySender = sender.userType === UserType.Company;
 
   return (
     <div className="notification-item">
       <div className="notification-header">
-        <span className="company-name">{replyReceiver.name}</span>
+        <span className="company-name">{sender.name}</span>
         <span className="notification-date">
           {formatTimestamp(notification.createdAt)}
         </span>
-        <button
-          className="button-notification"
-          onClick={() => setReplying(true)}
-        >
-          Reply
-        </button>
+        {isCompanySender && ( // Only show the reply button if the sender is a Company
+          <button
+            className="button-notification"
+            onClick={() => setReplying(true)}
+          >
+            Reply
+          </button>
+        )}
       </div>
       <div className="notification-body">
         <h3 className="notification-subject ">{notification.subject}</h3>
         <p className="notification-description">{notification.description}</p>
       </div>
       {replying && (
-        <ReplyForm
-          receiver={replyReceiver}
-          onClose={() => setReplying(false)}
-        />
+        <ReplyForm receiver={sender} onClose={() => setReplying(false)} />
       )}
     </div>
   );
