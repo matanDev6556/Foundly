@@ -53,7 +53,7 @@ const CompanyHeader: React.FC<{ handleLogout: () => void }> = ({
         </div>
       )}
       {modalType === 'Notifications' && (
-        <Modal isDynamicSize={true}>
+        <Modal isDynamicSize={false}>
           <NotificationPanel />
         </Modal>
       )}
