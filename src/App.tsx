@@ -14,6 +14,7 @@ import MyInvestments from './pages/investor/my-investments/myInvestments';
 import { CompanyListProvider } from './context/CompanyListContext';
 import { PurchedProvider } from './context/PurchedContext';
 import CompanyProfile from './pages/company/company-profile/companyProfile';
+import { NotificationProvider } from './context/NotificationsContext';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -24,7 +25,9 @@ export const CommonProviders: React.FC<ProvidersProps> = ({ children }) => {
     <UserProvider>
       <AppStatusProvider>
         <CompanyListProvider>
-          <ModalProvider>{children}</ModalProvider>
+          <NotificationProvider>
+            <ModalProvider>{children}</ModalProvider>
+          </NotificationProvider>
         </CompanyListProvider>
       </AppStatusProvider>
     </UserProvider>
