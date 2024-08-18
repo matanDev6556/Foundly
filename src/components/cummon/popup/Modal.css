@@ -39,7 +39,7 @@
   align-items: center;
   min-width: 300px;
   max-width: 600px;
-  max-height: 80vh; /* הגדרת גובה מקסימלי */
+  max-height: 95vh; /* הגדרת גובה מקסימלי */
   overflow-y: auto; /* מאפשר גלילה אנכית */
 }
 
@@ -48,12 +48,19 @@
   justify-content: flex-end;
   width: 100%;
 }
-
+.closeBtnContainer {
+  background-color: white;
+  width: 50px;
+  height: 50px;
+  margin-top: 20px;
+  margin-right: 50px;
+}
 .titleCloseBtn button {
-  background-color: transparent;
   border: none;
+  border-radius: 10px;
   font-size: 25px;
   cursor: pointer;
+  color: var(--primary-color);
 }
 
 .sign-up-as {
