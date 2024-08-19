@@ -27,13 +27,13 @@ const InvestmentsSection: React.FC = () => {
   return (
     <section className="investments-section">
       <div className="investments-section__header">
-        <h3 className="investments-section__title">Suggested Investments</h3>
         <button
           className="investments-section__button"
           onClick={handleAllClick}
         >
           All
         </button>
+        <h4 className="investments-section__title">Suggested Investments</h4>
       </div>
       <div className="investments-section__list">
         <InvestmentList companies={companies.slice(0, 3)} />

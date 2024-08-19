@@ -1,0 +1,42 @@
+/* InvestmentsView.css */
+
+.investments-view {
+  padding: 20px;
+}
+
+.investments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.investments-title {
+  color: #728f9e;
+  font-size: 24px;
+  margin: 0;
+}
+
+.total-investments {
+  background-color: #f0f8ff;
+  border: 2px solid #39958c;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.total-investments .amount {
+  font-size: 24px;
+  font-weight: bold;
+  color: #39958c;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.total-investments .label {
+  font-size: 14px;
+  color: #728f9e;
+  text-transform: uppercase;
+}
