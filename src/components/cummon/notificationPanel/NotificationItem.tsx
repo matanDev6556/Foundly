@@ -20,7 +20,8 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
     return null;
   }
 
-  const isCompanySender = sender.userType === UserType.Company;
+  const iAllowToReplay =
+    sender.userType === UserType.Company || UserType.Investor;
 
   return (
     <div className="notification-item">
@@ -29,7 +30,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
         <span className="notification-date">
           {formatTimestamp(notification.createdAt)}
         </span>
-        {isCompanySender && ( // Only show the reply button if the sender is a Company
+        {iAllowToReplay && ( // Only show the reply button if the sender is a Company | Investor
           <button
             className="button-notification"
             onClick={() => setReplying(true)}
