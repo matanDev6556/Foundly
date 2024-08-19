@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import "./myInvestments.css";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
-import InvestmentsView from "../../../components/investor/my-investments/InvestmentsView";
-import { useFilteredPurchasedCompanies } from "./hooks/useFilterPurchedCompanies";
-import { useFilteredLikedCompanies } from "./hooks/useFilterLikedCompany";
-import { useToggleView } from "./hooks/useToggleView";
-import FilterButton from "../../../components/cummon/filter/FilterButton";
-import SearchBar from "../../../components/cummon/search/SearchBar";
-import LikedCompaniesView from "../../../components/investor/my-investments/LikeView";
-import { useAppStatus } from "../../../context/AppStatusContext";
-import { ClipLoader } from "react-spinners";
+import React, { useState } from 'react';
+import './myInvestments.css';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
+import InvestmentsView from '../../../components/investor/my-investments/InvestmentsView';
+import { useFilteredPurchasedCompanies } from './hooks/useFilterPurchedCompanies';
+import { useFilteredLikedCompanies } from './hooks/useFilterLikedCompany';
+import { useToggleView } from './hooks/useToggleView';
+import FilterButton from '../../../components/cummon/filter/FilterButton';
+import SearchBar from '../../../components/cummon/search/SearchBar';
+import LikedCompaniesView from '../../../components/investor/my-investments/LikeView';
+import { useAppStatus } from '../../../context/AppStatusContext';
+import { ClipLoader } from 'react-spinners';
 
 const MyInvestments: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const { isLikesView, toggleView } = useToggleView();
   const { loading } = useAppStatus();
@@ -49,12 +49,13 @@ const MyInvestments: React.FC = () => {
       {isLikesView ? (
         <LikedCompaniesView
           companies={filteredLikedCompanies}
-          title={"Saved Investments"}
+          title={'Saved Investments'}
         />
       ) : (
         <InvestmentsView
           companies={filteredPurchasedCompanies}
-          title={"My Investments"}
+          title={'My Investments'}
+          showUserInvestments={true}
         />
       )}
     </div>

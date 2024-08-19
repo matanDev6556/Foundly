@@ -8,7 +8,7 @@ export const RaisePurpose: string[] = [
   'Design',
 ];
 export const InvesmentsCategories: string[] = [
-  'Ai',
+  'AI',
   'Technology',
   'Health',
   'Renewable Energy',
