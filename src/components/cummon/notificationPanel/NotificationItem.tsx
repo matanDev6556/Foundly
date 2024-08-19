@@ -20,8 +20,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
     return null;
   }
 
-  const iAllowToReplay =
-    sender.userType === UserType.Company || UserType.Investor;
+  const iAllowToReplay = sender.userType !== UserType.Admin;
 
   return (
     <div className="notification-item">
@@ -41,7 +40,9 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
       </div>
       <div className="notification-body">
         <h3 className="notification-subject ">{notification.subject}</h3>
-        <p className="notification-description">{notification.description}</p>
+        <p className="notification-description">
+          {notification.description} {sender.userType}
+        </p>
       </div>
       {replying && (
         <ReplyForm receiver={sender} onClose={() => setReplying(false)} />
