@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
-import { useUsersManagement } from "../../../pages/admin/hooks/useUsersManagement";
-import "./Contact.css";
-import Company from "../../../models/Company";
-import User from "../../../models/User";
+import { useEffect, useState } from 'react';
+import { useUsersManagement } from '../../../../../pages/admin/hooks/useUsersManagement';
+import './Contact.css';
+import Company from '../../../../../models/Company';
+import User from '../../../../../models/User';
 interface props {
   receiver: User;
   isReply?: boolean;
 }
 
 export const Contact: React.FC<props> = ({ isReply, receiver }) => {
-  const [subject, setsubject] = useState("");
-  const [description, setDescription] = useState("");
+  const [subject, setsubject] = useState('');
+  const [description, setDescription] = useState('');
   const { handleSendNotification } = useUsersManagement(0);
   const handleSend = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    console.log("check5   ");
+    console.log('check5   ');
     handleSendNotification(receiver.uid, subject, description);
-    setDescription("");
-    setsubject("");
+    setDescription('');
+    setsubject('');
   };
   return (
     <>
@@ -52,7 +52,7 @@ export const Contact: React.FC<props> = ({ isReply, receiver }) => {
               className="submit-button"
               onClick={(e) => handleSend(e)}
             >
-              {!isReply ? "Send" : "Reply"}
+              {!isReply ? 'Send' : 'Reply'}
             </button>
           </div>
         </form>

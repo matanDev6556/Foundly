@@ -11,6 +11,7 @@ import Company from '../../../models/Company';
 import Modal from '../../../components/cummon/popup/modal';
 
 import './CompanyProfile.css';
+import Button from '../../../components/cummon/Button';
 const CompanyProfile: React.FC = () => {
   const { setModalType, modalType, openModal } = useModal();
   const { user } = useUser();
@@ -57,9 +58,16 @@ const CompanyProfile: React.FC = () => {
       />
       <CompanyDetails company={company} />
       <div className="center-button-container">
-        <button className="custom-button" onClick={handleBuy}>
-          I want to invest!
-        </button>
+        <Button
+          label="I want to invest"
+          onClick={() => handleBuy()}
+          color="white"
+          backgroundColor="#39958c"
+          borderColor=""
+          width="300px"
+          height="60px"
+          fontSize="20px"
+        />
       </div>
       {modalType === 'Buy' && user?.uid && (
         <Modal>

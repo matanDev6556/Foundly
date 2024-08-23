@@ -1,9 +1,10 @@
-import Company from "../../../models/Company";
-import { CompanyBasicInfo } from "./companyPresentation/companyBasicInfo/CompanyBasicInfo";
-import { Contact } from "../../cummon/contact/Contact";
-import { CompanyDocs } from "./companyPresentation/companyDocs/CompanyDocs";
-import "./CompanyDetails.css";
-import { useEffect } from "react";
+import Company from '../../../models/Company';
+import { CompanyBasicInfo } from './companyPresentation/companyBasicInfo/CompanyBasicInfo';
+import { Contact } from './companyPresentation/contact/Contact';
+import { CompanyDocs } from './companyPresentation/companyDocs/CompanyDocs';
+import './CompanyDetails.css';
+
+
 interface props {
   company: Company;
 }
