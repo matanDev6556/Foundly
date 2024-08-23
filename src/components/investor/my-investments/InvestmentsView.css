@@ -173,3 +173,78 @@
 .investment-card:nth-child(even) {
   animation-delay: 0.4s;
 }
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  .investments-view {
+    padding: 10px;
+  }
+
+  .investments-header {
+    flex-direction: column;
+    align-items: center; /* Changed from flex-start to center */
+    text-align: center; /* Added to ensure text is centered */
+  }
+
+  .investments-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    width: 100%; /* Ensures the title takes full width */
+    text-align: center; /* Explicitly center the text */
+  }
+
+  .total-investments {
+    width: 90%;
+    margin-top: 10px;
+  }
+
+  .total-investments .amount {
+    font-size: 20px;
+  }
+
+  .total-investments .label {
+    font-size: 12px;
+  }
+
+  .investment-card {
+    padding: 15px;
+  }
+
+  .investment-card h3 {
+    font-size: 18px;
+  }
+
+  .investment-card p {
+    font-size: 14px;
+  }
+
+  .investment-card .amount {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .investments-title {
+    font-size: 18px;
+  }
+
+  .total-investments .amount {
+    font-size: 18px;
+  }
+
+  .total-investments .label {
+    font-size: 11px;
+  }
+
+  .investment-card h3 {
+    font-size: 16px;
+  }
+
+  .investment-card p {
+    font-size: 13px;
+  }
+
+  .investment-card .amount {
+    font-size: 16px;
+  }
+}
