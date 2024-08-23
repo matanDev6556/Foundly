@@ -21,7 +21,9 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
     return null;
   }
 
+
   const iAllowToReplay = sender.userType !== UserType.Admin;
+
 
   return (
     <div className="notification-item">
