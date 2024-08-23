@@ -63,3 +63,9 @@
   height: 50vh;
   width: 100%;
 }
+
+@media screen and (max-width: 600px) {
+  .investments-section__title {
+    font-size: 1.4rem;
+  }
+}

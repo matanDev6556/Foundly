@@ -1,5 +1,5 @@
-import React from "react";
-import "./OpenAll.css";
+import React from 'react';
+import './OpenAll.css';
 
 interface OpenAllProps {
   title: string;
@@ -12,7 +12,7 @@ const OpenAll: React.FC<OpenAllProps> = ({
   title,
   isBold = true,
   onClick,
-  buttonText = 'הכל'
+  buttonText = 'הכל',
 }) => {
   return (
     <div className="container">
@@ -20,7 +20,7 @@ const OpenAll: React.FC<OpenAllProps> = ({
         {buttonText}
       </button>
 
-      <h2 className="title" style={{ fontWeight: isBold ? "bold" : "normal" }}>
+      <h2 className="title" style={{ fontWeight: isBold ? 'bold' : 'normal' }}>
         {title}
       </h2>
     </div>

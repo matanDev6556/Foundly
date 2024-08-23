@@ -5,6 +5,7 @@ import { formatTimestamp } from '../../../utils/functions';
 import { ReplyForm } from './ReplayForm';
 import './NotificationPanel.css';
 import { UserType } from '../../../utils/enums';
+import { ClipLoader } from 'react-spinners';
 
 interface NotificationItemProps {
   notification: MyNotification;
@@ -40,9 +41,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
       </div>
       <div className="notification-body">
         <h3 className="notification-subject ">{notification.subject}</h3>
-        <p className="notification-description">
-          {notification.description} {sender.userType}
-        </p>
+        <p className="notification-description">{notification.description}</p>
       </div>
       {replying && (
         <ReplyForm receiver={sender} onClose={() => setReplying(false)} />
