@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaBell, FaSignOutAlt } from 'react-icons/fa';
+import { FaBell, FaSignOutAlt, FaChartLine, FaUser } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useModal } from '../../../context/popupContext';
 import Modal from '../popup/modal';
@@ -24,7 +24,8 @@ const InvestorHeader: React.FC<{ handleLogout: () => void }> = ({
         className={'header__button header_button--fill'}
         onClick={() => handleClick()}
       >
-        My Investments
+        <span className="button-text">My Investments</span>
+        <FaChartLine className="button-icon" />
       </button>
       <button
         className={'header__button header_button--border'}
@@ -32,7 +33,8 @@ const InvestorHeader: React.FC<{ handleLogout: () => void }> = ({
           setModalType('Profile');
         }}
       >
-        My Profile
+        <span className="button-text">My Profile</span>
+        <FaUser className="button-icon" />
       </button>
 
       {modalType === 'Profile' && (
