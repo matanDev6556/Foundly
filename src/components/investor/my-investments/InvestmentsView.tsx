@@ -2,7 +2,7 @@ import React from 'react';
 import noDataImg from '../../../assets/images/no_data.png';
 import { useNavigate } from 'react-router-dom';
 import Company from '../../../models/Company';
-import NoData from '../../cummon/NoData';
+import NoData from '../../cummon/no-data/NoData';
 import Button from '../../cummon/Button';
 import { RoutePath } from '../../../utils/enums';
 import InvestmentList from '../../cummon/invest-card/InvestList';

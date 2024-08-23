@@ -45,7 +45,7 @@ body {
 }
 
 .submit-button {
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color);
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -61,7 +61,34 @@ body {
 }
 
 @media (max-width: 768px) {
+  .contact-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  .contact-form {
+    width: 100%;
+    max-width: 300px;
+  }
+
   .form-group {
-    width: 90%;
+    width: 100%;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    text-align: center;
+  }
+  .contact-section .form-group {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    margin: 5px 0;
+  }
+  .submit-button {
+    width: 100%;
   }
 }
