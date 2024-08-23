@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import "./MiddleSection.css";
-import { useUser } from "../../../../context/UserContext";
-import { fetchForUser } from "../../../../services/dbService";
-import Company from "../../../../models/Company";
-import Invest from "../../../../models/Invest";
+import React, { useEffect, useState } from 'react';
+import './MiddleSection.css';
+import { useUser } from '../../../../context/UserContext';
+import { fetchForUser } from '../../../../services/dbService';
+import Company from '../../../../models/Company';
+import Invest from '../../../../models/Invest';
 import {
   calculateRemainingDays,
   formatRemainingTime,
   formatTargetAmount,
-} from "../../../../utils/functions";
+} from '../../../../utils/functions';
 
 const MiddleSection = () => {
   const { user } = useUser();
@@ -17,9 +17,10 @@ const MiddleSection = () => {
     total: 0,
     investoramount: 0,
     daysToComplete: 0,
-    remainingTimeValue: "",
-    remainingTimeUnit: "",
+    remainingTimeValue: '',
+    remainingTimeUnit: '',
   });
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -27,8 +28,8 @@ const MiddleSection = () => {
         try {
           const company = user as Company;
           const investoramount = await fetchForUser(
-            "investments",
-            "companyUid",
+            'investments',
+            'companyUid',
             company.uid,
             Invest.fromJson
           );
@@ -48,8 +49,11 @@ const MiddleSection = () => {
             remainingTimeValue,
             remainingTimeUnit,
           });
+
+          // Trigger animation after data is loaded
+          setIsVisible(true);
         } catch (error) {
-          console.error("Error fetching data:", error);
+          console.error('Error fetching data:', error);
         }
       }
     };
@@ -58,23 +62,34 @@ const MiddleSection = () => {
   }, [user]);
 
   return (
-    <div className="middle-section">
+    <div className={`middle-section ${isVisible ? 'visible' : ''}`}>
       <div className="content">
-        <p className="information">
-          <p className="target">
-            {data.target}% <br /> of target{" "}
-          </p>
-          <p className="total">
-            {formatTargetAmount(data.total) + "$"} <br /> invested{" "}
-          </p>
-          <p className="investors">
-            {data.investoramount} <br /> investors{" "}
-          </p>
-          <p className="days">
-            {" "}
-            {data.remainingTimeValue} {data.remainingTimeUnit} <br /> remaining
-          </p>
-        </p>
+        <div className="information">
+          <div className="info-item">
+            <p className="target">
+              <span className="value">{data.target}%</span>
+              <span className="label">of target</span>
+            </p>
+          </div>
+          <div className="info-item">
+            <p className="total">
+              <span className="value">{formatTargetAmount(data.total)}$</span>
+              <span className="label">invested</span>
+            </p>
+          </div>
+          <div className="info-item">
+            <p className="investors">
+              <span className="value">{data.investoramount}</span>
+              <span className="label">investors</span>
+            </p>
+          </div>
+          <div className="info-item">
+            <p className="days">
+              <span className="value">{data.remainingTimeValue}</span>
+              <span className="label">{data.remainingTimeUnit} remaining</span>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

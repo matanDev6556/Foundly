@@ -20,6 +20,12 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: var(--txtMain-color);
+}
+
+@media screen and (max-width: 600px) {
+  .title {
+    font-size: 1.4rem;
+  }
 }
