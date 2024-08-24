@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useUsersManagement } from '../../../../../pages/admin/hooks/useUsersManagement';
 import './Contact.css';
-import Company from '../../../../../models/Company';
 import User from '../../../../../models/User';
+
 interface props {
   receiver: User;
   isReply?: boolean;
@@ -22,7 +22,7 @@ export const Contact: React.FC<props> = ({ isReply, receiver }) => {
   return (
     <>
       <div className="contact-section">
-        {!isReply && <h2>Contact</h2>}
+        {!isReply && <h2 style={{ color: '#7fcbc4' }}>Contact</h2>}
         <form className="contact-form">
           <div className="form-group">
             <input
