@@ -12,55 +12,44 @@
   z-index: 1000;
 }
 
-.modal.fixed-size {
-  width: 32%;
-  border-radius: 12px;
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  display: flex;
-  flex-direction: column;
-  padding: 25px;
-  justify-content: center;
-  align-items: center;
-  min-width: 300px;
-  max-width: 600px;
-  max-height: 80vh; /* הגדרת גובה מקסימלי */
-  overflow-y: auto; /* מאפשר גלילה אנכית */
+.modalTitle {
+  color: white;
+  margin-bottom: 20px;
+  text-align: center;
 }
+
+.modal.fixed-size,
 .modal.dynamic-size {
-  width: auto;
+  position: relative;
+  width: 40%;
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
   flex-direction: column;
   padding: 25px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   min-width: 300px;
-  max-width: 600px;
-  max-height: 95vh; /* הגדרת גובה מקסימלי */
-  overflow-y: auto; /* מאפשר גלילה אנכית */
+  max-width: 850px;
+  max-height: 95vh;
+  overflow-y: auto;
 }
 
 .titleCloseBtn {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
 }
-.closeBtnContainer {
-  background-color: white;
-  width: 50px;
-  height: 50px;
-  margin-top: 20px;
-  margin-right: 50px;
-}
+
 .titleCloseBtn button {
+  background-color: transparent;
   border: none;
-  border-radius: 10px;
-  font-size: 25px;
+  font-size: 20px;
   cursor: pointer;
   color: var(--primary-color);
+  padding: 5px;
 }
 
 .sign-up-as {
@@ -92,13 +81,9 @@
   font-weight: bold;
 }
 
-.modalTitle {
-  color: white;
-  margin-bottom: 20px;
-}
-
 .body {
   width: 100%;
+  margin-top: 20px;
 }
 
 .modalContainer .body {
@@ -115,6 +100,7 @@ form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 10px;
 }
 
 form label {
@@ -143,4 +129,12 @@ form button {
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .modal.fixed-size,
+  .modal.dynamic-size {
+    width: 90%;
+    max-width: none;
+  }
 }
