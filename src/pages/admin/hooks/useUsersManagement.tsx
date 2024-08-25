@@ -1,14 +1,14 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-import Company from "../../../models/Company";
-import Investor from "../../../models/Investor";
-import { fetchForUser, saveToDb } from "../../../services/dbService";
-import { useModal } from "../../../context/popupContext";
-
-import { useUser } from "../../../context/UserContext";
-import MyNotification from "../../../models/Notification";
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import Company from '../../../models/Company';
+import Investor from '../../../models/Investor';
+import { fetchForUser, saveToDb } from '../../../services/dbService';
+import { useModal } from '../../../context/popupContext';
+import { toast } from 'react-toastify';
+import { useUser } from '../../../context/UserContext';
+import MyNotification from '../../../models/Notification';
 
 type TableUser = Investor | Company;
-type UserType = "All" | "Admin" | "Company" | "Investor";
+type UserType = 'All' | 'Admin' | 'Company' | 'Investor';
 
 export const useUsersManagement = (limitedRowsCount: number) => {
   const [investors, setInvestors] = useState<Investor[]>([]);
@@ -16,30 +16,30 @@ export const useUsersManagement = (limitedRowsCount: number) => {
   const [displayedUsers, setDisplayedUsers] = useState<TableUser[]>([]);
   const [showAllUsers, setShowAllUsers] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedUserType, setSelectedUserType] = useState<UserType>("All");
-  const { setModalType, modalType } = useModal();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedUserType, setSelectedUserType] = useState<UserType>('All');
+  const { setModalType, modalType, openModal } = useModal();
   const { user } = useUser();
 
   const loadUsers = useCallback(async () => {
     try {
       const fetchedInvestors = await fetchForUser(
-        "users",
-        "userType",
-        "Investor",
+        'users',
+        'userType',
+        'Investor',
         Investor.fromJson
       );
       const fetchedCompanies = await fetchForUser(
-        "users",
-        "userType",
-        "Company",
+        'users',
+        'userType',
+        'Company',
         Company.fromJson
       );
       setInvestors(fetchedInvestors);
       setCompanies(fetchedCompanies);
       updateDisplayedUsers(fetchedInvestors, fetchedCompanies);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error('Error fetching users:', error);
     }
   }, []);
 
@@ -69,7 +69,7 @@ export const useUsersManagement = (limitedRowsCount: number) => {
   const handleNotificationClick = useCallback(
     (userId: string) => {
       setSelectedUserId(userId);
-      setModalType("Notifications");
+      setModalType('Notifications');
     },
     [setModalType]
   );
@@ -77,8 +77,8 @@ export const useUsersManagement = (limitedRowsCount: number) => {
   const handleSendNotification = useCallback(
     async (receiverId: string, subject: string, description: string) => {
       if (!user) {
-        console.error("No user logged in");
-        alert("You must be logged in to send notifications.");
+        toast.warning('Please log in for contact with the company!');
+        openModal('Login');
         return;
       }
 
@@ -89,12 +89,12 @@ export const useUsersManagement = (limitedRowsCount: number) => {
           subject,
           description
         );
-        await saveToDb("notifications", null, notification);
-        alert("Notification sent successfully!");
-        setModalType("");
+        await saveToDb('notifications', null, notification);
+        alert('Notification sent successfully!');
+        setModalType('');
       } catch (error) {
-        console.error("Error sending notification:", error);
-        alert("Error sending notification. Please try again.");
+        console.error('Error sending notification:', error);
+        alert('Error sending notification. Please try again.');
       }
     },
     [user, setModalType]
@@ -104,7 +104,7 @@ export const useUsersManagement = (limitedRowsCount: number) => {
     const allUsers = [...investors, ...companies];
     return allUsers.filter(
       (user) =>
-        (selectedUserType === "All" || user.userType === selectedUserType) &&
+        (selectedUserType === 'All' || user.userType === selectedUserType) &&
         (user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
           user.email.toLowerCase().includes(searchTerm.toLowerCase()))
     );
@@ -128,26 +128,26 @@ export const useUsersManagement = (limitedRowsCount: number) => {
   const columns = useMemo(
     () => [
       {
-        header: "Username",
+        header: 'Username',
         render: (user: TableUser) => user.name,
       },
       {
-        header: "Type",
+        header: 'Type',
         render: (user: TableUser) => user.userType,
       },
       {
-        header: "Email",
+        header: 'Email',
         render: (user: TableUser) => user.email,
       },
       {
-        header: "Additional Details",
+        header: 'Additional Details',
         render: (user: TableUser) => {
           if (user instanceof Company) {
             return `${user.companyDetails.category}, ${user.raiseDetails.currentInvestmentsAmount}₪ invested`;
           } else if (user instanceof Investor) {
-            return user.preferences.categories.join(", ");
+            return user.preferences.categories.join(', ');
           }
-          return "";
+          return '';
         },
       },
     ],

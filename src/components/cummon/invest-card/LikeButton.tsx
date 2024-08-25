@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useLikes } from '../../../context/LikesContext';
 import { useUser } from '../../../context/UserContext';
 import './LikeButton.css';
+import { useModal } from '../../../context/popupContext';
 
 interface LikeButtonProps {
   companyId: string;
@@ -14,12 +15,13 @@ const LikeButton: React.FC<LikeButtonProps> = ({ companyId }) => {
   const { user } = useUser();
   const { likes, toggleLike } = useLikes();
   const [isAnimating, setIsAnimating] = useState(false);
-
+  const { openModal } = useModal();
   const liked = likes.some((like) => like.companyId === companyId);
 
   const handleLikeClick = () => {
     if (!user) {
       toast.warning('Please log in to save investments!');
+      openModal('Login');
       return;
     }
     if (user.userType !== 'Investor') {
