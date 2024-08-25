@@ -134,7 +134,7 @@ form button {
 @media (max-width: 768px) {
   .modal.fixed-size,
   .modal.dynamic-size {
-    width: 90%;
+    width: 80%;
     max-width: none;
   }
 }

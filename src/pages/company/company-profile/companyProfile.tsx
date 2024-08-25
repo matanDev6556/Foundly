@@ -9,9 +9,10 @@ import { useModal } from '../../../context/popupContext';
 import { useUser } from '../../../context/UserContext';
 import Company from '../../../models/Company';
 import Modal from '../../../components/cummon/popup/modal';
-
+import { toast } from 'react-toastify';
 import './CompanyProfile.css';
 import Button from '../../../components/cummon/Button';
+
 const CompanyProfile: React.FC = () => {
   const { setModalType, modalType, openModal } = useModal();
   const { user } = useUser();
@@ -43,6 +44,7 @@ const CompanyProfile: React.FC = () => {
 
   const handleBuy = () => {
     if (!user) {
+      toast.warning('Pls login for buy investments!');
       openModal('Login');
       return;
     }
