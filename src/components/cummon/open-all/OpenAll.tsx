@@ -16,13 +16,15 @@ const OpenAll: React.FC<OpenAllProps> = ({
 }) => {
   return (
     <div className="container">
+       <h2 className="title" style={{ fontWeight: isBold ? 'bold' : 'normal' }}>
+        {title}
+      </h2>
+      
       <button className="allButton" onClick={onClick}>
         {buttonText}
       </button>
 
-      <h2 className="title" style={{ fontWeight: isBold ? 'bold' : 'normal' }}>
-        {title}
-      </h2>
+     
     </div>
   );
 };

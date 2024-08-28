@@ -1,16 +1,16 @@
 import { useAppStatus } from '../../../context/AppStatusContext';
-import { ClipLoader } from 'react-spinners';
 import React from 'react';
 import { useNotifications } from '../../../context/NotificationsContext';
 import { NotificationItem } from './NotificationItem';
 import './NotificationPanel.css';
+import Loading from '../loading/Loading';
 
 export const NotificationPanel: React.FC = () => {
   const { notifications } = useNotifications();
   const { loading } = useAppStatus();
 
   if (loading) {
-    return <ClipLoader color="#46968c" loading={loading} size={50} />;
+    return <Loading />;
   }
 
   return (

@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { useUser } from "../../context/UserContext";
-import { loginUser } from "../../services/authService";
-import { useModal } from "../../context/popupContext";
-import { useAppStatus } from "../../context/AppStatusContext";
-import { ClipLoader } from "react-spinners";
-import { fetchUserFromDb } from "../../services/dbService";
-import { handleFirebaseError } from "../../services/FirebaseErrorService";
-import { FirebaseError } from "firebase/app";
+import React, { useState } from 'react';
+import { useUser } from '../../context/UserContext';
+import { loginUser } from '../../services/authService';
+import { useModal } from '../../context/popupContext';
+import { useAppStatus } from '../../context/AppStatusContext';
+import { fetchUserFromDb } from '../../services/dbService';
+import { handleFirebaseError } from '../../services/FirebaseErrorService';
+import { FirebaseError } from 'firebase/app';
+import Loading from '../cummon/loading/Loading';
 
 const LoginForm: React.FC = () => {
   const { setUser } = useUser();
   const { closeModal } = useModal();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { loading, setLoading, error, setError } = useAppStatus();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,7 +38,7 @@ const LoginForm: React.FC = () => {
       if (err instanceof Error) {
         setError(handleFirebaseError(err as FirebaseError));
       } else {
-        setError("An unexpected error occurred");
+        setError('An unexpected error occurred');
       }
     } finally {
       setLoading(false);
@@ -46,11 +46,11 @@ const LoginForm: React.FC = () => {
   };
 
   const inputStyle = {
-    border: error ? "1px solid red" : "1px solid #ccc",
-    borderRadius: "4px",
-    padding: "8px",
-    marginBottom: "10px",
-    width: "100%",
+    border: error ? '1px solid red' : '1px solid #ccc',
+    borderRadius: '4px',
+    padding: '8px',
+    marginBottom: '10px',
+    width: '100%',
   };
 
   return (
@@ -73,12 +73,8 @@ const LoginForm: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         style={inputStyle}
       />
-      {error && <p style={{ color: "red", marginBottom: "10px" }}>{error}</p>}
-      {loading ? (
-        <ClipLoader color="#39958c" loading={loading} size={50} />
-      ) : (
-        <button type="submit">Login</button>
-      )}
+      {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
+      {loading ? <Loading /> : <button type="submit">Login</button>}
     </form>
   );
 };

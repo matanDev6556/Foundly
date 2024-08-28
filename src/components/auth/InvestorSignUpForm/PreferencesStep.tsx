@@ -9,10 +9,10 @@ import {
 import { useUser } from "../../../context/UserContext";
 import { useModal } from "../../../context/popupContext";
 import { useAppStatus } from "../../../context/AppStatusContext";
-import { ClipLoader } from "react-spinners";
 import { saveUserToDb } from "../../../services/dbService";
 import GenericSelector from "../../cummon/drop-down/Selector";
 import ListSelector from "../../cummon/list-selector/ListSelector";
+import Loading from "../../cummon/loading/Loading";
 
 interface PreferencesStepProps {
   isEditing?: boolean;
@@ -93,7 +93,7 @@ const PreferencesStep: React.FC<PreferencesStepProps> = ({
         initialValue={investInPublicCompanies}
       />
       {loading ? (
-        <ClipLoader color="#39958c" loading={loading} size={50} />
+        <Loading/>
       ) : (
         <button>{isEditing ? "Save Changes" : "Let's Start!"}</button>
       )}

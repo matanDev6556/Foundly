@@ -5,7 +5,6 @@ import { formatTimestamp } from '../../../utils/functions';
 import { ReplyForm } from './ReplayForm';
 import './NotificationPanel.css';
 import { UserType } from '../../../utils/enums';
-import { ClipLoader } from 'react-spinners';
 
 interface NotificationItemProps {
   notification: MyNotification;
@@ -21,9 +20,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
     return null;
   }
 
-
   const iAllowToReplay = sender.userType !== UserType.Admin;
-
 
   return (
     <div className="notification-item">

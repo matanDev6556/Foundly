@@ -1,0 +1,50 @@
+export const styles = {
+  container: {
+    backgroundColor: '#f9f9f9',
+    padding: '20px',
+    minHeight: '100vh',
+  },
+  header: {
+    textAlign: 'center' as const,
+    color: '#728f9e',
+    fontSize: '2.5rem',
+    marginBottom: '30px',
+    textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
+  },
+  searchContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '20px 0',
+    padding: '20px',
+    backgroundColor: '#fdffff',
+    borderRadius: '15px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+  },
+  searchBar: {
+    width: '100%',
+    maxWidth: '500px',
+    marginRight: '15px',
+  },
+  dropdown: {
+    padding: '10px 15px',
+    fontSize: '16px',
+    borderRadius: '8px',
+    border: '1px solid #39958c',
+    backgroundColor: 'white',
+    color: '#39958c',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    '&:hover': {
+      backgroundColor: '#39958c',
+      color: 'white',
+    },
+  },
+  tableContainer: {
+    margin: '20px 0',
+    padding: '20px',
+    backgroundColor: '#fdffff',
+    borderRadius: '15px',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+  },
+};

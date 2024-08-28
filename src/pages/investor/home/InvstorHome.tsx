@@ -14,4 +14,6 @@ const InvestorHome: React.FC = () => {
   );
 };
 
+
 export default InvestorHome;
+

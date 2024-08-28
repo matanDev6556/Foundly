@@ -1,59 +1,55 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import OpenAll from '../../components/cummon/open-all/OpenAll';
-import ManagmentInfo from '../../components/admin/home/managment-info/ManagmentInfo';
 import { useUsersManagement } from './hooks/useUsersManagement';
 import { useLastInvestments } from './hooks/useLastInvestments';
-import GenericUsersTable from '../../components/cummon/users-table/GenericTable';
-import LastInvestmentsChart from '../../components/admin/home/LastInvestmentChart';
+import { RoutePath } from '../../utils/enums';
 import { deleteDocument } from '../../services/dbService';
 import Company from '../../models/Company';
-import { RoutePath } from '../../utils/enums';
 import Modal from '../../components/cummon/popup/modal';
-import SearchBar from '../../components/cummon/search/SearchBar';
 import AdminNotification from '../../components/admin/home/notifications/Notifications';
+import ManagmentInfo from '../../components/admin/home/managment-info/ManagmentInfo';
+import { SearchSection } from './components/SearchSection';
+import { UsersTable } from './components/UsersTable';
+import { InvestmentsSection } from './components/InvestmentsSection';
+import { StatisticalDashboard } from './components/StatisticalDashboard';
+import { styles } from './styles';
 
 const AdminHome: React.FC = () => {
   const navigate = useNavigate();
-  const limitedRowsCount = 4;
-  const {
-    investors,
-    companies,
-    displayedUsers,
-    showAllUsers,
-    toggleUsersDisplay,
-    deleteUser,
-    columns: userColumns,
-    reloadUsers,
-    handleNotificationClick,
-    handleSendNotification,
-    selectedUserId,
-    modalType,
-    searchTerm,
-    setSearchTerm,
-    selectedUserType,
-    handleUserTypeChange,
-  } = useUsersManagement(limitedRowsCount);
+  const limitedRowsCount = 3;
+  const usersManagement = useUsersManagement(limitedRowsCount);
+  const investmentsManagement = useLastInvestments(limitedRowsCount);
 
-  const {
-    displayedInvestments,
-    showAllInvestments,
-    toggleInvestmentsDisplay,
-    columns: investmentColumns,
-  } = useLastInvestments(limitedRowsCount);
-
-  const totalUsers = investors.length + companies.length;
-  const totalInvestments = displayedInvestments.length;
+  
+  const calculateDashboardData = () => {
+    return {
+      newUsers:
+        usersManagement.investors.length + usersManagement.companies.length,
+      newCompanies: usersManagement.companies.length,
+      newInvestors: usersManagement.investors.length,
+      totalInvestments: investmentsManagement.displayedInvestments.reduce(
+        (sum, inv) => sum + inv.investAmount,
+        0
+      ),
+      averageInvestment:
+        investmentsManagement.displayedInvestments.length > 0
+          ? investmentsManagement.displayedInvestments.reduce(
+              (sum, inv) => sum + inv.investAmount,
+              0
+            ) / investmentsManagement.displayedInvestments.length
+          : 0,
+    };
+  };
 
   const handleDeleteUser = async (userId: string) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
+    if (window.confirm('האם אתה בטוח שברצונך למחוק משתמש זה?')) {
       try {
         await deleteDocument('users', userId);
-        deleteUser(userId);
+        usersManagement.deleteUser(userId);
       } catch (error) {
-        console.error('Error deleting user:', error);
-        alert('Error deleting user. Please try again.');
-        reloadUsers();
+        console.error('שגיאה במחיקת משתמש:', error);
+        alert('שגיאה במחיקת משתמש. אנא נסה שוב.');
+        usersManagement.reloadUsers();
       }
     }
   };
@@ -64,131 +60,55 @@ const AdminHome: React.FC = () => {
     }
   };
 
-  const styles = {
-    header: {
-      textAlign: 'center' as const,
-      color: '#728f9e',
-      fontSize: '2.5rem',
-      marginBottom: '30px',
-      textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
-    },
-    searchContainer: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      margin: '20px 0',
-      padding: '20px',
-      backgroundColor: '#fdffff',
-      borderRadius: '15px',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    },
-    searchBar: {
-      width: '100%',
-      maxWidth: '500px',
-      marginRight: '15px',
-    },
-    dropdown: {
-      padding: '10px 15px',
-      fontSize: '16px',
-      borderRadius: '8px',
-      border: '1px solid #39958c',
-      backgroundColor: 'white',
-      color: '#39958c',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
-      '&:hover': {
-        backgroundColor: '#39958c',
-        color: 'white',
-      },
-    },
-    tableContainer: {
-      margin: '20px 0',
-      padding: '20px',
-      backgroundColor: '#fdffff',
-      borderRadius: '15px',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    },
-  };
-
   return (
-    <>
+    <div style={styles.container}>
+      <h1 style={styles.header}>Panel Management</h1>
+
+      <ManagmentInfo
+        investors={usersManagement.investors}
+        companies={usersManagement.companies}
+      />
+      <SearchSection
+        searchTerm={usersManagement.searchTerm}
+        setSearchTerm={usersManagement.setSearchTerm}
+        selectedUserType={usersManagement.selectedUserType}
+        handleUserTypeChange={usersManagement.handleUserTypeChange}
+      />
+      <UsersTable
+        {...usersManagement}
+        handleDeleteUser={handleDeleteUser}
+        handleUserRowClick={handleUserRowClick}
+        limitedRowsCount={limitedRowsCount}
+      />
+      <InvestmentsSection
+        {...investmentsManagement}
+        limitedRowsCount={limitedRowsCount}
+      />
+      <h2 style={{ textAlign: 'center', color: '#728f9e' }}>Statistics</h2>
       <div
         style={{
-          backgroundColor: '#f9f9f9',
+          backgroundColor: 'white',
+          boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
           padding: '20px',
-          minHeight: '100vh',
+          borderRadius: '8px',
         }}
       >
-        <h1 style={styles.header}>Management Panel</h1>
-        <ManagmentInfo investors={investors} companies={companies} />
-        <div style={styles.searchContainer}>
-          <div style={styles.searchBar}>
-            <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-          </div>
-          <select
-            value={selectedUserType}
-            onChange={(e) =>
-              handleUserTypeChange(
-                e.target.value as 'All' | 'Admin' | 'Company' | 'Investor'
-              )
-            }
-            style={styles.dropdown}
-          >
-            <option value="All">All Users</option>
-            <option value="Admin">Admins</option>
-            <option value="Company">Companies</option>
-            <option value="Investor">Investors</option>
-          </select>
-        </div>
-        <div style={styles.tableContainer}>
-          <OpenAll
-            title={'Users'}
-            onClick={toggleUsersDisplay}
-            buttonText={
-              showAllUsers || displayedUsers.length <= limitedRowsCount
-                ? 'Less'
-                : 'All'
-            }
-          />
-          <GenericUsersTable
-            isUserTable={true}
-            isAdmin={true}
-            data={displayedUsers}
-            columns={userColumns}
-            onDelete={handleDeleteUser}
-            onRowClick={handleUserRowClick}
-            onNotificationClick={handleNotificationClick}
-          />
-        </div>
-
-        <OpenAll
-          title={'Last Investments'}
-          onClick={toggleInvestmentsDisplay}
-          buttonText={
-            showAllInvestments || totalInvestments <= limitedRowsCount
-              ? 'All'
-              : 'Less'
-          }
+        <StatisticalDashboard
+          data={calculateDashboardData()}
+          investments={investmentsManagement.displayedInvestments}
         />
-        <div style={styles.tableContainer}>
-          <GenericUsersTable
-            data={displayedInvestments}
-            columns={investmentColumns}
-          />
-        </div>
-        <OpenAll title={'Chart'} onClick={() => {}} buttonText={''} />
-        <LastInvestmentsChart investments={displayedInvestments} />
-
-        {modalType === 'Notifications' && selectedUserId && (
+      </div>
+      {usersManagement.modalType === 'Notifications' &&
+        usersManagement.selectedUserId && (
           <Modal>
             <AdminNotification
-              receiverId={selectedUserId}
-              onSendNotification={handleSendNotification}
+              receiverId={usersManagement.selectedUserId}
+              onSendNotification={usersManagement.handleSendNotification}
             />
           </Modal>
         )}
-      </div>
-    </>
+    </div>
   );
 };
+
 export default AdminHome;

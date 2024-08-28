@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useModal } from '../../../../context/popupContext';
 import { useAppStatus } from '../../../../context/AppStatusContext';
-import { ClipLoader } from 'react-spinners';
+import Loading from '../../../cummon/loading/Loading';
 
 interface buyInvestProps {
   investorUid: string;
@@ -51,8 +51,7 @@ const BuyInvest: React.FC<buyInvestProps> = ({
     }
   };
 
-  if (loading)
-    return <ClipLoader color="#39958c" loading={loading} size={50} />;
+  if (loading) return <Loading />;
 
   return (
     <div className="buy-container">

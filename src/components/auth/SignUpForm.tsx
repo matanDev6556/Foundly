@@ -1,12 +1,12 @@
 // src/components/SignUpForm.tsx
-import React, { useState } from "react";
-import User, { UserType } from "../../models/User";
-import { useUser } from "../../context/UserContext";
-import { registerUser } from "../../services/authService";
-import ClipLoader from "react-spinners/ClipLoader";
-import { useAppStatus } from "../../context/AppStatusContext";
-import { handleFirebaseError } from "../../services/FirebaseErrorService";
-import { FirebaseError } from "firebase/app";
+import React, { useState } from 'react';
+import User, { UserType } from '../../models/User';
+import { useUser } from '../../context/UserContext';
+import { registerUser } from '../../services/authService';
+import { useAppStatus } from '../../context/AppStatusContext';
+import { handleFirebaseError } from '../../services/FirebaseErrorService';
+import { FirebaseError } from 'firebase/app';
+import Loading from '../cummon/loading/Loading';
 
 interface SignUpFormProps {
   userType: UserType;
@@ -17,9 +17,9 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ userType, moveStep }) => {
   const { setUser } = useUser();
   const { loading, setLoading, setError } = useAppStatus();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,7 +39,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ userType, moveStep }) => {
       moveStep();
     } catch (error: any) {
       setError(handleFirebaseError(error as FirebaseError));
-      console.error("Error signing up: ", error);
+      console.error('Error signing up: ', error);
       setLoading(false);
     } finally {
       setLoading(false);
@@ -75,11 +75,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ userType, moveStep }) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      {loading ? (
-        <ClipLoader color="#39958c" loading={loading} size={50} />
-      ) : (
-        <button type="submit">Sign Up</button>
-      )}
+      {loading ? <Loading /> : <button type="submit">Sign Up</button>}
     </form>
   );
 };

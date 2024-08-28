@@ -9,7 +9,7 @@ import FilterButton from '../../../components/cummon/filter/FilterButton';
 import SearchBar from '../../../components/cummon/search/SearchBar';
 import LikedCompaniesView from '../../../components/investor/my-investments/LikeView';
 import { useAppStatus } from '../../../context/AppStatusContext';
-import { ClipLoader } from 'react-spinners';
+import Loading from '../../../components/cummon/loading/Loading';
 
 const MyInvestments: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -30,8 +30,7 @@ const MyInvestments: React.FC = () => {
     setSelectedFilters(filters);
   };
 
-  if (loading)
-    return <ClipLoader color="#39958c" loading={loading} size={50} />;
+  if (loading) return <Loading />;
 
   return (
     <div className="all-investments">
